@@ -1,0 +1,244 @@
+{
+  "feature_root": "/path/to/trident_features",
+  "groups": [
+    {
+      "group": "cptac_benchmark/10x_256px",
+      "cohort": "cptac_benchmark",
+      "magnification": 10.0,
+      "patch_size": 256,
+      "n_encoders": 6,
+      "encoders": "conch_v1,ctranspath,gigapath,keep,resnet50,uni_v2",
+      "dims": "512,768,1536,768,1024,1536",
+      "n_shared_slides": 2296
+    },
+    {
+      "group": "cptac_benchmark/20x_256px",
+      "cohort": "cptac_benchmark",
+      "magnification": 20.0,
+      "patch_size": 256,
+      "n_encoders": 5,
+      "encoders": "ctranspath,gigapath,keep,resnet50,uni_v2",
+      "dims": "768,1536,768,1024,1536",
+      "n_shared_slides": 2296
+    },
+    {
+      "group": "cptac_benchmark/5x_256px",
+      "cohort": "cptac_benchmark",
+      "magnification": 5.0,
+      "patch_size": 256,
+      "n_encoders": 5,
+      "encoders": "ctranspath,gigapath,keep,resnet50,uni_v2",
+      "dims": "768,1536,768,1024,1536",
+      "n_shared_slides": 2296
+    },
+    {
+      "group": "master_benchmark/10x_256px",
+      "cohort": "master_benchmark",
+      "magnification": 10.0,
+      "patch_size": 256,
+      "n_encoders": 5,
+      "encoders": "conch_v1,ctranspath,gigapath,resnet50,uni_v2",
+      "dims": "512,768,1536,1024,1536",
+      "n_shared_slides": 2169
+    },
+    {
+      "group": "master_benchmark/20x_256px",
+      "cohort": "master_benchmark",
+      "magnification": 20.0,
+      "patch_size": 256,
+      "n_encoders": 5,
+      "encoders": "ctranspath,gigapath,keep,resnet50,uni_v2",
+      "dims": "768,1536,768,1024,1536",
+      "n_shared_slides": 1126
+    },
+    {
+      "group": "cptac_benchmark/20x_224px",
+      "cohort": "cptac_benchmark",
+      "magnification": 20.0,
+      "patch_size": 224,
+      "n_encoders": 4,
+      "encoders": "gpfm,hoptimus0,virchow,virchow2",
+      "dims": "1024,1536,2560,2560",
+      "n_shared_slides": 2296
+    },
+    {
+      "group": "master_benchmark/20x_224px",
+      "cohort": "master_benchmark",
+      "magnification": 20.0,
+      "patch_size": 224,
+      "n_encoders": 4,
+      "encoders": "gpfm,hoptimus0,virchow,virchow2",
+      "dims": "1024,1536,2560,2560",
+      "n_shared_slides": 2169
+    },
+    {
+      "group": "master_benchmark/5x_256px",
+      "cohort": "master_benchmark",
+      "magnification": 5.0,
+      "patch_size": 256,
+      "n_encoders": 4,
+      "encoders": "ctranspath,gigapath,resnet50,uni_v2",
+      "dims": "768,1536,1024,1536",
+      "n_shared_slides": 2169
+    },
+    {
+      "group": "cptac_benchmark/10x_224px",
+      "cohort": "cptac_benchmark",
+      "magnification": 10.0,
+      "patch_size": 224,
+      "n_encoders": 3,
+      "encoders": "gpfm,hoptimus0,virchow2",
+      "dims": "1024,1536,2560",
+      "n_shared_slides": 2296
+    },
+    {
+      "group": "cptac_benchmark/5x_224px",
+      "cohort": "cptac_benchmark",
+      "magnification": 5.0,
+      "patch_size": 224,
+      "n_encoders": 3,
+      "encoders": "gpfm,hoptimus0,virchow2",
+      "dims": "1024,1536,2560",
+      "n_shared_slides": 2296
+    },
+    {
+      "group": "master_benchmark/10x_224px",
+      "cohort": "master_benchmark",
+      "magnification": 10.0,
+      "patch_size": 224,
+      "n_encoders": 3,
+      "encoders": "gpfm,hoptimus0,virchow2",
+      "dims": "1024,1536,2560",
+      "n_shared_slides": 2169
+    },
+    {
+      "group": "master_benchmark/5x_224px",
+      "cohort": "master_benchmark",
+      "magnification": 5.0,
+      "patch_size": 224,
+      "n_encoders": 3,
+      "encoders": "gpfm,hoptimus0,virchow2",
+      "dims": "1024,1536,2560",
+      "n_shared_slides": 2169
+    },
+    {
+      "group": "cptac_benchmark/10x_512px",
+      "cohort": "cptac_benchmark",
+      "magnification": 10.0,
+      "patch_size": 512,
+      "n_encoders": 2,
+      "encoders": "conch_v1,conch_v15",
+      "dims": "512,768",
+      "n_shared_slides": 2296
+    },
+    {
+      "group": "cptac_benchmark/20x_512px",
+      "cohort": "cptac_benchmark",
+      "magnification": 20.0,
+      "patch_size": 512,
+      "n_encoders": 2,
+      "encoders": "conch_v1,conch_v15",
+      "dims": "512,768",
+      "n_shared_slides": 2296
+    },
+    {
+      "group": "cptac_benchmark/5x_512px",
+      "cohort": "cptac_benchmark",
+      "magnification": 5.0,
+      "patch_size": 512,
+      "n_encoders": 2,
+      "encoders": "conch_v1,conch_v15",
+      "dims": "512,768",
+      "n_shared_slides": 2296
+    },
+    {
+      "group": "master_benchmark/20x_512px",
+      "cohort": "master_benchmark",
+      "magnification": 20.0,
+      "patch_size": 512,
+      "n_encoders": 2,
+      "encoders": "conch_v1,conch_v15",
+      "dims": "512,768",
+      "n_shared_slides": 1126
+    },
+    {
+      "group": "cptac_benchmark/10x_384px",
+      "cohort": "cptac_benchmark",
+      "magnification": 10.0,
+      "patch_size": 384,
+      "n_encoders": 1,
+      "encoders": "musk",
+      "dims": "1024",
+      "n_shared_slides": 2296
+    },
+    {
+      "group": "cptac_benchmark/20x_384px",
+      "cohort": "cptac_benchmark",
+      "magnification": 20.0,
+      "patch_size": 384,
+      "n_encoders": 1,
+      "encoders": "musk",
+      "dims": "1024",
+      "n_shared_slides": 2296
+    },
+    {
+      "group": "cptac_benchmark/5x_384px",
+      "cohort": "cptac_benchmark",
+      "magnification": 5.0,
+      "patch_size": 384,
+      "n_encoders": 1,
+      "encoders": "musk",
+      "dims": "1024",
+      "n_shared_slides": 2296
+    },
+    {
+      "group": "master_benchmark/10x_384px",
+      "cohort": "master_benchmark",
+      "magnification": 10.0,
+      "patch_size": 384,
+      "n_encoders": 1,
+      "encoders": "musk",
+      "dims": "1024",
+      "n_shared_slides": 2169
+    },
+    {
+      "group": "master_benchmark/20x_384px",
+      "cohort": "master_benchmark",
+      "magnification": 20.0,
+      "patch_size": 384,
+      "n_encoders": 1,
+      "encoders": "musk",
+      "dims": "1024",
+      "n_shared_slides": 2169
+    },
+    {
+      "group": "master_benchmark/5x_384px",
+      "cohort": "master_benchmark",
+      "magnification": 5.0,
+      "patch_size": 384,
+      "n_encoders": 1,
+      "encoders": "musk",
+      "dims": "1024",
+      "n_shared_slides": 2169
+    }
+  ],
+  "widest_group": "cptac_benchmark/10x_256px",
+  "coordinate_verification": {
+    "cptac_benchmark/10x_224px": true,
+    "cptac_benchmark/10x_256px": true,
+    "cptac_benchmark/10x_512px": true,
+    "cptac_benchmark/20x_224px": true,
+    "cptac_benchmark/20x_256px": true,
+    "cptac_benchmark/20x_512px": true,
+    "cptac_benchmark/5x_224px": true,
+    "cptac_benchmark/5x_256px": true,
+    "cptac_benchmark/5x_512px": true,
+    "master_benchmark/10x_224px": true,
+    "master_benchmark/10x_256px": true,
+    "master_benchmark/20x_224px": true,
+    "master_benchmark/20x_256px": true,
+    "master_benchmark/20x_512px": true,
+    "master_benchmark/5x_224px": true,
+    "master_benchmark/5x_256px": true
+  }
+}

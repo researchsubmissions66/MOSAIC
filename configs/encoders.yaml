@@ -1,0 +1,176 @@
+# Pathology foundation model registry for MOSAIC.
+#
+# PROVENANCE — two classes of field, treat them differently:
+#
+#   Machine-verified (read off disk / trident source, safe to rely on):
+#     dim, hf_id, precision, and the availability grid in feature_inventory.json
+#
+#   Literature-sourced (hand-entered for grouping and for RQ2 "does the
+#     pretraining objective dominate?"): architecture, family, objective,
+#     pretrain_data, params. VERIFY THESE AGAINST THE PAPERS BEFORE PUBLICATION.
+#     They drive how models are grouped in figures, not how features are loaded,
+#     so an error here changes an interpretation, not a result.
+#
+# `family` is the coarse grouping used to test RQ2:
+#   vision_ssl        self-supervised on images only
+#   vision_language   trained with paired text supervision
+#   supervised        classical supervised baseline (control)
+
+feature_root: /path/to/trident_features
+
+encoders:
+
+  uni_v2:
+    display_name: UNI2-h
+    dim: 1536
+    hf_id: MahmoodLab/UNI2-h
+    precision: bfloat16
+    architecture: ViT-H/14 (registers)
+    family: vision_ssl
+    objective: DINOv2
+    pretrain_data: ~200M patches from ~350k WSIs (Mass General Brigham)
+    params: 681M
+
+  conch_v1:
+    display_name: CONCH
+    dim: 512
+    hf_id: MahmoodLab/conch
+    precision: float32
+    architecture: ViT-B/16 + text encoder
+    family: vision_language
+    objective: CoCa (contrastive + captioning)
+    pretrain_data: 1.17M image-caption pairs
+    params: 86M (image tower)
+
+  conch_v15:
+    display_name: CONCH v1.5
+    dim: 768
+    hf_id: MahmoodLab/conchv1_5
+    precision: float16
+    architecture: ViT-L/16 @ 448px
+    family: vision_language
+    objective: vision-language pretraining (TITAN patch encoder)
+    pretrain_data: TITAN corpus
+    params: 307M
+
+  gigapath:
+    display_name: Prov-GigaPath
+    dim: 1536
+    hf_id: prov-gigapath/prov-gigapath
+    precision: float16
+    architecture: ViT-g/14
+    family: vision_ssl
+    objective: DINOv2
+    pretrain_data: 1.3B tiles from 171k WSIs (Providence)
+    params: 1.1B
+    notes: >-
+      Loading this through trident asserts timm==0.9.16; the environment has
+      1.0.26, so gigapath cannot be used for the layer-wise analysis (which is
+      the only stage that loads weights). Its stored features are unaffected
+      and it participates in every other phase normally.
+
+  virchow:
+    display_name: Virchow
+    dim: 2560
+    hf_id: paige-ai/Virchow
+    precision: float16
+    architecture: ViT-H/14
+    family: vision_ssl
+    objective: DINOv2
+    pretrain_data: 1.5M WSIs (MSKCC)
+    params: 632M
+    notes: >-
+      dim 2560 = class token (1280) concatenated with mean of patch tokens
+      (1280). Worth remembering in Phase IV: the two halves are different
+      kinds of representation and may align differently.
+
+  virchow2:
+    display_name: Virchow2
+    dim: 2560
+    hf_id: paige-ai/Virchow2
+    precision: float16
+    architecture: ViT-H/14
+    family: vision_ssl
+    objective: DINOv2 with pathology-specific augmentations
+    pretrain_data: 3.1M WSIs
+    params: 632M
+    notes: same class-token + mean-patch-token concatenation as Virchow.
+
+  hoptimus0:
+    display_name: H-optimus-0
+    dim: 1536
+    hf_id: bioptimus/H-optimus-0
+    precision: float16
+    architecture: ViT-g/14
+    family: vision_ssl
+    objective: DINOv2
+    pretrain_data: ~500k WSIs
+    params: 1.1B
+
+  gpfm:
+    display_name: GPFM
+    dim: 1024
+    hf_id: majiabo/GPFM
+    precision: float16
+    architecture: ViT-L/14
+    family: vision_ssl
+    objective: expert knowledge distillation (multi-teacher)
+    pretrain_data: ~190k WSIs
+    params: 307M
+    notes: >-
+      The only distillation-trained model in the set. If the "objective
+      dominates" hypothesis holds, this one should sit apart from the
+      DINOv2 cluster.
+
+  keep:
+    display_name: KEEP
+    dim: 768
+    hf_id: Astaxanthin/KEEP
+    precision: float16
+    architecture: ViT-L/16
+    family: vision_language
+    objective: knowledge-enhanced vision-language pretraining
+    pretrain_data: image-text pairs + disease knowledge graph
+    params: 307M
+
+  musk:
+    display_name: MUSK
+    dim: 1024
+    hf_id: xiangjx/musk
+    precision: float16
+    architecture: BEiT-3 style multimodal transformer @ 384px
+    family: vision_language
+    objective: masked modelling + vision-language alignment
+    pretrain_data: 50M images + 1B text tokens
+    params: 675M
+
+  ctranspath:
+    display_name: CTransPath
+    dim: 768
+    hf_id: MahmoodLab/hest-bench
+    precision: float32
+    architecture: CNN + Swin-T hybrid
+    family: vision_ssl
+    objective: SRCL (semantically-relevant contrastive learning)
+    pretrain_data: ~15M patches (TCGA + PAIP)
+    params: 28M
+    notes: pre-foundation-model era; useful as a weaker-encoder control.
+
+  resnet50:
+    display_name: ResNet50 (ImageNet)
+    dim: 1024
+    hf_id: null
+    precision: float32
+    architecture: ResNet50 truncated after layer3
+    family: supervised
+    objective: ImageNet supervised classification
+    pretrain_data: ImageNet-1k (no pathology data)
+    params: 25M
+    notes: >-
+      THE CONTROL. It has never seen a pathology slide in training. Any
+      "shared morphological manifold" claim has to show the pathology models
+      agree with each other substantially more than they agree with this.
+
+# Slide-level encoders present in the feature store but out of scope for
+# Phase I/V, which operate on patch embeddings:
+#   chief, madeleine, prism, gigapath (slide), titan, feather

@@ -1,0 +1,3 @@
+class,n_slides,mean_patches,min_patches,max_patches
+LUAD,531,2723.4576271186443,60,4000
+LUSC,512,2844.03125,172,4000

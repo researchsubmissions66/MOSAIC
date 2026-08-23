@@ -1,0 +1,6 @@
+query,conch_v1,ctranspath,gigapath,resnet50,uni_v2
+conch_v1,1.0,0.0002,0.0,0.0002,0.0
+ctranspath,0.0002,1.0,0.0004,0.0002,0.0
+gigapath,0.0,0.0002,1.0,0.0,0.0002
+resnet50,0.0,0.0002,0.0,1.0,0.0
+uni_v2,0.0,0.0,0.0,0.0,1.0

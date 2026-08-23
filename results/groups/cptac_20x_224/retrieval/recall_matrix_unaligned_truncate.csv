@@ -1,0 +1,5 @@
+query,gpfm,hoptimus0,virchow,virchow2
+gpfm,0.9996,0.0,0.0004,0.0004
+hoptimus0,0.0,0.9994,0.0002,0.0
+virchow,0.0,0.0,0.9994,0.0004
+virchow2,0.0004,0.0,0.0002,0.9994

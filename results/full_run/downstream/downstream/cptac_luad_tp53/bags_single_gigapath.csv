@@ -1,0 +1,3 @@
+class,n_slides,mean_patches,min_patches,max_patches
+MUT,541,2326.837338262477,158,4000
+WT,517,1863.4622823984525,87,4000

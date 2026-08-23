@@ -1,0 +1,3 @@
+class,n_slides,mean_patches,min_patches,max_patches
+early,767,3100.727509778357,195,4000
+late,245,2961.5510204081634,283,4000

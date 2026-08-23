@@ -1,0 +1,87 @@
+# MOSAIC — Python dependencies.
+#
+# Every entry below is imported somewhere in the codebase; nothing is listed
+# speculatively. Versions are the ones the results were produced with on `alt`.
+# Install with:
+#
+#     pip install -r requirements.txt
+#
+# Two notes before you pin anything:
+#   * numpy >= 2 is REQUIRED. utils/preprocessing.py relies on NumPy 2 copy
+#     semantics (np.array(..., copy=False) raises there rather than copying),
+#     and the code is written for the NumPy 2 behaviour.
+#   * torch is listed CPU-agnostic. For GPU, install the build matching your
+#     CUDA version from https://pytorch.org first, then this file.
+
+# ---------------------------------------------------------------------------
+# Core numerics — required by everything
+# ---------------------------------------------------------------------------
+numpy==2.4.6            # every module; the array type all metrics operate on
+scipy==1.18.0           # utils/cka.py, cca.py, mcca.py (eigh), ablation.py
+                        #   (spearman), cosine.py (correlations),
+                        #   optimal_transport.py (logsumexp), visualization.py
+                        #   (linkage, squareform)
+pandas==3.0.3           # results tables throughout: pairwise.py, labels.py,
+                        #   ablation.py, transfer.py, retrieval.py, all scripts
+
+# ---------------------------------------------------------------------------
+# Machine learning
+# ---------------------------------------------------------------------------
+scikit-learn==1.9.0     # utils/visualization.py (MDS), utils/mil.py (AUC, F1,
+                        #   balanced accuracy), utils/transfer.py (the linear
+                        #   probe). NOTE: 1.9 renamed the MDS parameters;
+                        #   visualization.py resolves both spellings at runtime.
+torch==2.7.1            # utils/mil.py (ABMIL/TransMIL), alignment/autoencoder.py,
+                        #   utils/layers.py (forward hooks for Phase IV)
+
+# ---------------------------------------------------------------------------
+# Data I/O
+# ---------------------------------------------------------------------------
+h5py==3.16.0            # utils/features.py — reads every trident feature file
+PyYAML==6.0.3           # utils/features.py — parses configs/encoders.yaml
+joblib==1.5.3           # utils/alignment/base.py — aligner save/load
+
+# ---------------------------------------------------------------------------
+# Plotting
+# ---------------------------------------------------------------------------
+matplotlib==3.11.0      # utils/visualization.py, utils/paperfigs.py, layers.py
+seaborn==0.13.2         # utils/visualization.py — clustermap only
+umap-learn==0.5.12      # utils/visualization.py — model-space UMAP. Optional in
+                        #   practice: MDS is the ordination to trust at ~8
+                        #   models, and every driver accepts --no-umap.
+
+# ---------------------------------------------------------------------------
+# Phase IV only (layer-wise alignment) — needs slide images and model weights,
+# unlike every other stage, which reads the precomputed feature store.
+# ---------------------------------------------------------------------------
+openslide-python==1.4.2 # scripts/layerwise_alignment.py — crops patches from WSIs.
+                        #   Requires the OpenSlide C library:
+                        #     conda install -c conda-forge openslide
+                        #     (or: apt-get install openslide-tools)
+timm==1.0.26            # pulled in by trident's model zoo when loading encoders.
+                        #   CAVEAT: trident asserts timm==0.9.16 for GigaPath, so
+                        #   GigaPath cannot be used in Phase IV at this version.
+                        #   Its stored features are unaffected and it appears in
+                        #   every other analysis. Do not downgrade — 0.9.16
+                        #   breaks the other encoders' loaders.
+
+# Phase IV also needs a trident checkout for its encoder factory (not a pip
+# package here; expected at ~/trident, override with --trident-root):
+#     git clone https://github.com/mahmoodlab/trident
+# scripts/layerwise_alignment.py imports trident's load.py directly under
+# stubbed geo modules, so geopandas/shapely are NOT required.
+
+# ---------------------------------------------------------------------------
+# Testing
+# ---------------------------------------------------------------------------
+pytest==9.0.3           # 229 property tests; `-m "not slow"` skips model training
+
+# ---------------------------------------------------------------------------
+# Not required
+# ---------------------------------------------------------------------------
+# plotnine    — installed while evaluating a ggplot-grammar implementation of the
+#               paper figures. utils/paperfigs.py is pure matplotlib, so this is
+#               NOT a dependency. Kept out of the pinned list deliberately.
+# geopandas   — imported by trident's IO module for slide contours; stubbed out
+#               in layerwise_alignment.py rather than installed.
+# shapely     — same as geopandas.

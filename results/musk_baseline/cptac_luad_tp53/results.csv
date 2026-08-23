@@ -1,0 +1,2 @@
+condition,encoders,mil,dim,auc,accuracy,f1,balanced_accuracy,n_test,seconds
+single,musk,abmil,1024,0.67926619059345,0.6274509803921569,0.626324638664795,0.6264159074119675,255,31.8
