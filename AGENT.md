@@ -22,6 +22,12 @@ alongside [`README.md`](README.md) (install and run) and [`PLAN.md`](PLAN.md)
   grids; the unit of analysis is `(cohort, magnification, patch_size)`.
 - Downstream splits are **patient-grouped**. A slide-level split leaks patients
   across folds and inflates every metric.
+- **Two MIL heads, always: ABMIL and TransMIL.** Every reported bar averages
+  them, so a result is about the representation and not about one classifier.
+  Per-head values live in `results.csv` and can differ by 0.03-0.04 AUC --
+  check them before making a per-encoder claim. `utils/mil.py` also implements
+  a mean-pool (no-attention) control; it is deliberately **not** part of the
+  evaluation.
 - Run `python -m pytest tests/ -q` before and after changes.
 
 ## 🔁 Reproducing the results
@@ -99,10 +105,14 @@ from this repository alone. Only the feature store (Step 0) requires the raw dat
 
 Prioritized remaining work to complete coverage and the result set:
 
-1. **Complete the CPTAC-LSCC cohort.** All 1081 LSCC slides are available; run
-   feature extraction for the six flagship patch encoders at `10x/256px` and the
-   six slide encoders at their native grids. Unlocks the LSCC mutation tasks and
-   the full-lung `cptac_nsclc` split.
+1. ~~Complete the CPTAC-LSCC cohort.~~ **Dropped 2026-08-25.** LSCC is out of
+   the study: only 134 of 1081 slides ever had features, which made every LSCC
+   task unusable or severely imbalanced. The `cptac_nsclc` task (LUAD vs LSCC,
+   1139:134) has been removed from the registry and its results deleted, so the
+   downstream set is **13 tasks, not 14**. The decision was not forced by
+   access — the slides download fine from TCIA pathdb, verified on
+   `C3L-00081-21.svs` — it was a scope call. The 134 LSCC feature files remain
+   on disk, unused.
 2. **Populate the CPTAC `10x/256px` feature store** (`features_{conch_v1,
    ctranspath, gigapath, keep, resnet50, uni_v2}`) before running any
    six-encoder CPTAC analysis or the `concat` / `shared` downstream conditions.

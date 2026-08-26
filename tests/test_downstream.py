@@ -216,7 +216,9 @@ def test_stage_grouping(stage, expected):
 
 
 def test_task_registry_is_well_formed():
-    assert len(available_tasks()) == 14
+    # 13, not 14: cptac_nsclc was removed on 2026-08-25 when CPTAC-LSCC was
+    # dropped from the study. See the note above CPTAC_TASKS in utils/labels.py.
+    assert len(available_tasks()) == 13
     for name in available_tasks():
         t = TASK_REGISTRY[name]
         assert t.name == name
@@ -227,12 +229,14 @@ def test_task_registry_is_well_formed():
 
 def test_registry_composition_is_locked():
     """Guard the exact task set, so tasks cannot drift in or out unnoticed."""
+    # cptac_nsclc (LUAD vs LSCC) is deliberately absent: CPTAC-LSCC is dropped.
+    # If it reappears here, someone has re-added an LSCC task -- that reverses a
+    # documented decision, so make it deliberate rather than letting it drift.
     assert set(available_tasks()) == {
         "tcga_nsclc",
         "tcga_brca_subtype",
         "tcga_brca_stage",
         "tcga_nsclc_stage",
-        "cptac_nsclc",
     } | {
         f"cptac_{c}_{g}"
         for c, genes in {

@@ -80,7 +80,7 @@ PRESETS: dict[str, dict] = {
         "align_patches": 3000,
         "tasks": ["tcga_nsclc"],
         "methods": ["joint_pca", "gcca"],
-        "mil": ["abmil"],
+        "mil": ["abmil"],  # smoke only: one head, for speed
     },
     "standard": {
         "n_patches": 20000,
@@ -93,7 +93,7 @@ PRESETS: dict[str, dict] = {
         "align_patches": 20000,
         "tasks": ["tcga_nsclc", "tcga_brca_subtype", "cptac_luad_tp53", "cptac_luad_kras"],
         "methods": ["joint_pca", "gcca", "procrustes"],
-        "mil": ["abmil"],
+        "mil": ["abmil", "transmil"],
     },
     "full": {
         "n_patches": 50000,

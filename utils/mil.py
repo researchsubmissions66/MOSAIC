@@ -16,10 +16,17 @@ Three input conditions, which are the actual experiment:
 
 Models
 ------
-``ABMIL`` (Ilse et al., ICML 2018) gated-attention pooling is the primary head.
-``MeanMIL`` is the trivial control that shows how much the attention mechanism
-contributes. ``TransMIL``-style self-attention pooling is the second baseline
-the plan asks for, to show findings are not an ABMIL artefact.
+The study evaluates **two** heads and averages them per reported bar, so a
+result is about the representation rather than one classifier:
+
+``ABMIL`` (Ilse et al., ICML 2018) gated-attention pooling, and ``TransMIL``
+-style self-attention pooling as the second baseline the plan asks for, to show
+findings are not an ABMIL artefact.
+
+``MeanMIL`` is implemented and tested but is **deliberately not part of the
+evaluation**. It would be the no-attention control; it is kept available for
+anyone who wants that comparison, and building it is a one-word change to
+``--mil``.
 """
 
 from __future__ import annotations

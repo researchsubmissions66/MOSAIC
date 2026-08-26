@@ -80,12 +80,20 @@ PLOT_NAMES: dict[str, str] = {
     "gigapath": "GigaPath",
     "Prov-GigaPath": "GigaPath",
     "virchow": "Virchow",
+    "Virchow": "Virchow",
     "virchow2": "Virchow2",
+    "Virchow2": "Virchow2",
     "hoptimus0": "H-optimus-0",
     "H-optimus-0": "H-optimus-0",
     "gpfm": "GPFM",
+    # The display-name spellings matter as much as the keys: similarity CSVs
+    # are written with display names (FeatureStore.display_names), so an
+    # acronym missing here is title-cased into "Gpfm" / "Keep" / "Musk".
+    "GPFM": "GPFM",
     "keep": "KEEP",
+    "KEEP": "KEEP",
     "musk": "MUSK",
+    "MUSK": "MUSK",
     "ctranspath": "CTransPath",
     "CTransPath": "CTransPath",
     "resnet50": "ResNet50",

@@ -1,0 +1,8 @@
+,linear_cka,kernel_cka,svcca,pwcca,procrustes,cosine_rsa,distance_correlation
+linear_cka,1.0,1.0,0.5,-0.5,1.0,0.5,1.0
+kernel_cka,1.0,1.0,0.5,-0.5,1.0,0.5,1.0
+svcca,0.5,0.5,1.0,0.5,0.5,-0.5,0.5
+pwcca,-0.5,-0.5,0.5,1.0,-0.5,-1.0,-0.5
+procrustes,1.0,1.0,0.5,-0.5,1.0,0.5,1.0
+cosine_rsa,0.5,0.5,-0.5,-1.0,0.5,1.0,0.5
+distance_correlation,1.0,1.0,0.5,-0.5,1.0,0.5,1.0

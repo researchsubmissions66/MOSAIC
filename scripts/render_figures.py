@@ -39,7 +39,6 @@ TASK_TITLES = {
     "tcga_brca_subtype": "TCGA BRCA\nIDC/ILC",
     "tcga_brca_stage": "TCGA BRCA\nStage",
     "tcga_nsclc_stage": "TCGA NSCLC\nStage",
-    "cptac_nsclc": "CPTAC\nNSCLC",
     "cptac_luad_tp53": "LUAD\nTP53",
     "cptac_luad_kras": "LUAD\nKRAS",
     "cptac_luad_stk11": "LUAD\nSTK11",
@@ -51,7 +50,7 @@ TASK_TITLES = {
     "cptac_coad_pik3ca": "COAD\nPIK3CA",
 }
 TASK_ORDER = [
-    "tcga_nsclc", "tcga_brca_subtype", "cptac_nsclc",
+    "tcga_nsclc", "tcga_brca_subtype",
     "cptac_luad_tp53", "cptac_luad_kras", "cptac_luad_stk11",
     "cptac_brca_pik3ca", "cptac_brca_gata3", "cptac_brca_map3k1",
     "cptac_coad_tp53", "cptac_coad_kras", "cptac_coad_pik3ca",
@@ -151,9 +150,7 @@ FIG_META: dict[str, dict[str, str]] = {
             "indistinguishable. Bottom: molecular (mutation) tasks are where "
             "representations separate — MOSAIC (the shared space) wins on some "
             "(BRCA GATA3, COAD PIK3CA) and loses on others (LUAD/COAD TP53). The "
-            "dashed line is chance (AUC 0.5). LUAD KRAS shows a single bar: its "
-            "concat/shared runs were lost to an interruption and cannot be "
-            "recomputed (features deleted)."
+            "dashed line is chance (AUC 0.5)."
         ),
         "source": "results/full_run/downstream/downstream/*/results.csv",
         "methods": (
@@ -372,6 +369,28 @@ FIG_META: dict[str, dict[str, str]] = {
 }
 
 
+def _incomplete_downstream_tasks() -> list[str]:
+    """Tasks whose results.csv is missing an input condition.
+
+    The fig3 caption used to assert in a hardcoded string that LUAD KRAS could
+    never be completed because its features were deleted. That was wrong -- the
+    features are present -- and a static sentence would go stale the moment the
+    missing rows were computed. Derive it from the tables instead, so the
+    caption stops mentioning a task as soon as it is filled in.
+    """
+    root = Path(__file__).resolve().parents[1]
+    want = {"single", "concat", "shared"}
+    missing = []
+    for f in sorted(root.glob("results/full_run/downstream/downstream/*/results.csv")):
+        try:
+            have = set(pd.read_csv(f)["condition"].unique())
+        except Exception:
+            continue
+        if want - have:
+            missing.append(f.parent.name)
+    return missing
+
+
 def emit(fig, out: Path, key: str, fmt: str) -> None:
     """Save a figure into its own directory alongside a provenance markdown.
 
@@ -383,11 +402,21 @@ def emit(fig, out: Path, key: str, fmt: str) -> None:
 
     meta = FIG_META.get(key)
     if meta is not None:
+        caption = meta["caption"]
+        if key.startswith("fig3_downstream"):
+            gaps = _incomplete_downstream_tasks()
+            if gaps:
+                names = ", ".join(clean_label(t) for t in gaps)
+                caption += (
+                    f" {names} shows fewer than three bars: those input "
+                    "conditions have not been computed yet. The features are "
+                    "present, so this is a pending run, not a missing result."
+                )
         md = fdir / f"{key}.md"
         md.write_text(
             f"# {meta['title']}\n\n"
             f"![{key}]({key}.png)\n\n"
-            f"**Caption.** {meta['caption']}\n\n"
+            f"**Caption.** {caption}\n\n"
             f"## How it was computed\n\n{meta['methods']}\n\n"
             f"## Source data\n\n`{meta['source']}`\n\n"
             f"## Files\n\n"
@@ -463,7 +492,7 @@ def fig_retrieval(out: Path, fmt: str) -> None:
 
 # The two difficulty regimes, stacked as separate panels.
 CLINICAL_TASKS = [
-    "tcga_nsclc", "tcga_brca_subtype", "cptac_nsclc",
+    "tcga_nsclc", "tcga_brca_subtype",
     "tcga_brca_stage", "tcga_nsclc_stage",
 ]
 MUTATION_TASKS = [

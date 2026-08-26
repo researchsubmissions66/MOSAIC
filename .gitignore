@@ -4,3 +4,12 @@ __pycache__/
 *.log
 .DS_Store
 .ipynb_checkpoints/
+
+# Local run artefacts, not part of the released study
+slurm_logs/
+# derived: regenerate with scripts/render_figures.py
+results/figures/
+results.backup-*/
+# Cluster-specific batch scripts: they hardcode an account, venv and home dir,
+# so they are local infrastructure rather than part of the released artefact.
+scripts/mosaic_*.sh

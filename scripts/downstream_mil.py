@@ -60,8 +60,10 @@ def main() -> None:
     parser.add_argument(
         "--mil",
         nargs="+",
-        default=["abmil"],
-        help="MIL heads; add 'transmil' or 'mean' to check ABMIL is not special",
+        default=["abmil", "transmil"],
+        help="MIL heads. The study evaluates both and averages them per bar, so "
+        "that a result is about the representation rather than one classifier. "
+        "'mean' is implemented but is deliberately not part of the evaluation",
     )
     parser.add_argument(
         "--aligner", default="gcca", help="aligner used for the shared condition"

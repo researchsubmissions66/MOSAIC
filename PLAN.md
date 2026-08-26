@@ -60,7 +60,7 @@ Two cohorts, features extracted with [trident](https://github.com/mahmoodlab/tri
 | Cohort | Store key | Slides | Contents |
 |---|---|---|---|
 | TCGA | `master_benchmark` | 2169 | BRCA 1126, LUAD 531, LUSC 512 |
-| CPTAC | `cptac_benchmark` | 2296 | LUAD 1139, BRCA 654, COAD 369, LSCC 134 |
+| CPTAC | `cptac_benchmark` | 2296 | LUAD 1139, BRCA 654, COAD 369 (LSCC 134, dropped) |
 
 **Key requirement:** every patch must have embeddings from all models compared.
 Trident writes one coordinate grid per `(magnification, patch_size)`, so
@@ -238,7 +238,8 @@ Build the database with **model A**, issue queries with **model B**.
 
 ## Phase VIII — Downstream learning
 
-> **Status: implemented.** `utils/mil.py` (ABMIL, TransMIL, mean-pool control),
+> **Status: implemented.** `utils/mil.py` (ABMIL and TransMIL are the two
+> evaluated heads; a mean-pool control exists but is not part of the study),
 > `utils/bags.py` (the three input conditions) and `utils/labels.py` (14 tasks),
 > driven by `scripts/downstream_mil.py`. Splits are patient-grouped, and the
 > aligner for the shared condition is fitted on training slides only.
@@ -246,23 +247,31 @@ Build the database with **model A**, issue queries with **model B**.
 > **Tasks** — all confined to a single cancer type; tissue-of-origin tasks are
 > excluded because they saturate and cannot rank encoders:
 > `tcga_nsclc` (LUAD/LUSC, 1043 slides), `tcga_brca_subtype` (IDC/ILC, 958),
-> `tcga_brca_stage` (1012), `tcga_nsclc_stage` (831), `cptac_nsclc` (1273),
+> `tcga_brca_stage` (1012), `tcga_nsclc_stage` (831),
 > plus 9 CPTAC mutation tasks — BRCA (PIK3CA/MAP3K1/GATA3, 377 slides),
 > COAD (KRAS/PIK3CA/TP53, 223), LUAD (TP53/STK11/KRAS, 1058).
-> CPTAC-LSCC mutation tasks are omitted: only 134 of 1081 LSCC slides are
-> extracted, leaving 28 patients.
+> **CPTAC-LSCC is dropped from the study entirely** (2026-08-25). Only 134 of
+> 1081 slides were ever extracted, leaving 28 patients — too few for the LSCC
+> mutation tasks, and the reason `cptac_nsclc` ran 1139:134. That task has been
+> removed from the registry too, so the downstream set is **13 tasks**.
 
-Keep the downstream head simple (ABMIL).
+Keep the downstream head simple. **Two heads are evaluated — ABMIL and
+TransMIL — and every reported bar averages them**, so a result is a statement
+about the representation rather than about one classifier. Per-head values stay
+in `results.csv`, and they can differ by 0.03-0.04 AUC, so check them before
+making any per-encoder claim.
 
 **Conditions**
 
-1. Baseline: single encoder → ABMIL
-2. Concatenation of encoders → ABMIL
-3. Shared latent space → ABMIL
+1. Baseline: single encoder → ABMIL + TransMIL
+2. Concatenation of encoders → ABMIL + TransMIL
+3. Shared latent space → ABMIL + TransMIL
 
 **Metrics:** AUC, accuracy, F1, balanced accuracy.
 
-Optionally add one more MIL baseline (CLAM or TransMIL) to show the findings are not an artifact of ABMIL.
+**Done:** TransMIL is the second head, so the findings are not an ABMIL
+artefact. A mean-pool (no-attention) control is implemented in `utils/mil.py`
+but deliberately excluded from the evaluation.
 
 ---
 
@@ -294,9 +303,10 @@ sweeping them needs no new code.
 
 ## Open items
 
-- **Extract the rest of CPTAC-LSCC.** Only 134 of 1081 slides have features,
-  which leaves 28 patients — too few for the LSCC mutation tasks (dropped from
-  the registry) and the reason `cptac_nsclc` is 1139:134.
+- ~~Extract the rest of CPTAC-LSCC.~~ **Closed 2026-08-25: LSCC dropped.** The
+  slides were reachable — they download from TCIA pathdb, verified end to end on
+  `C3L-00081-21.svs` (183 MB, opens in openslide at 20x) — so this was a scope
+  decision, not a blocker. `cptac_nsclc` is gone with it.
 - **Re-extract MUSK and CONCH v1.5 at 256px.** MUSK is stranded alone at 384px
   and CONCH v1.5 only pairs with CONCH v1 at 512px, so neither can enter the
   main six-encoder comparison.

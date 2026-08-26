@@ -43,6 +43,14 @@ __all__ = [
     "save_figure",
 ]
 
+#: Fewest models UMAP can embed. Below this the neighbourhood graph is
+#: degenerate: ``n_neighbors`` cannot exceed ``n - 1`` and ``n_components`` is
+#: capped at ``n - 2``, so three points would be asked for a 1-D embedding and
+#: two for a 0-D one. :func:`umap_embedding` refuses outright;
+#: :func:`plot_model_space` drops the panel instead, because an optional panel
+#: should not cost the caller the whole figure.
+UMAP_MIN_POINTS = 4
+
 
 def _as_labelled_matrix(
     S: pd.DataFrame | np.ndarray,
@@ -622,8 +630,8 @@ def umap_embedding(
     arr, _ = _as_labelled_matrix(D)
     n = arr.shape[0]
 
-    if n < 4:
-        raise ValueError(f"UMAP needs at least 4 points, got {n}")
+    if n < UMAP_MIN_POINTS:
+        raise ValueError(f"UMAP needs at least {UMAP_MIN_POINTS} points, got {n}")
     if n < 15:
         warnings.warn(
             f"running UMAP on only {n} points; the layout is not "
@@ -733,7 +741,9 @@ def plot_model_space(
         Similarity-to-distance conversion for clustering and ordination.
     include_umap : bool, default True
         Add a fourth UMAP panel. Set False for a cleaner three-panel figure
-        (recommended when the model count is small).
+        (recommended when the model count is small). Requested panels are
+        dropped with a :class:`RuntimeWarning` when there are fewer than
+        :data:`UMAP_MIN_POINTS` models, so this is safe to leave True.
     random_state : int, default 0
         Seed for MDS and UMAP.
     suptitle : str, optional
@@ -746,6 +756,18 @@ def plot_model_space(
     matplotlib.figure.Figure
         The composed figure.
     """
+    n_models = _as_labelled_matrix(S, labels)[0].shape[0]
+    if include_umap and n_models < UMAP_MIN_POINTS:
+        warnings.warn(
+            f"skipping the UMAP panel: it needs at least {UMAP_MIN_POINTS} "
+            f"models and this matrix has {n_models}. The heatmap, dendrogram "
+            "and MDS panels are all well defined here, and MDS is the model-"
+            "space ordination to read for a comparison this small.",
+            RuntimeWarning,
+            stacklevel=2,
+        )
+        include_umap = False
+
     n_panels = 4 if include_umap else 3
     fig, axes = plt.subplots(1, n_panels, figsize=figsize)
 
