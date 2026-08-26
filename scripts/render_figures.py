@@ -32,7 +32,21 @@ from utils.paperfigs import (  # noqa: E402
 
 RESULTS = Path("results")
 
-METRIC4 = ["linear_cka", "kernel_cka", "svcca", "procrustes"]
+#: All seven metrics the study computes. Figures previously showed only
+#: four (linear/kernel CKA, SVCCA, Procrustes) while the CSVs carried
+#: seven -- which omitted PWCCA, the one metric that disagrees with the
+#: others (Spearman 0.175 vs Procrustes on the flagship, and negative
+#: against CKA on the 224px group). The dissenting metric should be
+#: visible, not filtered out.
+METRICS = [
+    "linear_cka",
+    "kernel_cka",
+    "svcca",
+    "pwcca",
+    "procrustes",
+    "cosine_rsa",
+    "distance_correlation",
+]
 ALIGN_ORDER = ["unaligned_pca", "procrustes", "autoencoder", "mcca", "joint_pca", "gcca"]
 TASK_TITLES = {
     "tcga_nsclc": "TCGA\nNSCLC",
@@ -97,18 +111,24 @@ FIG_META: dict[str, dict[str, str]] = {
             "and a shared scale would flatten all but the widest-ranging. Only "
             "the lower triangle is shown (the matrices are symmetric). ResNet50, "
             "the ImageNet-supervised control, is consistently the least similar "
-            "to the pathology encoders."
+            "to the pathology encoders. All seven metrics are shown: PWCCA "
+            "ranks the pairs differently from the others (Spearman 0.175 "
+            "against Procrustes), so reading any single metric as *the* "
+            "similarity overstates how settled the picture is."
         ),
-        "source": "results/full_run/analysis/similarity/matrices/{linear_cka,kernel_cka,svcca,procrustes}.csv",
+        "source": "results/full_run/analysis/similarity/matrices/*.csv",
         "methods": (
             "- **Encoders (6):** CONCH, CTransPath, Prov-GigaPath, KEEP, "
             "ResNet50, UNI2 — the only patch encoders sharing the 10x/256px "
             "coordinate grid, hence row-paired by patch index.\n"
             "- **Data:** 50,000 patches sampled across ≤500 CPTAC slides "
             "(shared subsample, seed 0); the O(n²) metrics subsample 8,000.\n"
-            "- **Metrics:** linear CKA (feature-space form), RBF-kernel CKA "
-            "(median-heuristic bandwidth), SVCCA (99% variance retained), and "
-            "normalised orthogonal Procrustes similarity.\n"
+            "- **Metrics (7):** linear CKA (feature-space form), RBF-kernel CKA "
+            "(median-heuristic bandwidth), SVCCA (99% variance retained), "
+            "PWCCA, normalised orthogonal Procrustes, cosine RSA and "
+            "distance correlation. `metric_agreement.csv` holds the Spearman "
+            "agreement between them; distance correlation is redundant with "
+            "kernel CKA (1.000) while PWCCA is the outlier.\n"
             "- Every matrix is computed on column-centered features; the "
             "diagonal is 1.0 by construction."
         ),
@@ -438,7 +458,7 @@ def fig_similarity(out: Path, fmt: str) -> None:
     mdir = RESULTS / "full_run/analysis/similarity/matrices"
     mats = {
         clean_label(m): _load_matrix(mdir / f"{m}.csv")
-        for m in METRIC4
+        for m in METRICS
         if (mdir / f"{m}.csv").exists()
     }
     if not mats:
@@ -446,7 +466,7 @@ def fig_similarity(out: Path, fmt: str) -> None:
     fig = heatmap_row(
         mats, value_fmt="{:.2f}", mask="lower", ylab="Encoder",
         cbar_label="Similarity", rotate_xticks=40,
-        panel_size=(4.4, 4.6), label_size=8.0, base_size=11,
+        panel_size=(3.5, 3.9), label_size=7.5, base_size=10,
     )
     emit(fig, out, "fig1_similarity", fmt)
 
@@ -763,7 +783,7 @@ GROUP_DIRS = {
 def _similarity_panel(mdir: Path, title: str, path: Path, fmt: str) -> bool:
     """Render a similarity heatmap row for one group, sized to its encoders."""
     mats = {clean_label(m): _load_matrix(mdir / f"{m}.csv")
-            for m in METRIC4 if (mdir / f"{m}.csv").exists()}
+            for m in METRICS if (mdir / f"{m}.csv").exists()}
     if not mats:
         return False
     n = next(iter(mats.values())).shape[0]
