@@ -52,8 +52,12 @@ PANEL_RAMPS: dict[str, tuple[str, str]] = {
     "red": ("#ffffff", "#c0392b"),
     "teal": ("#ffffff", "#1f7a7a"),
     "orange": ("#ffffff", "#d2691e"),
+    "magenta": ("#ffffff", "#a8327d"),
 }
-RAMP_CYCLE = ("green", "blue", "purple", "red", "teal", "orange")
+#: Must be at least as long as the widest panel row, or panels wrap onto a
+#: colour already used and two different metrics read as the same series. Seven
+#: entries covers the seven similarity metrics.
+RAMP_CYCLE = ("green", "blue", "purple", "red", "teal", "orange", "magenta")
 
 #: Light-to-dark categorical ramps for the bar panels. The last swatch is the
 #: darkest, and the highlighted series is placed last so it lands there.
@@ -117,7 +121,7 @@ PLOT_NAMES: dict[str, str] = {
     "pwcca": "PWCCA",
     "procrustes": "Procrustes",
     "cosine_rsa": "Cosine RSA",
-    "distance_correlation": "Distance Corr.",
+    "distance_correlation": "Distance Correlation",
     "joint_pca": "Joint PCA",
     "gcca": "GCCA",
     "mcca": "MCCA",
