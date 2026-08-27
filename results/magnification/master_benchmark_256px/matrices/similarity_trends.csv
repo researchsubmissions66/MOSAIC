@@ -1,127 +1,211 @@
 magnification,metric,model_a,model_b,pair,similarity
-5.0,linear_cka,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6922404781782333
-5.0,linear_cka,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7772501099837166
-5.0,linear_cka,CTransPath,UNI2-h,CTransPath~UNI2-h,0.7293627951648802
-5.0,linear_cka,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.7150630171839045
-5.0,linear_cka,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6899023858675838
-5.0,linear_cka,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.6098630091958929
-5.0,kernel_cka,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.747600109237561
-5.0,kernel_cka,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7956422707308943
-5.0,kernel_cka,CTransPath,UNI2-h,CTransPath~UNI2-h,0.7580444104307752
-5.0,kernel_cka,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.7435948423107245
-5.0,kernel_cka,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.7240867527279536
-5.0,kernel_cka,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.6324805034032369
-5.0,svcca,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6831337065369241
-5.0,svcca,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.5002619888035642
-5.0,svcca,CTransPath,UNI2-h,CTransPath~UNI2-h,0.6847671695336573
-5.0,svcca,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.49408227161222673
-5.0,svcca,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.5097654036081775
-5.0,svcca,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5013102654156172
-5.0,pwcca,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.7344114928327057
-5.0,pwcca,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.6213312249937248
-5.0,pwcca,CTransPath,UNI2-h,CTransPath~UNI2-h,0.712721099904709
-5.0,pwcca,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.6073096887688401
-5.0,pwcca,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6126830158456311
-5.0,pwcca,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5810705569271055
-5.0,procrustes,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.7091220240518371
-5.0,procrustes,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7418001860290047
-5.0,procrustes,CTransPath,UNI2-h,CTransPath~UNI2-h,0.6520614991218282
-5.0,procrustes,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.624000714129203
-5.0,procrustes,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6879789788186015
-5.0,procrustes,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.542977065499279
-5.0,cosine_rsa,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.7165175572184377
-5.0,cosine_rsa,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7491304554993284
-5.0,cosine_rsa,CTransPath,UNI2-h,CTransPath~UNI2-h,0.6953047257345866
-5.0,cosine_rsa,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.6800817496043108
-5.0,cosine_rsa,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6444246110432326
-5.0,cosine_rsa,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5769145593583597
-5.0,distance_correlation,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.8671372343298527
-5.0,distance_correlation,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.8956703916392903
-5.0,distance_correlation,CTransPath,UNI2-h,CTransPath~UNI2-h,0.8737806367651754
-5.0,distance_correlation,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.8635138553022035
-5.0,distance_correlation,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.8512558280560979
-5.0,distance_correlation,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.7979140548679995
-10.0,linear_cka,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6649527436171324
-10.0,linear_cka,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7228070294852467
-10.0,linear_cka,CTransPath,UNI2-h,CTransPath~UNI2-h,0.678114522652511
-10.0,linear_cka,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.6224387987323409
-10.0,linear_cka,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6435300911615394
-10.0,linear_cka,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.534208130522677
-10.0,kernel_cka,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6867625648654463
-10.0,kernel_cka,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.750198623998727
-10.0,kernel_cka,CTransPath,UNI2-h,CTransPath~UNI2-h,0.7058502413558428
-10.0,kernel_cka,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.6384281219653447
-10.0,kernel_cka,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6659301842611354
-10.0,kernel_cka,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5592082639208148
-10.0,svcca,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6507634376014246
-10.0,svcca,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.4874291486147623
-10.0,svcca,CTransPath,UNI2-h,CTransPath~UNI2-h,0.6647264244826256
-10.0,svcca,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.49639673660772743
-10.0,svcca,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.5061428081680193
-10.0,svcca,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5058568546744331
-10.0,pwcca,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.7037056255482542
-10.0,pwcca,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.6160415894153235
-10.0,pwcca,CTransPath,UNI2-h,CTransPath~UNI2-h,0.6970357931680019
-10.0,pwcca,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.5939188326361318
-10.0,pwcca,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6053027619180118
-10.0,pwcca,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5776969869943712
-10.0,procrustes,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.639390291246475
-10.0,procrustes,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7206642279266322
-10.0,procrustes,CTransPath,UNI2-h,CTransPath~UNI2-h,0.6125779361729187
-10.0,procrustes,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.548554180601899
-10.0,procrustes,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6634567462060809
-10.0,procrustes,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.504396971911193
-10.0,cosine_rsa,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6099893272567424
-10.0,cosine_rsa,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7171621406788179
-10.0,cosine_rsa,CTransPath,UNI2-h,CTransPath~UNI2-h,0.6355421852581468
-10.0,cosine_rsa,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.575908105549474
-10.0,cosine_rsa,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.5623533175796583
-10.0,cosine_rsa,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5025812854119579
-10.0,distance_correlation,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.8306354123125019
-10.0,distance_correlation,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.8680385033595881
-10.0,distance_correlation,CTransPath,UNI2-h,CTransPath~UNI2-h,0.8431832651677185
-10.0,distance_correlation,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.800316044209811
-10.0,distance_correlation,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.8146579040154301
-10.0,distance_correlation,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.7501256697865136
-20.0,linear_cka,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.707559304098731
-20.0,linear_cka,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.6721586378177704
-20.0,linear_cka,CTransPath,UNI2-h,CTransPath~UNI2-h,0.5835540047995815
-20.0,linear_cka,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.5433357238599971
-20.0,linear_cka,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6520433971336184
-20.0,linear_cka,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.39701718492011506
-20.0,kernel_cka,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.7261573767891165
-20.0,kernel_cka,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7205072242119672
-20.0,kernel_cka,CTransPath,UNI2-h,CTransPath~UNI2-h,0.6061667256669903
-20.0,kernel_cka,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.5758797621615854
-20.0,kernel_cka,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6702662332436591
-20.0,kernel_cka,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.43270333974333164
-20.0,svcca,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6103578351548352
-20.0,svcca,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.4698965915112054
-20.0,svcca,CTransPath,UNI2-h,CTransPath~UNI2-h,0.625851041359292
-20.0,svcca,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.4872267623908316
-20.0,svcca,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.5041792374666411
-20.0,svcca,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5015963818756024
-20.0,pwcca,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6778419679451434
-20.0,pwcca,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.6041421281242605
-20.0,pwcca,CTransPath,UNI2-h,CTransPath~UNI2-h,0.6701944048629509
-20.0,pwcca,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.5870889758643805
-20.0,pwcca,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.5958286229881322
-20.0,pwcca,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5734214738566021
-20.0,procrustes,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6091669595830165
-20.0,procrustes,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7032040270653653
-20.0,procrustes,CTransPath,UNI2-h,CTransPath~UNI2-h,0.5599329872436735
-20.0,procrustes,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.506954743636806
-20.0,procrustes,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6438539266164877
-20.0,procrustes,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.45955543374360247
-20.0,cosine_rsa,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6597473413165054
-20.0,cosine_rsa,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7189582270069769
-20.0,cosine_rsa,CTransPath,UNI2-h,CTransPath~UNI2-h,0.5058788202322997
-20.0,cosine_rsa,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.5230942611952344
-20.0,cosine_rsa,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.5298290776249697
-20.0,cosine_rsa,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.372703008022183
-20.0,distance_correlation,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.854179373602098
-20.0,distance_correlation,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.8497386594354468
-20.0,distance_correlation,CTransPath,UNI2-h,CTransPath~UNI2-h,0.7811962443828124
-20.0,distance_correlation,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.7605943649100319
-20.0,distance_correlation,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.8155581162106119
-20.0,distance_correlation,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.6598299290414337
+5.0,linear_cka,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6944603349312546
+5.0,linear_cka,CTransPath,KEEP,CTransPath~KEEP,0.6592070633187599
+5.0,linear_cka,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7704782444280682
+5.0,linear_cka,CTransPath,UNI2-h,CTransPath~UNI2-h,0.7267859583718398
+5.0,linear_cka,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.5634570941805189
+5.0,linear_cka,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.7064606633981101
+5.0,linear_cka,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6892726038171957
+5.0,linear_cka,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.5560435934301626
+5.0,linear_cka,KEEP,UNI2-h,KEEP~UNI2-h,0.7808249330636574
+5.0,linear_cka,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5941560352543453
+5.0,kernel_cka,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.7497068511656612
+5.0,kernel_cka,CTransPath,KEEP,CTransPath~KEEP,0.6796514179421165
+5.0,kernel_cka,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7913371517737613
+5.0,kernel_cka,CTransPath,UNI2-h,CTransPath~UNI2-h,0.7538729851145629
+5.0,kernel_cka,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.6013137614637782
+5.0,kernel_cka,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.7360529416392322
+5.0,kernel_cka,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.7236394367579818
+5.0,kernel_cka,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.5683385770906988
+5.0,kernel_cka,KEEP,UNI2-h,KEEP~UNI2-h,0.8065307160589099
+5.0,kernel_cka,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.6173137497667652
+5.0,svcca,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.7240981675082678
+5.0,svcca,CTransPath,KEEP,CTransPath~KEEP,0.5027065595675757
+5.0,svcca,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.5347438611771135
+5.0,svcca,CTransPath,UNI2-h,CTransPath~UNI2-h,0.7288625483931255
+5.0,svcca,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.6332317876937092
+5.0,svcca,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.5588943553930852
+5.0,svcca,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.5705971180911261
+5.0,svcca,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.41583811534969406
+5.0,svcca,KEEP,UNI2-h,KEEP~UNI2-h,0.6814021170143223
+5.0,svcca,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5739991974842819
+5.0,pwcca,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.7852682987123353
+5.0,pwcca,CTransPath,KEEP,CTransPath~KEEP,0.6139358757407325
+5.0,pwcca,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.6687812576335146
+5.0,pwcca,CTransPath,UNI2-h,CTransPath~UNI2-h,0.7658470800872522
+5.0,pwcca,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.7381745630116605
+5.0,pwcca,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.682133027095805
+5.0,pwcca,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6794337786254142
+5.0,pwcca,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.5879519898863543
+5.0,pwcca,KEEP,UNI2-h,KEEP~UNI2-h,0.7508803404320619
+5.0,pwcca,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.6603575473399834
+5.0,procrustes,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.7219171679411674
+5.0,procrustes,CTransPath,KEEP,CTransPath~KEEP,0.6666244943245148
+5.0,procrustes,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7506038251382441
+5.0,procrustes,CTransPath,UNI2-h,CTransPath~UNI2-h,0.664294617094081
+5.0,procrustes,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.6206115875852164
+5.0,procrustes,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.6377933755494227
+5.0,procrustes,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.7124347036780345
+5.0,procrustes,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.5702660466289488
+5.0,procrustes,KEEP,UNI2-h,KEEP~UNI2-h,0.6579583863950329
+5.0,procrustes,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5579346183718863
+5.0,cosine_rsa,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.7130904900410094
+5.0,cosine_rsa,CTransPath,KEEP,CTransPath~KEEP,0.6049781907444525
+5.0,cosine_rsa,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7431499539995465
+5.0,cosine_rsa,CTransPath,UNI2-h,CTransPath~UNI2-h,0.6866648799192133
+5.0,cosine_rsa,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.5312116611756001
+5.0,cosine_rsa,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.6643880628753434
+5.0,cosine_rsa,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6351076790657202
+5.0,cosine_rsa,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.5086693260011017
+5.0,cosine_rsa,KEEP,UNI2-h,KEEP~UNI2-h,0.7337050291886418
+5.0,cosine_rsa,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5476951874627636
+5.0,distance_correlation,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.8681651915698864
+5.0,distance_correlation,CTransPath,KEEP,CTransPath~KEEP,0.8272645552484583
+5.0,distance_correlation,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.8932403590947549
+5.0,distance_correlation,CTransPath,UNI2-h,CTransPath~UNI2-h,0.8712069333863177
+5.0,distance_correlation,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.7763766482780863
+5.0,distance_correlation,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.8596752800868425
+5.0,distance_correlation,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.8506260746089988
+5.0,distance_correlation,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.7565216654784245
+5.0,distance_correlation,KEEP,UNI2-h,KEEP~UNI2-h,0.9013157609624027
+5.0,distance_correlation,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.7886655111849741
+10.0,linear_cka,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6680996481362061
+10.0,linear_cka,CTransPath,KEEP,CTransPath~KEEP,0.6486379293130654
+10.0,linear_cka,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7244275476948915
+10.0,linear_cka,CTransPath,UNI2-h,CTransPath~UNI2-h,0.6886685552956512
+10.0,linear_cka,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.5905494306301562
+10.0,linear_cka,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.6051460887024139
+10.0,linear_cka,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6557582779013097
+10.0,linear_cka,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.5515825219075366
+10.0,linear_cka,KEEP,UNI2-h,KEEP~UNI2-h,0.7330593415031436
+10.0,linear_cka,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5216546216943797
+10.0,kernel_cka,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6888130278220725
+10.0,kernel_cka,CTransPath,KEEP,CTransPath~KEEP,0.6723985511600413
+10.0,kernel_cka,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7543764223270413
+10.0,kernel_cka,CTransPath,UNI2-h,CTransPath~UNI2-h,0.7145148593273499
+10.0,kernel_cka,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.6068173578652676
+10.0,kernel_cka,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.6220487592173849
+10.0,kernel_cka,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6795907581595912
+10.0,kernel_cka,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.5631158973415695
+10.0,kernel_cka,KEEP,UNI2-h,KEEP~UNI2-h,0.7593519104442696
+10.0,kernel_cka,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5492386607832506
+10.0,svcca,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6988157949714985
+10.0,svcca,CTransPath,KEEP,CTransPath~KEEP,0.48712914544037794
+10.0,svcca,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.5229872147652762
+10.0,svcca,CTransPath,UNI2-h,CTransPath~UNI2-h,0.7152738340038353
+10.0,svcca,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.6472410028135268
+10.0,svcca,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.5646069912760151
+10.0,svcca,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.5658536647019087
+10.0,svcca,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.4162733547643541
+10.0,svcca,KEEP,UNI2-h,KEEP~UNI2-h,0.6863570617252577
+10.0,svcca,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5792689906633509
+10.0,pwcca,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.7590183689449777
+10.0,pwcca,CTransPath,KEEP,CTransPath~KEEP,0.6071197948581972
+10.0,pwcca,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.6629663121361973
+10.0,pwcca,CTransPath,UNI2-h,CTransPath~UNI2-h,0.7551466634475887
+10.0,pwcca,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.7338679503573965
+10.0,pwcca,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.6699900932799916
+10.0,pwcca,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6738706648272437
+10.0,pwcca,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.5858130392701528
+10.0,pwcca,KEEP,UNI2-h,KEEP~UNI2-h,0.7478831191240407
+10.0,pwcca,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.6579829717369803
+10.0,procrustes,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6564705212442169
+10.0,procrustes,CTransPath,KEEP,CTransPath~KEEP,0.6589768587782572
+10.0,procrustes,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7322934151345062
+10.0,procrustes,CTransPath,UNI2-h,CTransPath~UNI2-h,0.632559589840999
+10.0,procrustes,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.5994329414776604
+10.0,procrustes,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.5639899229182025
+10.0,procrustes,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6983906066456969
+10.0,procrustes,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.5663125927909121
+10.0,procrustes,KEEP,UNI2-h,KEEP~UNI2-h,0.6248244549717289
+10.0,procrustes,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5243081886826289
+10.0,cosine_rsa,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6106652412414232
+10.0,cosine_rsa,CTransPath,KEEP,CTransPath~KEEP,0.5989528565408552
+10.0,cosine_rsa,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7196217982227704
+10.0,cosine_rsa,CTransPath,UNI2-h,CTransPath~UNI2-h,0.6388324415071354
+10.0,cosine_rsa,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.5237646979857336
+10.0,cosine_rsa,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.5637976909193883
+10.0,cosine_rsa,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.5695183645439238
+10.0,cosine_rsa,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.5129339628122321
+10.0,cosine_rsa,KEEP,UNI2-h,KEEP~UNI2-h,0.6679695377226047
+10.0,cosine_rsa,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.48903413545321855
+10.0,distance_correlation,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.8312484760573008
+10.0,distance_correlation,CTransPath,KEEP,CTransPath~KEEP,0.8218410494741438
+10.0,distance_correlation,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.8700232686506107
+10.0,distance_correlation,CTransPath,UNI2-h,CTransPath~UNI2-h,0.8479370658314384
+10.0,distance_correlation,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.7792960279177642
+10.0,distance_correlation,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.7897086309654536
+10.0,distance_correlation,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.8215759373213212
+10.0,distance_correlation,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.7501235468750888
+10.0,distance_correlation,KEEP,UNI2-h,KEEP~UNI2-h,0.8744065205391239
+10.0,distance_correlation,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.7430118396572444
+20.0,linear_cka,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.7090726234470061
+20.0,linear_cka,CTransPath,KEEP,CTransPath~KEEP,0.6213288965460164
+20.0,linear_cka,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.6719942957528252
+20.0,linear_cka,CTransPath,UNI2-h,CTransPath~UNI2-h,0.5961399584873059
+20.0,linear_cka,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.5911338860840558
+20.0,linear_cka,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.5256691438878058
+20.0,linear_cka,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.678554493632395
+20.0,linear_cka,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.490882127256001
+20.0,linear_cka,KEEP,UNI2-h,KEEP~UNI2-h,0.6076226197814798
+20.0,linear_cka,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.38243745042125216
+20.0,kernel_cka,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.7277021799349428
+20.0,kernel_cka,CTransPath,KEEP,CTransPath~KEEP,0.6444909145927799
+20.0,kernel_cka,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7214070598283614
+20.0,kernel_cka,CTransPath,UNI2-h,CTransPath~UNI2-h,0.6182716273956596
+20.0,kernel_cka,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.6089445915299232
+20.0,kernel_cka,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.5618639996982914
+20.0,kernel_cka,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.69810657340396
+20.0,kernel_cka,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.5113813464217614
+20.0,kernel_cka,KEEP,UNI2-h,KEEP~UNI2-h,0.6244046175007355
+20.0,kernel_cka,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.4226790911277165
+20.0,svcca,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6660078062415452
+20.0,svcca,CTransPath,KEEP,CTransPath~KEEP,0.45467594390345206
+20.0,svcca,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.5074430270073933
+20.0,svcca,CTransPath,UNI2-h,CTransPath~UNI2-h,0.6840177666513296
+20.0,svcca,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.6455142952737511
+20.0,svcca,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.5584318070953452
+20.0,svcca,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.5644715794104046
+20.0,svcca,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.4191307682481379
+20.0,svcca,KEEP,UNI2-h,KEEP~UNI2-h,0.6791614788284378
+20.0,svcca,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.5777301477149965
+20.0,pwcca,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.737877510837819
+20.0,pwcca,CTransPath,KEEP,CTransPath~KEEP,0.586376659278651
+20.0,pwcca,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.6528263642380265
+20.0,pwcca,CTransPath,UNI2-h,CTransPath~UNI2-h,0.7332727615149863
+20.0,pwcca,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.7279166394550758
+20.0,pwcca,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.6641887560671573
+20.0,pwcca,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.665095126681303
+20.0,pwcca,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.5796066805651015
+20.0,pwcca,KEEP,UNI2-h,KEEP~UNI2-h,0.7359077156063885
+20.0,pwcca,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.6550949427132489
+20.0,procrustes,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.628033962622293
+20.0,procrustes,CTransPath,KEEP,CTransPath~KEEP,0.6371903393741473
+20.0,procrustes,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.713301798192036
+20.0,procrustes,CTransPath,UNI2-h,CTransPath~UNI2-h,0.5829005285537847
+20.0,procrustes,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.5816148501553224
+20.0,procrustes,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.5265246989842446
+20.0,procrustes,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.6828962477384243
+20.0,procrustes,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.5414696473898791
+20.0,procrustes,KEEP,UNI2-h,KEEP~UNI2-h,0.5743129757050912
+20.0,procrustes,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.48181016124434123
+20.0,cosine_rsa,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.6576953915758448
+20.0,cosine_rsa,CTransPath,KEEP,CTransPath~KEEP,0.5875782678480174
+20.0,cosine_rsa,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.7173285477415491
+20.0,cosine_rsa,CTransPath,UNI2-h,CTransPath~UNI2-h,0.5100888181263464
+20.0,cosine_rsa,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.5192058024328227
+20.0,cosine_rsa,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.5076746325818555
+20.0,cosine_rsa,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.541937357314799
+20.0,cosine_rsa,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.4717751383162091
+20.0,cosine_rsa,KEEP,UNI2-h,KEEP~UNI2-h,0.5199240332280006
+20.0,cosine_rsa,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.3548036776190023
+20.0,distance_correlation,CTransPath,Prov-GigaPath,CTransPath~Prov-GigaPath,0.8545854988852108
+20.0,distance_correlation,CTransPath,KEEP,CTransPath~KEEP,0.8036580172754381
+20.0,distance_correlation,CTransPath,ResNet50 (ImageNet),CTransPath~ResNet50 (ImageNet),0.8501939256524506
+20.0,distance_correlation,CTransPath,UNI2-h,CTransPath~UNI2-h,0.7880417152846164
+20.0,distance_correlation,Prov-GigaPath,KEEP,Prov-GigaPath~KEEP,0.780675237676373
+20.0,distance_correlation,Prov-GigaPath,ResNet50 (ImageNet),Prov-GigaPath~ResNet50 (ImageNet),0.750996803325746
+20.0,distance_correlation,Prov-GigaPath,UNI2-h,Prov-GigaPath~UNI2-h,0.8305663812824232
+20.0,distance_correlation,KEEP,ResNet50 (ImageNet),KEEP~ResNet50 (ImageNet),0.7136934617631032
+20.0,distance_correlation,KEEP,UNI2-h,KEEP~UNI2-h,0.7924934749085776
+20.0,distance_correlation,ResNet50 (ImageNet),UNI2-h,ResNet50 (ImageNet)~UNI2-h,0.6513308910039955

@@ -1,7 +1,7 @@
 ,neighborhood_preservation
-conch_v1,0.4565
-ctranspath,0.5916
-gigapath,0.5146000000000001
-keep,0.472
-resnet50,0.4898
-uni_v2,0.5112000000000001
+conch_v1,0.4675
+ctranspath,0.59475
+gigapath,0.5244
+keep,0.4753
+resnet50,0.4884
+uni_v2,0.51275

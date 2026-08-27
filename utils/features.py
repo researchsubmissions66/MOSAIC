@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
+from functools import lru_cache
 from pathlib import Path
 from typing import Iterable, Sequence
 
@@ -46,6 +47,33 @@ DEFAULT_CONFIG = Path(__file__).resolve().parents[1] / "configs" / "encoders.yam
 
 #: trident directory naming, e.g. "20x_256px_0px_overlap".
 _DIR_RE = re.compile(r"^(?P<mag>[\d.]+)x_(?P<patch>\d+)px_(?P<overlap>\d+)px_overlap$")
+
+
+#: Slides withheld from every analysis. The features remain on disk; they are
+#: simply never sampled. Filtering here rather than in each script means the
+#: exclusion cannot be forgotten by one caller -- similarity, alignment,
+#: retrieval, transfer, subspace and downstream all resolve slides through
+#: :meth:`FeatureGroup.slides`.
+EXCLUDED_SLIDES_FILE = Path(__file__).resolve().parents[1] / "configs" / "excluded_slides.txt"
+
+
+@lru_cache(maxsize=1)
+def excluded_slides(path: str | None = None) -> frozenset[str]:
+    """Slide ids listed in ``configs/excluded_slides.txt``.
+
+    Returns
+    -------
+    frozenset of str
+        Excluded slide ids; empty if the file is absent.
+    """
+    f = Path(path) if path else EXCLUDED_SLIDES_FILE
+    if not f.exists():
+        return frozenset()
+    return frozenset(
+        line.strip()
+        for line in f.read_text().splitlines()
+        if line.strip() and not line.startswith("#")
+    )
 
 
 @dataclass(frozen=True)
@@ -179,7 +207,7 @@ class FeatureGroup:
             sets.append({p.stem for p in self.encoders[name].glob("*.h5")})
         if not sets:
             return []
-        return sorted(set.intersection(*sets))
+        return sorted(set.intersection(*sets) - excluded_slides())
 
     def load_slide(
         self,
@@ -942,7 +970,11 @@ class SlideEncoderSet:
         if missing:
             raise KeyError(f"{missing} not available; present: {sorted(self.encoders)}")
         sets = [{p.stem for p in self.encoders[n].glob("*.h5")} for n in names]
-        return sorted(set.intersection(*sets)) if sets else []
+        if not sets:
+            return []
+        # Same withholding as FeatureGroup.slides; this store resolves slides
+        # independently, so the filter has to be applied here too.
+        return sorted(set.intersection(*sets) - excluded_slides())
 
     def load(
         self,

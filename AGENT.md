@@ -22,6 +22,15 @@ alongside [`README.md`](README.md) (install and run) and [`PLAN.md`](PLAN.md)
   grids; the unit of analysis is `(cohort, magnification, patch_size)`.
 - Downstream splits are **patient-grouped**. A slide-level split leaks patients
   across folds and inflates every metric.
+- **TCGA-RCC (kidney) is excluded from the study.** `configs/excluded_slides.txt`
+  lists the 940 KICH/KIRC/KIRP slides and `FeatureGroup.slides()` filters them,
+  so every analysis inherits it and no script opts in. The features stay on
+  disk. Reason: kidney was extracted for a different encoder set — of the 12
+  registered encoders it exists only for CONCH and CONCH v1.5 (10x/512px) and
+  MUSK (10x/384px), and **not at all on the flagship 10x/256px grid** — so it
+  could never enter the six-encoder comparison, while its presence made those
+  two groups a different cohort from every other TCGA group (3104 vs 2169
+  slides). To add slides back, edit that file; do not filter in a script.
 - **Two MIL heads, always: ABMIL and TransMIL.** Every reported bar averages
   them, so a result is about the representation and not about one classifier.
   Per-head values live in `results.csv` and can differ by 0.03-0.04 AUC --

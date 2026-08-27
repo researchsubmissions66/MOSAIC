@@ -10,6 +10,8 @@ study wrote. Aesthetics are tuned for a compact, publication-grade look.
 from __future__ import annotations
 
 import argparse
+import csv
+import re
 import sys
 from pathlib import Path
 
@@ -1133,6 +1135,276 @@ def fig_alignment_tcga(out: Path, fmt: str) -> None:
     emit(fig, out, "fig9_alignment_tcga", fmt)
 
 
+# ---------------------------------------------------------------------------
+# Similarity, one figure per (patch grid, cohort, magnification)
+# ---------------------------------------------------------------------------
+
+#: Which encoders live on each patch grid. Row-pairing confines a similarity
+#: matrix to one (cohort, magnification, patch_size) group, so these are
+#: separate results rather than panels of one figure -- a 224px patch and a
+#: 256px patch cover different tissue and share no row index.
+GRID_NOTE = {
+    "224px": "GPFM, H-optimus-0, Virchow, Virchow2 (Virchow only at 20x)",
+    "256px": "CONCH / CONCH v1.5, CTransPath, Prov-GigaPath, KEEP, ResNet50, UNI2-h",
+    "384px": "MUSK alone -- similarity undefined at n=1",
+    "512px": "CONCH vs CONCH v1.5",
+}
+
+
+def _similarity_dirs() -> dict:
+    """Locate every similarity matrix directory, keyed by grid/cohort/mag.
+
+    Two layouts hold these: ``results/groups/<tag>/similarity`` and the
+    ``results/full_run/analysis/similarity_<px>/<group>`` folders. Where both
+    describe the same group the richer one wins, since one carries six encoders
+    and the other five for TCGA 10x/256px.
+    """
+    root = Path(__file__).resolve().parents[1]
+    found: dict = {}
+    for f in sorted(root.glob("results/**/matrices/linear_cka.csv")):
+        mdir = f.parent
+        tag = mdir.parent.name
+        if tag == "similarity":                       # results/groups/<tag>/similarity
+            tag = mdir.parent.parent.name
+        if mdir.parent.name == "similarity" and tag == "analysis":
+            # the flagship run: results/full_run/analysis/similarity/matrices
+            key = ("256px", "cptac", "10x")
+            n = len(next(csv.reader(open(f)))[1:])
+            if key not in found or n > found[key][0]:
+                found[key] = (n, mdir)
+            continue
+        m = re.search(r"(cptac|master|tcga)\w*?_(\d+)x_(\d+)(?:px)?", tag)
+        if not m:
+            continue
+        cohort = "cptac" if m.group(1) == "cptac" else "tcga"
+        key = (f"{m.group(3)}px", cohort, f"{m.group(2)}x")
+        n = len(next(csv.reader(open(f)))[1:])
+        if key not in found or n > found[key][0]:
+            found[key] = (n, mdir)
+    return found
+
+
+def figs_similarity_by_grid(out: Path, fmt: str) -> None:
+    """One similarity figure per grid/cohort/magnification, filed by grid."""
+    found = _similarity_dirs()
+    if not found:
+        print("  skip similarity-by-grid: nothing found")
+        return
+
+    index: dict = {}
+    for (px, cohort, mag), (n, mdir) in sorted(found.items()):
+        mats = {clean_label(m): _load_matrix(mdir / f"{m}.csv")
+                for m in METRICS if (mdir / f"{m}.csv").exists()}
+        if not mats:
+            continue
+        wide = max(3.0, min(4.4, 26.0 / len(mats)))
+        fig = heatmap_row(
+            mats, value_fmt="{:.2f}", mask="lower", ylab="Encoder",
+            cbar_label="Similarity", rotate_xticks=40,
+            panel_size=(wide, wide * 1.1), label_size=7.5, base_size=10,
+            suptitle=f"{cohort.upper()} · {mag} · {px} · {n} encoders",
+        )
+        name = f"{cohort}_{mag}_{px}"
+        save_plot(fig, out / "similarity_by_grid" / px / f"{name}.{fmt}")
+        plt.close(fig)
+        index.setdefault(px, []).append((name, cohort, mag, n, mdir))
+        print(f"  similarity_by_grid/{px}/{name}.{fmt}  ({n} encoders, {len(mats)} metrics)")
+
+    lines = ["# Similarity by patch grid", "",
+             "One figure per `(patch grid, cohort, magnification)`. These are separate",
+             "results, not panels of one figure: similarity needs row-paired patches, and",
+             "trident writes one coordinate grid per `(magnification, patch_size)`, so",
+             "encoders on different grids share no row index and were never compared.",
+             "", "All seven metrics are shown in every figure.", ""]
+    for px in sorted(index):
+        lines += [f"## {px}", "", f"_{GRID_NOTE.get(px, '')}_", "",
+                  "| figure | cohort | magnification | encoders | source |",
+                  "|---|---|---|---|---|"]
+        for name, cohort, mag, n, mdir in sorted(index[px], key=lambda r: (r[1], int(r[2][:-1]))):
+            rel = mdir.relative_to(root) if mdir.is_absolute() else mdir
+            lines.append(f"| `{px}/{name}.{fmt}` | {cohort.upper()} | {mag} | {n} | `{rel}` |")
+        lines.append("")
+    lines += ["## Not represented", "",
+              "- **384px** — MUSK is the only encoder on it, so similarity is undefined.",
+              "- **5x/256px** — covered by the magnification series rather than a",
+              "  standalone matrix; see `results/figures/magnification/`.", ""]
+    (out / "similarity_by_grid" / "README.md").write_text("\n".join(lines))
+    print(f"  similarity_by_grid/README.md  ({sum(len(v) for v in index.values())} figures indexed)")
+
+
+def table_similarity_all(out: Path, fmt: str) -> None:
+    """One table holding every similarity result, so all grids are comparable.
+
+    Each row is a (grid, cohort, magnification) group; each metric column is the
+    mean off-diagonal similarity for that group. Levels are only comparable
+    within a column -- the metrics sit at different scales -- and only loosely
+    across rows, since the groups hold different encoders.
+    """
+    found = _similarity_dirs()
+    if not found:
+        return
+    rows = []
+    for (px, cohort, mag), (n, mdir) in sorted(
+        found.items(), key=lambda kv: (kv[0][0], kv[0][1], int(kv[0][2][:-1]))
+    ):
+        rec = {"grid": px, "cohort": cohort.upper(), "mag": mag,
+               "encoders": n, "pairs": n * (n - 1) // 2}
+        for m in METRICS:
+            f = mdir / f"{m}.csv"
+            if not f.exists():
+                rec[m] = float("nan"); continue
+            d = pd.read_csv(f, index_col=0).values
+            off = d[~np.eye(d.shape[0], dtype=bool)]
+            rec[m] = float(np.mean(off))
+        rows.append(rec)
+    df = pd.DataFrame(rows)
+    dest = out / "similarity_by_grid"
+    dest.mkdir(parents=True, exist_ok=True)
+    df.to_csv(dest / "similarity_all_grids.csv", index=False)
+
+    hdr = ["grid", "cohort", "mag", "encoders", "pairs"] + [clean_label(m) for m in METRICS]
+    lines = ["# Every similarity result in one table", "",
+             "Mean **off-diagonal** similarity per group.", "",
+             "- **encoders** — how many encoders share that group's coordinate grid;",
+             "  the similarity matrix is `encoders x encoders`.",
+             "- **pairs** — distinct encoder pairs, `encoders x (encoders - 1) / 2`.",
+             "  This is what each mean is actually averaged over, and it is why a",
+             "  2-encoder row is a single number rather than a distribution.",
+             "- The unit diagonal is excluded from every mean.", "",
+             "Read down a column, not across a row: the seven metrics sit at different",
+             "levels, and the groups hold different encoder sets, so a 2-encoder 512px",
+             "row is not on the same footing as a 6-encoder 256px one.", "",
+             "| " + " | ".join(hdr) + " |",
+             "|" + "|".join(["---"] * len(hdr)) + "|"]
+    for r in rows:
+        npairs = r["encoders"] * (r["encoders"] - 1) // 2
+        cells = [r["grid"], r["cohort"], r["mag"], str(r["encoders"]), str(npairs)]
+        cells += ["—" if pd.isna(r[m]) else f"{r[m]:.3f}" for m in METRICS]
+        lines.append("| " + " | ".join(cells) + " |")
+    lines += ["", "Source: `similarity_all_grids.csv` in this folder.", ""]
+    (dest / "similarity_all_grids.md").write_text("\n".join(lines))
+    print(f"  similarity_by_grid/similarity_all_grids.{{csv,md}}  ({len(rows)} groups)")
+
+
+def figs_slide_encoder_similarity(out: Path, fmt: str) -> None:
+    """Similarity for the slide-level encoders, all seven metrics, per cohort.
+
+    Slide encoders emit one vector per slide, so the patch-grid pairing
+    constraint does not apply and every one of them is comparable at once --
+    they are filed apart from the patch grids for exactly that reason. The
+    trade-off is sample size: n is the slide count, not a patch count, against
+    dimensions of 512-1280, which is close to the floor for the CCA family.
+    """
+    root = Path(__file__).resolve().parents[1]
+    made = []
+    for mdir in sorted(root.glob("results/slide_encoders/*/matrices")):
+        cohort = mdir.parent.name
+        label = "CPTAC" if "cptac" in cohort else "TCGA"
+        mats = {clean_label(m): _load_matrix(mdir / f"{m}.csv")
+                for m in METRICS if (mdir / f"{m}.csv").exists()}
+        if not mats:
+            continue
+        n = next(iter(mats.values())).shape[0]
+        wide = max(3.0, min(4.4, 26.0 / len(mats)))
+        fig = heatmap_row(
+            mats, value_fmt="{:.2f}", mask="lower", ylab="Slide encoder",
+            cbar_label="Similarity", rotate_xticks=40,
+            panel_size=(wide, wide * 1.1), label_size=7.5, base_size=10,
+            suptitle=f"Slide encoders · {label} · {n} encoders",
+        )
+        dest = out / "slide_encoders" / f"{label.lower()}_slide_encoders.{fmt}"
+        save_plot(fig, dest)
+        plt.close(fig)
+        made.append((label, n, dest, mdir))
+        print(f"  slide_encoders/{dest.name}  ({n} encoders, {len(mats)} metrics)")
+
+    if made:
+        lines = ["# Slide-encoder similarity", "",
+                 "All seven metrics, one figure per cohort.", "",
+                 "Slide encoders emit one vector per slide, so the patch-grid pairing",
+                 "constraint does not apply and all of them are comparable at once --",
+                 "unlike the patch encoders, which split across four grids.", "",
+                 "**Sample-size caveat.** n here is the number of *slides*, not patches,",
+                 "against dimensions of 512-1280. That is ample for CKA and RSA but close",
+                 "to the floor for SVCCA and PWCCA, which saturate as n approaches d.", "",
+                 "| figure | cohort | encoders | source |", "|---|---|---|---|"]
+        for label, n, dest, mdir in made:
+            rel = mdir.relative_to(root) if mdir.is_absolute() else mdir
+            lines.append(f"| `{dest.name}` | {label} | {n} | `{rel}` |")
+        lines.append("")
+        (out / "slide_encoders" / "README.md").write_text("\n".join(lines))
+        print("  slide_encoders/README.md")
+
+
+def figs_similarity_by_subcohort(out: Path, fmt: str, metric: str = "linear_cka") -> None:
+    """Subcohort similarity: full per-subcohort figures plus tissue comparisons.
+
+    Two shapes, because they answer different questions:
+
+    ``<grid>/<group>_<subcohort>.<fmt>``
+        All seven metrics for one (group, subcohort) -- the complete record.
+
+    ``compare/<group>_<metric>.<fmt>``
+        One panel per subcohort, same metric, same encoders. This is the figure
+        the split exists for: encoders and magnification are held fixed and only
+        tissue varies, so a difference between panels is a tissue effect rather
+        than the composition artefact that pooling produces.
+    """
+    root = Path(__file__).resolve().parents[1]
+    base = root / "results/full_run/analysis/similarity_by_subcohort"
+    if not base.is_dir():
+        print("  skip similarity-by-subcohort: nothing on disk")
+        return
+
+    by_group: dict[str, list[tuple[str, Path]]] = {}
+    for mdir in sorted(base.glob("*/*/matrices")):
+        group, sub = mdir.parent.parent.name, mdir.parent.name
+        by_group.setdefault(group, []).append((sub, mdir))
+
+    n_full = 0
+    for group, entries in sorted(by_group.items()):
+        m = re.search(r"_(\d+x)_(\d+px)$", group)
+        grid = m.group(2) if m else "other"
+        for sub, mdir in sorted(entries):
+            mats = {clean_label(k): _load_matrix(mdir / f"{k}.csv")
+                    for k in METRICS if (mdir / f"{k}.csv").exists()}
+            if not mats:
+                continue
+            n = next(iter(mats.values())).shape[0]
+            wide = max(3.0, min(4.4, 26.0 / len(mats)))
+            fig = heatmap_row(
+                mats, value_fmt="{:.2f}", mask="lower", ylab="Encoder",
+                cbar_label="Similarity", rotate_xticks=40,
+                panel_size=(wide, wide * 1.1), label_size=7.5, base_size=10,
+                suptitle=f"{sub.replace('_', '-')} · {group} · {n} encoders",
+            )
+            save_plot(fig, out / "similarity_by_subcohort" / grid / f"{group}_{sub}.{fmt}")
+            plt.close(fig)
+            n_full += 1
+
+        # tissue comparison: same metric, same encoders, one panel per subcohort
+        panels = {}
+        for sub, mdir in sorted(entries):
+            f = mdir / f"{metric}.csv"
+            if f.exists():
+                panels[sub.replace("_", "-")] = _load_matrix(f)
+        if len(panels) >= 2:
+            n = next(iter(panels.values())).shape[0]
+            fig = heatmap_row(
+                panels, value_fmt="{:.2f}", mask="lower", ylab="Encoder",
+                cbar_label=clean_label(metric), shared_limits=True,
+                rotate_xticks=40, panel_size=(4.0, 4.4), label_size=8.0, base_size=11,
+                suptitle=f"{clean_label(metric)} by subcohort · {group} · "
+                         f"{n} encoders (shared colour scale)",
+            )
+            save_plot(fig, out / "similarity_by_subcohort" / "compare"
+                      / f"{group}_{metric}.{fmt}")
+            plt.close(fig)
+            print(f"  similarity_by_subcohort/compare/{group}_{metric}.{fmt}  "
+                  f"({len(panels)} subcohorts)")
+    print(f"  similarity_by_subcohort: {n_full} per-subcohort figures")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Render the MOSAIC figure set.")
     parser.add_argument("--out", type=Path, default=Path("results/figures"))
@@ -1156,6 +1428,11 @@ def main() -> None:
     if not args.headline_only:
         print("\nPer-group figures:")
         figs_all_groups(args.out, args.format)
+        print("\nSimilarity by patch grid:")
+        figs_similarity_by_grid(args.out, args.format)
+        table_similarity_all(args.out, args.format)
+        figs_slide_encoder_similarity(args.out, args.format)
+        figs_similarity_by_subcohort(args.out, args.format)
         print("\nPer-series magnification figures:")
         figs_all_magnification(args.out, args.format)
         print("\nPer-baseline layer-wise figures:")

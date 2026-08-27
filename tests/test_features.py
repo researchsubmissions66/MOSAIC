@@ -248,3 +248,42 @@ def test_real_store_best_group_is_pairable():
     slides = g.slides()
     assert len(slides) > 0
     assert g.verify_alignment(slides[0])
+
+
+# ---------------------------------------------------------------------------
+# Slide exclusion
+# ---------------------------------------------------------------------------
+
+
+def test_excluded_slides_file_parses():
+    """The exclusion list loads, ignoring comments and blanks."""
+    from utils.features import excluded_slides
+
+    ex = excluded_slides()
+    assert isinstance(ex, frozenset)
+    assert not any(s.startswith("#") or not s.strip() for s in ex)
+
+
+def test_excluded_slides_never_reach_a_group():
+    """No excluded slide survives FeatureGroup.slides().
+
+    The exclusion is applied in one place so that every analysis inherits it.
+    If this fails, some group is sampling slides the study has withdrawn --
+    TCGA-RCC is excluded because kidney exists for only 3 of the 12 registered
+    encoders and for none on the flagship 10x/256px grid.
+    """
+    from utils.features import FeatureStore, excluded_slides
+
+    ex = excluded_slides()
+    if not ex:
+        pytest.skip("no exclusion list configured")
+    try:
+        store = FeatureStore()
+    except Exception:
+        pytest.skip("feature store not reachable")
+    leaked = {
+        key: sorted(set(group.slides()) & ex)[:3]
+        for key, group in store.groups.items()
+        if set(group.slides()) & ex
+    }
+    assert not leaked, f"excluded slides reached these groups: {leaked}"

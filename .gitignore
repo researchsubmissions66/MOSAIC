@@ -11,3 +11,7 @@ results.backup-*/
 # Cluster-specific batch scripts: they hardcode an account, venv and home dir,
 # so they are local infrastructure rather than part of the released artefact.
 scripts/mosaic_*.sh
+
+# Stray render target: render_figures.py --out results/figures_png was used for a
+# one-off PNG preview; results/figures is the canonical output.
+results/figures_png/

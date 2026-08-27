@@ -1,0 +1,79 @@
+{
+  "preset": "full",
+  "config": {
+    "n_patches": 50000,
+    "max_slides": 500,
+    "max_samples": 8000,
+    "latent_dim": 64,
+    "query_samples": 5000,
+    "mil_epochs": 80,
+    "mil_max_patches": 4000,
+    "align_patches": 50000,
+    "tasks": [
+      "cptac_brca_gata3",
+      "cptac_brca_map3k1",
+      "cptac_brca_pik3ca",
+      "cptac_coad_kras",
+      "cptac_coad_pik3ca",
+      "cptac_coad_tp53",
+      "cptac_luad_kras",
+      "cptac_luad_stk11",
+      "cptac_luad_tp53",
+      "tcga_brca_stage",
+      "tcga_brca_subtype",
+      "tcga_nsclc",
+      "tcga_nsclc_stage"
+    ],
+    "methods": [
+      "joint_pca",
+      "gcca",
+      "mcca",
+      "procrustes",
+      "autoencoder"
+    ],
+    "mil": [
+      "abmil",
+      "transmil"
+    ]
+  },
+  "group": "cptac_benchmark/10x_256px",
+  "series": "best",
+  "seed": 0,
+  "started_utc": "2026-08-27T14:10:19.977348+00:00",
+  "finished_utc": "2026-08-27T16:15:37.974537+00:00",
+  "total_minutes": 125.3,
+  "stages": [
+    {
+      "stage": "similarity",
+      "command": "python scripts/representation_similarity.py --group cptac_benchmark/10x_256px --n-patches 50000 --max-slides 500 --max-samples 8000 --seed 0 --no-umap --out results/full_run/analysis/similarity",
+      "status": "ok",
+      "returncode": 0,
+      "minutes": 31.88,
+      "log": "results/full_run/analysis/logs/similarity.log"
+    },
+    {
+      "stage": "alignment",
+      "command": "python scripts/shared_latent_space.py --group cptac_benchmark/10x_256px --n-patches 50000 --max-slides 500 --latent-dim 64 --methods joint_pca gcca mcca procrustes autoencoder --seed 0 --save-aligners --out results/full_run/analysis/alignment",
+      "status": "ok",
+      "returncode": 0,
+      "minutes": 30.04,
+      "log": "results/full_run/analysis/logs/alignment.log"
+    },
+    {
+      "stage": "transfer",
+      "command": "python scripts/cross_model_transfer.py --group cptac_benchmark/10x_256px --n-patches 50000 --max-slides 500 --latent-dim 64 --aligner autoencoder --query-samples 5000 --seed 0 --out results/full_run/analysis/transfer",
+      "status": "ok",
+      "returncode": 0,
+      "minutes": 26.52,
+      "log": "results/full_run/analysis/logs/transfer.log"
+    },
+    {
+      "stage": "retrieval",
+      "command": "python scripts/cross_model_retrieval.py --group cptac_benchmark/10x_256px --n-patches 50000 --max-slides 500 --latent-dim 64 --methods joint_pca gcca mcca procrustes autoencoder --query-samples 5000 --seed 0 --out results/full_run/analysis/retrieval",
+      "status": "ok",
+      "returncode": 0,
+      "minutes": 36.85,
+      "log": "results/full_run/analysis/logs/retrieval.log"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 ![fig3_downstream_auc](fig3_downstream_auc.png)
 
-**Caption.** Slide-level prediction under three input representations, split into the two difficulty regimes. Top: morphological/clinical tasks saturate near AUC 0.97 and the three representations are indistinguishable. Bottom: molecular (mutation) tasks are where representations separate — MOSAIC (the shared space) wins on some (BRCA GATA3, COAD PIK3CA) and loses on others (LUAD/COAD TP53). The dashed line is chance (AUC 0.5). CPTAC LUAD KRAS shows fewer than three bars: those input conditions have not been computed yet. The features are present, so this is a pending run, not a missing result.
+**Caption.** Slide-level prediction under three input representations, split into the two difficulty regimes. Top: morphological/clinical tasks saturate near AUC 0.97 and the three representations are indistinguishable. Bottom: molecular (mutation) tasks are where representations separate — MOSAIC (the shared space) wins on some (BRCA GATA3, COAD PIK3CA) and loses on others (LUAD/COAD TP53). The dashed line is chance (AUC 0.5).
 
 ## How it was computed
 

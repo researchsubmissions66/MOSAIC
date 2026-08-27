@@ -130,7 +130,17 @@ def run_stage(name: str, cmd: list[str], log_dir: Path, dry_run: bool) -> dict:
     dict
         Stage record with command, status, duration and log path.
     """
-    printable = " ".join(str(c) for c in cmd)
+    # Repo-relative: the manifest is committed, so an absolute
+    # interpreter or checkout path would leak one machine's layout.
+    def _rel(c):
+        t = str(c)
+        if t == sys.executable:
+            return "python"
+        try:
+            return str(Path(t).resolve().relative_to(ROOT))
+        except (ValueError, OSError):
+            return t
+    printable = " ".join(_rel(c) for c in cmd)
     print(f"\n{'=' * 78}\n[{name}] {printable}\n{'=' * 78}", flush=True)
 
     if dry_run:
