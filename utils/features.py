@@ -58,6 +58,26 @@ EXCLUDED_SLIDES_FILE = Path(__file__).resolve().parents[1] / "configs" / "exclud
 
 
 @lru_cache(maxsize=1)
+def slide_encoder_allowlist(path: str | None = None) -> frozenset[str] | None:
+    """Slide encoders in scope, from ``configs/encoders.yaml``.
+
+    Returns
+    -------
+    frozenset of str, or None
+        Allowed directory suffixes, or ``None`` when the config declares no
+        list -- in which case discovery keeps its original behaviour of taking
+        whatever is on disk.
+    """
+    import yaml
+
+    f = Path(path) if path else Path(__file__).resolve().parents[1] / "configs" / "encoders.yaml"
+    if not f.exists():
+        return None
+    names = (yaml.safe_load(f.read_text()) or {}).get("slide_encoders")
+    return frozenset(names) if names else None
+
+
+@lru_cache(maxsize=1)
 def excluded_slides(path: str | None = None) -> frozenset[str]:
     """Slide ids listed in ``configs/excluded_slides.txt``.
 
@@ -770,6 +790,10 @@ class FeatureStore:
         if not root.exists():
             raise ValueError(f"cohort {cohort!r} not found under {self.feature_root}")
 
+        # Registry filter. Without it the glob below takes whatever is on disk,
+        # which differed between cohorts and silently changed the encoder set.
+        allowed = slide_encoder_allowlist()
+
         encoders, grids = {}, {}
         for grid_dir in sorted(p for p in root.iterdir() if p.is_dir()):
             if not _DIR_RE.match(grid_dir.name):
@@ -778,6 +802,8 @@ class FeatureStore:
                 if not fd.is_dir() or next(fd.glob("*.h5"), None) is None:
                     continue
                 name = fd.name[len("slide_features_") :]
+                if allowed is not None and name not in allowed:
+                    continue
                 encoders[name] = fd
                 grids[name] = grid_dir.name.replace("_0px_overlap", "")
 

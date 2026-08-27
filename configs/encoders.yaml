@@ -18,6 +18,23 @@
 
 feature_root: /path/to/trident_features
 
+# Slide-level encoders in scope, by directory suffix.
+#
+# Discovery globs `slide_features_*` under each grid, which sweeps in whatever
+# happens to sit on disk -- that is how `care` and `prism2` appeared on TCGA and
+# not on CPTAC, giving the two cohorts different encoder sets and making
+# fig6's "all six" untrue. Patch encoders are filtered by the `encoders` block
+# below; this list does the same job for slide encoders.
+#
+# To add one: extract it for BOTH cohorts, then list it here.
+slide_encoders:
+  - chief
+  - feather
+  - gigapath
+  - madeleine
+  - prism
+  - titan
+
 encoders:
 
   uni_v2:

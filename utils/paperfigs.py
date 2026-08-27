@@ -24,10 +24,12 @@ from typing import Mapping, Sequence
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import math
+
 import numpy as np
 import pandas as pd
 from matplotlib.figure import Figure
-from matplotlib.patches import Patch
+from matplotlib.patches import FancyBboxPatch, Patch
 
 __all__ = [
     "PLOT_NAMES",
@@ -58,6 +60,12 @@ PANEL_RAMPS: dict[str, tuple[str, str]] = {
 #: colour already used and two different metrics read as the same series. Seven
 #: entries covers the seven similarity metrics.
 RAMP_CYCLE = ("green", "blue", "purple", "red", "teal", "orange", "magenta")
+
+#: Half-width of a heatmap tile in data units. Below 0.5 the tiles separate,
+#: which is what produces the gap between cells in the reference figures.
+CELL_HALF = 0.44
+#: Corner radius of a tile, in the same units.
+CELL_ROUNDING = 0.10
 
 #: Light-to-dark categorical ramps for the bar panels. The last swatch is the
 #: darkest, and the highlighted series is placed last so it lands there.
@@ -320,15 +328,37 @@ def heatmap_panel(
     cmap = _ramp(ramp).copy()
     cmap.set_bad("white")
 
-    im = ax.imshow(
-        shown, cmap=cmap, vmin=lo, vmax=hi, origin="lower", aspect="equal"
-    )
+    # Cells are drawn as individual rounded tiles rather than an imshow raster.
+    # imshow plus white gridlines gives square cells butted edge to edge; the
+    # reference figures separate them into rounded tiles, which reads far better
+    # at the sizes these panels are printed at.
+    norm = mpl.colors.Normalize(vmin=lo, vmax=hi)
+    im = mpl.cm.ScalarMappable(norm=norm, cmap=cmap)
+    im.set_array(shown)
 
-    # White cell separators, drawn as gridlines on the minor ticks.
-    ax.set_xticks(np.arange(-0.5, n_cols, 1), minor=True)
-    ax.set_yticks(np.arange(-0.5, n_rows, 1), minor=True)
-    ax.grid(which="minor", color="white", linewidth=1.4)
-    ax.tick_params(which="minor", length=0)
+    for i in range(n_rows):
+        for j in range(n_cols):
+            v = shown[i, j]
+            if not np.isfinite(v):
+                continue
+            ax.add_patch(
+                FancyBboxPatch(
+                    (j - CELL_HALF, i - CELL_HALF),
+                    2 * CELL_HALF,
+                    2 * CELL_HALF,
+                    boxstyle=f"round,pad=0,rounding_size={CELL_ROUNDING}",
+                    facecolor=cmap(norm(v)),
+                    edgecolor="none",
+                    mutation_aspect=1.0,
+                )
+            )
+
+    ax.set_xlim(-0.5, n_cols - 0.5)
+    ax.set_ylim(-0.5, n_rows - 0.5)
+    ax.set_aspect("equal")
+    for side in ax.spines.values():
+        side.set_visible(False)
+    ax.tick_params(length=0)
 
     span = (hi - lo) or 1.0
     for i in range(n_rows):
@@ -379,8 +409,9 @@ def heatmap_row(
     base_size: float = 11.0,
     suptitle: str | None = None,
     rotate_xticks: float = 0.0,
+    n_cols: int | None = None,
 ) -> Figure:
-    """A row of heatmap panels, each with an independent colourbar.
+    """A row -- or grid -- of heatmap panels, each with an independent colourbar.
 
     Parameters
     ----------
@@ -411,6 +442,11 @@ def heatmap_row(
         Figure title.
     rotate_xticks : float, default 0.0
         Rotation for x tick labels; use 45 for long encoder names.
+    n_cols : int, optional
+        Wrap onto multiple rows at this width. A single row of seven panels is
+        ~27in wide, which forces the panels and their labels down until neither
+        is legible; wrapping keeps ``panel_size`` generous instead. ``None``
+        keeps everything on one row.
 
     Returns
     -------
@@ -428,14 +464,19 @@ def heatmap_row(
             max(float(np.nanmax(m.values)) for m in matrices.values()),
         )
 
+    ncol = len(names) if n_cols is None else max(1, min(n_cols, len(names)))
+    nrow = math.ceil(len(names) / ncol)
     fig, axes = plt.subplots(
-        1,
-        len(names),
-        figsize=(panel_size[0] * len(names), panel_size[1]),
+        nrow,
+        ncol,
+        figsize=(panel_size[0] * ncol, panel_size[1] * nrow),
         squeeze=False,
     )
+    flat = axes.ravel()
+    for ax in flat[len(names):]:      # trailing cells of a partly-filled row
+        ax.axis("off")
 
-    for i, (ax, name) in enumerate(zip(axes.ravel(), names)):
+    for i, (ax, name) in enumerate(zip(flat, names)):
         heatmap_panel(
             ax,
             matrices[name],
@@ -445,9 +486,10 @@ def heatmap_row(
             limits=limits,
             mask=mask,
             xlab=xlab,
-            ylab=ylab if i == 0 else "",
+            ylab=ylab if i % ncol == 0 else "",
             label_size=label_size,
-            cbar_label=cbar_label if i == len(names) - 1 else "",
+            cbar_label=cbar_label if (i % ncol == ncol - 1
+                                      or i == len(names) - 1) else "",
         )
         if rotate_xticks:
             for lab in ax.get_xticklabels():
@@ -456,7 +498,10 @@ def heatmap_row(
 
     if suptitle:
         fig.suptitle(suptitle, fontsize=base_size + 3, fontweight="bold")
-    fig.tight_layout()
+    # Rotated tick labels and per-panel colourbars both eat space that
+    # tight_layout's defaults do not budget for, so pad explicitly.
+    fig.tight_layout(pad=1.4, w_pad=2.0, h_pad=2.2,
+                     rect=(0, 0, 1, 0.94 if suptitle else 1.0))
     return fig
 
 

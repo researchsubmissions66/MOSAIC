@@ -1305,11 +1305,13 @@ def figs_slide_encoder_similarity(out: Path, fmt: str) -> None:
         if not mats:
             continue
         n = next(iter(mats.values())).shape[0]
-        wide = max(3.0, min(4.4, 26.0 / len(mats)))
+        # Wrap to a 4-wide grid rather than one 27in row: the panels keep the
+        # same generous size the two-panel figures use, so the encoder labels
+        # stay readable at eight encoders.
         fig = heatmap_row(
             mats, value_fmt="{:.2f}", mask="lower", ylab="Slide encoder",
-            cbar_label="Similarity", rotate_xticks=40,
-            panel_size=(wide, wide * 1.1), label_size=7.5, base_size=10,
+            cbar_label="Similarity", rotate_xticks=40, n_cols=4,
+            panel_size=(4.6, 4.9), label_size=8.5, base_size=11,
             suptitle=f"Slide encoders · {label} · {n} encoders",
         )
         dest = out / "slide_encoders" / f"{label.lower()}_slide_encoders.{fmt}"
@@ -1405,6 +1407,67 @@ def figs_similarity_by_subcohort(out: Path, fmt: str, metric: str = "linear_cka"
     print(f"  similarity_by_subcohort: {n_full} per-subcohort figures")
 
 
+#: The ImageNet-supervised control. Every "pathology encoders agree with each
+#: other more than with the control" claim is measured against this row.
+CONTROL_ENCODER = "ResNet50 (ImageNet)"
+
+
+def fig_control_gap(out: Path, fmt: str, metric: str = "linear_cka") -> None:
+    """How far the pathology encoders sit from the ImageNet control, per subcohort.
+
+    This is the sanity check the shared-manifold argument rests on, and pooling
+    inflates it: the pooled gap is larger than any individual subcohort's gap,
+    because the control separates tissue types more sharply than the pathology
+    encoders do, so mixing tissue pushes its geometry away from theirs. Plotting
+    pooled and per-subcohort side by side is the only way to see that.
+    """
+    root = Path(__file__).resolve().parents[1]
+    base = root / "results/full_run/analysis/similarity_by_subcohort"
+    pooled = root / f"results/full_run/analysis/similarity/matrices/{metric}.csv"
+
+    def gap(path: Path):
+        d = pd.read_csv(path, index_col=0)
+        if CONTROL_ENCODER not in d.index:
+            return None
+        enc = [e for e in d.index if e != CONTROL_ENCODER]
+        pp = np.mean([d.loc[a, b] for i, a in enumerate(enc) for b in enc[i + 1:]])
+        vc = np.mean([d.loc[CONTROL_ENCODER, e] for e in enc])
+        return pp, vc
+
+    rows = []
+    if pooled.exists() and (g := gap(pooled)):
+        rows.append(("Pooled\n(all tissue)", *g))
+    for mdir in sorted(base.glob("cptac_benchmark_10x_256px/*/matrices")):
+        f = mdir / f"{metric}.csv"
+        if f.exists() and (g := gap(f)):
+            rows.append((mdir.parent.name.replace("_", "-"), *g))
+    if len(rows) < 2:
+        print("  skip control-gap: needs pooled plus at least one subcohort")
+        return
+
+    long = pd.DataFrame(
+        [{"subcohort": n, "series": s, "value": v * 100.0}
+         for n, pp, vc in rows
+         for s, v in (("Pathology ↔ pathology", pp), ("vs ImageNet control", vc))]
+    )
+    fig, ax = grouped_bars(
+        long, x="subcohort", y="value", group="series",
+        highlight="vs ImageNet control", ramp="blue",
+        group_order=["Pathology ↔ pathology", "vs ImageNet control"],
+        x_order=[r[0] for r in rows],
+        ylab=f"Mean {clean_label(metric)} (%)",
+        figsize=(2.0 * len(rows) + 3.0, 4.8), legend_ncol=2,
+    )
+    for i, (_, pp, vc) in enumerate(rows):
+        ax.annotate(f"gap {pp - vc:+.3f}", xy=(i, max(pp, vc) * 100 + 3),
+                    ha="center", fontsize=9, fontweight="bold")
+    ax.set_ylim(0, 100)
+    emit(fig, out, f"fig_control_gap_{metric}", fmt)
+    plt.close(fig)
+    for n, pp, vc in rows:
+        print(f"      {n.splitlines()[0]:14s} patho={pp:.3f} control={vc:.3f} gap={pp - vc:.3f}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Render the MOSAIC figure set.")
     parser.add_argument("--out", type=Path, default=Path("results/figures"))
@@ -1433,6 +1496,7 @@ def main() -> None:
         table_similarity_all(args.out, args.format)
         figs_slide_encoder_similarity(args.out, args.format)
         figs_similarity_by_subcohort(args.out, args.format)
+        fig_control_gap(args.out, args.format)
         print("\nPer-series magnification figures:")
         figs_all_magnification(args.out, args.format)
         print("\nPer-baseline layer-wise figures:")
