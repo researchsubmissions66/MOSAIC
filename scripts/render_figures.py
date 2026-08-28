@@ -783,17 +783,41 @@ def fig_alignment(out: Path, fmt: str) -> None:
 # ---------------------------------------------------------------------------
 
 #: label -> (result base dir, human title). The flagship lives under full_run.
+#: Every (cohort, magnification, patch_size) grid holding two or more registered
+#: encoders appears here; a group with no results on disk is skipped silently by
+#: figs_all_groups, so listing one before its job lands costs nothing.
 GROUP_DIRS = {
     "cptac_10x_256px": (RESULTS / "full_run/analysis",
                         "CPTAC · 10× · 256px  (flagship, 6 encoders)"),
+    # 256px — the CONCH/CTransPath/GigaPath/KEEP/ResNet50/UNI2-h family
     "tcga_10x_256px": (RESULTS / "groups/tcga_10x_256", "TCGA · 10× · 256px"),
+    "tcga_20x_256px": (RESULTS / "groups/tcga_20x_256",
+                       "TCGA · 20× · 256px  (CONCH v1.5; BRCA only, n=1126)"),
+    "tcga_5x_256px": (RESULTS / "groups/tcga_5x_256", "TCGA · 5× · 256px"),
     "cptac_20x_256px": (RESULTS / "groups/cptac_20x_256", "CPTAC · 20× · 256px"),
-    "cptac_20x_224px": (RESULTS / "groups/cptac_20x_224",
-                        "CPTAC · 20× · 224px  (Virchow / GPFM / H-optimus)"),
+    "cptac_5x_256px": (RESULTS / "groups/cptac_5x_256", "CPTAC · 5× · 256px"),
+    # 224px — GPFM / H-optimus-0 / Virchow / Virchow2
     "tcga_20x_224px": (RESULTS / "groups/tcga_20x_224",
                        "TCGA · 20× · 224px  (Virchow / GPFM / H-optimus)"),
+    "tcga_10x_224px": (RESULTS / "groups/tcga_10x_224", "TCGA · 10× · 224px"),
+    "tcga_5x_224px": (RESULTS / "groups/tcga_5x_224", "TCGA · 5× · 224px"),
+    "cptac_20x_224px": (RESULTS / "groups/cptac_20x_224",
+                        "CPTAC · 20× · 224px  (Virchow / GPFM / H-optimus)"),
+    "cptac_10x_224px": (RESULTS / "groups/cptac_10x_224", "CPTAC · 10× · 224px"),
+    "cptac_5x_224px": (RESULTS / "groups/cptac_5x_224", "CPTAC · 5× · 224px"),
+    # 512px — CONCH v1 against CONCH v1.5, a single pair at every magnification
     "cptac_20x_512px": (RESULTS / "groups/cptac_20x_512",
                         "CPTAC · 20× · 512px  (CONCH v1 / v1.5)"),
+    "cptac_10x_512px": (RESULTS / "groups/cptac_10x_512",
+                        "CPTAC · 10× · 512px  (CONCH v1 / v1.5)"),
+    "cptac_5x_512px": (RESULTS / "groups/cptac_5x_512",
+                       "CPTAC · 5× · 512px  (CONCH v1 / v1.5)"),
+    "tcga_20x_512px": (RESULTS / "groups/tcga_20x_512",
+                       "TCGA · 20× · 512px  (CONCH v1 / v1.5)"),
+    "tcga_10x_512px": (RESULTS / "groups/tcga_10x_512",
+                       "TCGA · 10× · 512px  (CONCH v1 / v1.5)"),
+    "tcga_5x_512px": (RESULTS / "groups/tcga_5x_512",
+                      "TCGA · 5× · 512px  (CONCH v1 / v1.5; BRCA only, n=1126)"),
 }
 
 
