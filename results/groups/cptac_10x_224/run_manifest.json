@@ -1,0 +1,55 @@
+{
+  "preset": "full",
+  "config": {
+    "n_patches": 50000,
+    "max_slides": 500,
+    "max_samples": 8000,
+    "latent_dim": 64,
+    "query_samples": 5000,
+    "mil_epochs": 80,
+    "mil_max_patches": 4000,
+    "align_patches": 50000,
+    "tasks": [
+      "cptac_brca_gata3",
+      "cptac_brca_map3k1",
+      "cptac_brca_pik3ca",
+      "cptac_coad_kras",
+      "cptac_coad_pik3ca",
+      "cptac_coad_tp53",
+      "cptac_luad_kras",
+      "cptac_luad_stk11",
+      "cptac_luad_tp53",
+      "tcga_brca_stage",
+      "tcga_brca_subtype",
+      "tcga_nsclc",
+      "tcga_nsclc_stage"
+    ],
+    "methods": [
+      "joint_pca",
+      "gcca",
+      "mcca",
+      "procrustes",
+      "autoencoder"
+    ],
+    "mil": [
+      "abmil",
+      "transmil"
+    ]
+  },
+  "group": "cptac_benchmark/10x_224px",
+  "series": "best",
+  "seed": 0,
+  "started_utc": "2026-08-28T15:06:09.956868+00:00",
+  "finished_utc": "2026-08-28T16:43:02.701035+00:00",
+  "total_minutes": 96.88,
+  "stages": [
+    {
+      "stage": "retrieval",
+      "command": "python scripts/cross_model_retrieval.py --group cptac_benchmark/10x_224px --n-patches 50000 --max-slides 500 --latent-dim 64 --methods joint_pca gcca mcca procrustes autoencoder --query-samples 5000 --seed 0 --out results/groups/cptac_10x_224/retrieval",
+      "status": "ok",
+      "returncode": 0,
+      "minutes": 96.88,
+      "log": "results/groups/cptac_10x_224/logs/retrieval.log"
+    }
+  ]
+}
