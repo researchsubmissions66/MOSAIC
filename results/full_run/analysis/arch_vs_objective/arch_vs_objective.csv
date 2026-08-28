@@ -1,0 +1,379 @@
+group,metric,factor,delta,n_same,n_diff,mean_same,mean_diff
+"CPTAC 10x/256px (flagship, 6 enc)",linear_cka,objective,0.1384646027022699,4,11,0.7130981779401553,0.5746335752378854
+"CPTAC 10x/256px (flagship, 6 enc)",linear_cka,architecture (backbone),0.13435871050064208,6,9,0.6921726955922093,0.5578139850915672
+"CPTAC 10x/256px (flagship, 6 enc)",linear_cka,architecture (exact),nan,0,15,nan,nan
+"CPTAC 10x/256px (flagship, 6 enc)",kernel_cka,objective,0.1330167870313398,4,11,0.7354348039100946,0.6024180168787548
+"CPTAC 10x/256px (flagship, 6 enc)",kernel_cka,architecture (backbone),0.12430146791764118,6,9,0.7124700408376968,0.5881685729200556
+"CPTAC 10x/256px (flagship, 6 enc)",kernel_cka,architecture (exact),nan,0,15,nan,nan
+"CPTAC 10x/256px (flagship, 6 enc)",svcca,objective,0.04221240417491312,4,11,0.5967742673937719,0.5545618632188588
+"CPTAC 10x/256px (flagship, 6 enc)",svcca,architecture (backbone),0.10709143304137925,6,9,0.6300733641569966,0.5229819311156173
+"CPTAC 10x/256px (flagship, 6 enc)",svcca,architecture (exact),nan,0,15,nan,nan
+"CPTAC 10x/256px (flagship, 6 enc)",pwcca,objective,0.02995859969943826,4,11,0.659400597255735,0.6294419975562967
+"CPTAC 10x/256px (flagship, 6 enc)",pwcca,architecture (backbone),0.06239994030006579,6,9,0.6748709216561863,0.6124709813561205
+"CPTAC 10x/256px (flagship, 6 enc)",pwcca,architecture (exact),nan,0,15,nan,nan
+"CPTAC 10x/256px (flagship, 6 enc)",procrustes,objective,0.07335700456091332,4,11,0.6663192974550511,0.5929622928941378
+"CPTAC 10x/256px (flagship, 6 enc)",procrustes,architecture (backbone),0.014709430565326587,6,9,0.6213498191162441,0.6066403885509175
+"CPTAC 10x/256px (flagship, 6 enc)",procrustes,architecture (exact),nan,0,15,nan,nan
+"CPTAC 10x/256px (flagship, 6 enc)",cosine_rsa,objective,0.11813808100646517,4,11,0.664153086730632,0.5460150057241668
+"CPTAC 10x/256px (flagship, 6 enc)",cosine_rsa,architecture (backbone),0.1166764365670081,6,9,0.6475243559327624,0.5308479193657543
+"CPTAC 10x/256px (flagship, 6 enc)",cosine_rsa,architecture (exact),nan,0,15,nan,nan
+"CPTAC 10x/256px (flagship, 6 enc)",distance_correlation,objective,0.08459282143214852,4,11,0.8581784792413499,0.7735856578092014
+"CPTAC 10x/256px (flagship, 6 enc)",distance_correlation,architecture (backbone),0.08094796322481002,6,9,0.8447125214593271,0.763764558234517
+"CPTAC 10x/256px (flagship, 6 enc)",distance_correlation,architecture (exact),nan,0,15,nan,nan
+cptac_10x_224,linear_cka,objective,nan,3,0,nan,nan
+cptac_10x_224,linear_cka,architecture (backbone),nan,3,0,nan,nan
+cptac_10x_224,linear_cka,architecture (exact),nan,0,3,nan,nan
+cptac_10x_224,kernel_cka,objective,nan,3,0,nan,nan
+cptac_10x_224,kernel_cka,architecture (backbone),nan,3,0,nan,nan
+cptac_10x_224,kernel_cka,architecture (exact),nan,0,3,nan,nan
+cptac_10x_224,svcca,objective,nan,3,0,nan,nan
+cptac_10x_224,svcca,architecture (backbone),nan,3,0,nan,nan
+cptac_10x_224,svcca,architecture (exact),nan,0,3,nan,nan
+cptac_10x_224,pwcca,objective,nan,3,0,nan,nan
+cptac_10x_224,pwcca,architecture (backbone),nan,3,0,nan,nan
+cptac_10x_224,pwcca,architecture (exact),nan,0,3,nan,nan
+cptac_10x_224,procrustes,objective,nan,3,0,nan,nan
+cptac_10x_224,procrustes,architecture (backbone),nan,3,0,nan,nan
+cptac_10x_224,procrustes,architecture (exact),nan,0,3,nan,nan
+cptac_10x_224,cosine_rsa,objective,nan,3,0,nan,nan
+cptac_10x_224,cosine_rsa,architecture (backbone),nan,3,0,nan,nan
+cptac_10x_224,cosine_rsa,architecture (exact),nan,0,3,nan,nan
+cptac_10x_224,distance_correlation,objective,nan,3,0,nan,nan
+cptac_10x_224,distance_correlation,architecture (backbone),nan,3,0,nan,nan
+cptac_10x_224,distance_correlation,architecture (exact),nan,0,3,nan,nan
+cptac_10x_512,linear_cka,objective,nan,1,0,nan,nan
+cptac_10x_512,linear_cka,architecture (backbone),nan,1,0,nan,nan
+cptac_10x_512,linear_cka,architecture (exact),nan,0,1,nan,nan
+cptac_10x_512,kernel_cka,objective,nan,1,0,nan,nan
+cptac_10x_512,kernel_cka,architecture (backbone),nan,1,0,nan,nan
+cptac_10x_512,kernel_cka,architecture (exact),nan,0,1,nan,nan
+cptac_10x_512,svcca,objective,nan,1,0,nan,nan
+cptac_10x_512,svcca,architecture (backbone),nan,1,0,nan,nan
+cptac_10x_512,svcca,architecture (exact),nan,0,1,nan,nan
+cptac_10x_512,pwcca,objective,nan,1,0,nan,nan
+cptac_10x_512,pwcca,architecture (backbone),nan,1,0,nan,nan
+cptac_10x_512,pwcca,architecture (exact),nan,0,1,nan,nan
+cptac_10x_512,procrustes,objective,nan,1,0,nan,nan
+cptac_10x_512,procrustes,architecture (backbone),nan,1,0,nan,nan
+cptac_10x_512,procrustes,architecture (exact),nan,0,1,nan,nan
+cptac_10x_512,cosine_rsa,objective,nan,1,0,nan,nan
+cptac_10x_512,cosine_rsa,architecture (backbone),nan,1,0,nan,nan
+cptac_10x_512,cosine_rsa,architecture (exact),nan,0,1,nan,nan
+cptac_10x_512,distance_correlation,objective,nan,1,0,nan,nan
+cptac_10x_512,distance_correlation,architecture (backbone),nan,1,0,nan,nan
+cptac_10x_512,distance_correlation,architecture (exact),nan,0,1,nan,nan
+cptac_20x_224,linear_cka,objective,nan,6,0,nan,nan
+cptac_20x_224,linear_cka,architecture (backbone),nan,6,0,nan,nan
+cptac_20x_224,linear_cka,architecture (exact),-0.2161839656600969,1,5,0.317600231656227,0.5337841973163239
+cptac_20x_224,kernel_cka,objective,nan,6,0,nan,nan
+cptac_20x_224,kernel_cka,architecture (backbone),nan,6,0,nan,nan
+cptac_20x_224,kernel_cka,architecture (exact),-0.18795336901022142,1,5,0.36893353777599613,0.5568869067862176
+cptac_20x_224,svcca,objective,nan,6,0,nan,nan
+cptac_20x_224,svcca,architecture (backbone),nan,6,0,nan,nan
+cptac_20x_224,svcca,architecture (exact),-0.017121436930345957,1,5,0.5523848303365656,0.5695062672669116
+cptac_20x_224,pwcca,objective,nan,6,0,nan,nan
+cptac_20x_224,pwcca,architecture (backbone),nan,6,0,nan,nan
+cptac_20x_224,pwcca,architecture (exact),-0.05542878469765189,1,5,0.733070499706828,0.7884992844044799
+cptac_20x_224,procrustes,objective,nan,6,0,nan,nan
+cptac_20x_224,procrustes,architecture (backbone),nan,6,0,nan,nan
+cptac_20x_224,procrustes,architecture (exact),-0.02174663766986884,1,5,0.6658128101429713,0.6875594478128402
+cptac_20x_224,cosine_rsa,objective,nan,6,0,nan,nan
+cptac_20x_224,cosine_rsa,architecture (backbone),nan,6,0,nan,nan
+cptac_20x_224,cosine_rsa,architecture (exact),-0.1847518065224923,1,5,0.3309336347620461,0.5156854412845384
+cptac_20x_224,distance_correlation,objective,nan,6,0,nan,nan
+cptac_20x_224,distance_correlation,architecture (backbone),nan,6,0,nan,nan
+cptac_20x_224,distance_correlation,architecture (exact),-0.12972020356160274,1,5,0.6138458090393488,0.7435660126009516
+cptac_20x_256,linear_cka,objective,0.19227001133631005,3,7,0.6821675559607446,0.4898975446244346
+cptac_20x_256,linear_cka,architecture (backbone),0.17997793399909018,3,7,0.6735631018246907,0.4935851678256005
+cptac_20x_256,linear_cka,architecture (exact),nan,0,10,nan,nan
+cptac_20x_256,kernel_cka,objective,0.17888059365510334,3,7,0.699910344217615,0.5210297505625117
+cptac_20x_256,kernel_cka,architecture (backbone),0.15597169469211236,3,7,0.6838741149435213,0.527902420251409
+cptac_20x_256,kernel_cka,architecture (exact),nan,0,10,nan,nan
+cptac_20x_256,svcca,objective,0.08237297120861242,3,7,0.5671946835809552,0.48482171237234273
+cptac_20x_256,svcca,architecture (backbone),0.0705583488557564,3,7,0.5589244479339559,0.4883660990781995
+cptac_20x_256,svcca,architecture (exact),nan,0,10,nan,nan
+cptac_20x_256,pwcca,objective,0.05538864653492981,3,7,0.6465138916502476,0.5911252451153178
+cptac_20x_256,pwcca,architecture (backbone),0.04707939465727473,3,7,0.6406974153358891,0.5936180206786144
+cptac_20x_256,pwcca,architecture (exact),nan,0,10,nan,nan
+cptac_20x_256,procrustes,objective,0.06310821431808955,3,7,0.6222348314341969,0.5591266171161073
+cptac_20x_256,procrustes,architecture (backbone),0.04177752700523718,3,7,0.6073033503152002,0.565525823309963
+cptac_20x_256,procrustes,architecture (exact),nan,0,10,nan,nan
+cptac_20x_256,cosine_rsa,objective,0.16216158011235132,3,7,0.6257992858125304,0.4636377057001791
+cptac_20x_256,cosine_rsa,architecture (backbone),0.14222931878640327,3,7,0.6118467028843667,0.46961738409796344
+cptac_20x_256,cosine_rsa,architecture (exact),nan,0,10,nan,nan
+cptac_20x_256,distance_correlation,objective,0.1198209803530732,3,7,0.835202951769764,0.7153819714166908
+cptac_20x_256,distance_correlation,architecture (backbone),0.10682179513422518,3,7,0.8261035221165702,0.719281726982345
+cptac_20x_256,distance_correlation,architecture (exact),nan,0,10,nan,nan
+cptac_20x_512,linear_cka,objective,nan,1,0,nan,nan
+cptac_20x_512,linear_cka,architecture (backbone),nan,1,0,nan,nan
+cptac_20x_512,linear_cka,architecture (exact),nan,0,1,nan,nan
+cptac_20x_512,kernel_cka,objective,nan,1,0,nan,nan
+cptac_20x_512,kernel_cka,architecture (backbone),nan,1,0,nan,nan
+cptac_20x_512,kernel_cka,architecture (exact),nan,0,1,nan,nan
+cptac_20x_512,svcca,objective,nan,1,0,nan,nan
+cptac_20x_512,svcca,architecture (backbone),nan,1,0,nan,nan
+cptac_20x_512,svcca,architecture (exact),nan,0,1,nan,nan
+cptac_20x_512,pwcca,objective,nan,1,0,nan,nan
+cptac_20x_512,pwcca,architecture (backbone),nan,1,0,nan,nan
+cptac_20x_512,pwcca,architecture (exact),nan,0,1,nan,nan
+cptac_20x_512,procrustes,objective,nan,1,0,nan,nan
+cptac_20x_512,procrustes,architecture (backbone),nan,1,0,nan,nan
+cptac_20x_512,procrustes,architecture (exact),nan,0,1,nan,nan
+cptac_20x_512,cosine_rsa,objective,nan,1,0,nan,nan
+cptac_20x_512,cosine_rsa,architecture (backbone),nan,1,0,nan,nan
+cptac_20x_512,cosine_rsa,architecture (exact),nan,0,1,nan,nan
+cptac_20x_512,distance_correlation,objective,nan,1,0,nan,nan
+cptac_20x_512,distance_correlation,architecture (backbone),nan,1,0,nan,nan
+cptac_20x_512,distance_correlation,architecture (exact),nan,0,1,nan,nan
+cptac_5x_224,linear_cka,objective,nan,3,0,nan,nan
+cptac_5x_224,linear_cka,architecture (backbone),nan,3,0,nan,nan
+cptac_5x_224,linear_cka,architecture (exact),nan,0,3,nan,nan
+cptac_5x_224,kernel_cka,objective,nan,3,0,nan,nan
+cptac_5x_224,kernel_cka,architecture (backbone),nan,3,0,nan,nan
+cptac_5x_224,kernel_cka,architecture (exact),nan,0,3,nan,nan
+cptac_5x_224,svcca,objective,nan,3,0,nan,nan
+cptac_5x_224,svcca,architecture (backbone),nan,3,0,nan,nan
+cptac_5x_224,svcca,architecture (exact),nan,0,3,nan,nan
+cptac_5x_224,pwcca,objective,nan,3,0,nan,nan
+cptac_5x_224,pwcca,architecture (backbone),nan,3,0,nan,nan
+cptac_5x_224,pwcca,architecture (exact),nan,0,3,nan,nan
+cptac_5x_224,procrustes,objective,nan,3,0,nan,nan
+cptac_5x_224,procrustes,architecture (backbone),nan,3,0,nan,nan
+cptac_5x_224,procrustes,architecture (exact),nan,0,3,nan,nan
+cptac_5x_224,cosine_rsa,objective,nan,3,0,nan,nan
+cptac_5x_224,cosine_rsa,architecture (backbone),nan,3,0,nan,nan
+cptac_5x_224,cosine_rsa,architecture (exact),nan,0,3,nan,nan
+cptac_5x_224,distance_correlation,objective,nan,3,0,nan,nan
+cptac_5x_224,distance_correlation,architecture (backbone),nan,3,0,nan,nan
+cptac_5x_224,distance_correlation,architecture (exact),nan,0,3,nan,nan
+cptac_5x_256,linear_cka,objective,0.0982346294258517,3,7,0.6781033089969708,0.5798686795711191
+cptac_5x_256,linear_cka,architecture (backbone),0.09164744136063818,3,7,0.6734922773513214,0.5818448359906833
+cptac_5x_256,linear_cka,architecture (exact),nan,0,10,nan,nan
+cptac_5x_256,kernel_cka,objective,0.10666931749513586,3,7,0.7094608414071738,0.6027915239120379
+cptac_5x_256,kernel_cka,architecture (backbone),0.0886711750672946,3,7,0.6968621417076849,0.6081909666403903
+cptac_5x_256,kernel_cka,architecture (exact),nan,0,10,nan,nan
+cptac_5x_256,svcca,objective,0.10980530040615144,3,7,0.6064363703781718,0.49663106997202033
+cptac_5x_256,svcca,architecture (backbone),0.04800539490743172,3,7,0.5631764365290679,0.5151710416216362
+cptac_5x_256,svcca,architecture (exact),nan,0,10,nan,nan
+cptac_5x_256,pwcca,objective,0.07270521407264918,3,7,0.6780384441097359,0.6053332300370867
+cptac_5x_256,pwcca,architecture (backbone),0.03663801759418095,3,7,0.652791406574808,0.6161533889806271
+cptac_5x_256,pwcca,architecture (exact),nan,0,10,nan,nan
+cptac_5x_256,procrustes,objective,0.07242282757637186,3,7,0.680641701045107,0.6082188734687352
+cptac_5x_256,procrustes,architecture (backbone),0.024846888213953533,3,7,0.6473385434914142,0.6224916552774606
+cptac_5x_256,procrustes,architecture (exact),nan,0,10,nan,nan
+cptac_5x_256,cosine_rsa,objective,0.10174599005478424,3,7,0.6548491780124152,0.5531031879576309
+cptac_5x_256,cosine_rsa,architecture (backbone),0.08276965059430963,3,7,0.641565740390083,0.5587960897957733
+cptac_5x_256,cosine_rsa,architecture (exact),nan,0,10,nan,nan
+cptac_5x_256,distance_correlation,objective,0.07182189961793661,3,7,0.8444506605951657,0.7726287609772291
+cptac_5x_256,distance_correlation,architecture (backbone),0.0580025234557473,3,7,0.8347770972816332,0.7767745738258859
+cptac_5x_256,distance_correlation,architecture (exact),nan,0,10,nan,nan
+cptac_5x_512,linear_cka,objective,nan,1,0,nan,nan
+cptac_5x_512,linear_cka,architecture (backbone),nan,1,0,nan,nan
+cptac_5x_512,linear_cka,architecture (exact),nan,0,1,nan,nan
+cptac_5x_512,kernel_cka,objective,nan,1,0,nan,nan
+cptac_5x_512,kernel_cka,architecture (backbone),nan,1,0,nan,nan
+cptac_5x_512,kernel_cka,architecture (exact),nan,0,1,nan,nan
+cptac_5x_512,svcca,objective,nan,1,0,nan,nan
+cptac_5x_512,svcca,architecture (backbone),nan,1,0,nan,nan
+cptac_5x_512,svcca,architecture (exact),nan,0,1,nan,nan
+cptac_5x_512,pwcca,objective,nan,1,0,nan,nan
+cptac_5x_512,pwcca,architecture (backbone),nan,1,0,nan,nan
+cptac_5x_512,pwcca,architecture (exact),nan,0,1,nan,nan
+cptac_5x_512,procrustes,objective,nan,1,0,nan,nan
+cptac_5x_512,procrustes,architecture (backbone),nan,1,0,nan,nan
+cptac_5x_512,procrustes,architecture (exact),nan,0,1,nan,nan
+cptac_5x_512,cosine_rsa,objective,nan,1,0,nan,nan
+cptac_5x_512,cosine_rsa,architecture (backbone),nan,1,0,nan,nan
+cptac_5x_512,cosine_rsa,architecture (exact),nan,0,1,nan,nan
+cptac_5x_512,distance_correlation,objective,nan,1,0,nan,nan
+cptac_5x_512,distance_correlation,architecture (backbone),nan,1,0,nan,nan
+cptac_5x_512,distance_correlation,architecture (exact),nan,0,1,nan,nan
+tcga_10x_224,linear_cka,objective,nan,3,0,nan,nan
+tcga_10x_224,linear_cka,architecture (backbone),nan,3,0,nan,nan
+tcga_10x_224,linear_cka,architecture (exact),nan,0,3,nan,nan
+tcga_10x_224,kernel_cka,objective,nan,3,0,nan,nan
+tcga_10x_224,kernel_cka,architecture (backbone),nan,3,0,nan,nan
+tcga_10x_224,kernel_cka,architecture (exact),nan,0,3,nan,nan
+tcga_10x_224,svcca,objective,nan,3,0,nan,nan
+tcga_10x_224,svcca,architecture (backbone),nan,3,0,nan,nan
+tcga_10x_224,svcca,architecture (exact),nan,0,3,nan,nan
+tcga_10x_224,pwcca,objective,nan,3,0,nan,nan
+tcga_10x_224,pwcca,architecture (backbone),nan,3,0,nan,nan
+tcga_10x_224,pwcca,architecture (exact),nan,0,3,nan,nan
+tcga_10x_224,procrustes,objective,nan,3,0,nan,nan
+tcga_10x_224,procrustes,architecture (backbone),nan,3,0,nan,nan
+tcga_10x_224,procrustes,architecture (exact),nan,0,3,nan,nan
+tcga_10x_224,cosine_rsa,objective,nan,3,0,nan,nan
+tcga_10x_224,cosine_rsa,architecture (backbone),nan,3,0,nan,nan
+tcga_10x_224,cosine_rsa,architecture (exact),nan,0,3,nan,nan
+tcga_10x_224,distance_correlation,objective,nan,3,0,nan,nan
+tcga_10x_224,distance_correlation,architecture (backbone),nan,3,0,nan,nan
+tcga_10x_224,distance_correlation,architecture (exact),nan,0,3,nan,nan
+tcga_10x_256,linear_cka,objective,0.05434945613133868,4,11,0.6940152396991264,0.6396657835677877
+tcga_10x_256,linear_cka,architecture (backbone),0.022814000655753675,6,9,0.6678473722629302,0.6450333716071766
+tcga_10x_256,linear_cka,architecture (exact),nan,0,15,nan,nan
+tcga_10x_256,kernel_cka,objective,0.0538952091038275,4,11,0.7170563769512599,0.6631611678474324
+tcga_10x_256,kernel_cka,architecture (backbone),0.02296056780969502,6,9,0.69130956429427,0.668348996484575
+tcga_10x_256,kernel_cka,architecture (exact),nan,0,15,nan,nan
+tcga_10x_256,svcca,objective,0.04757457193229386,4,11,0.6084842209440007,0.5609096490117068
+tcga_10x_256,svcca,architecture (backbone),0.10767643403450722,6,9,0.6382020619476895,0.5305256279131823
+tcga_10x_256,svcca,architecture (exact),nan,0,15,nan,nan
+tcga_10x_256,pwcca,objective,0.02945492708090236,4,11,0.6601753132974336,0.6307203862165313
+tcga_10x_256,pwcca,architecture (backbone),0.061333201258618075,6,9,0.675374954193276,0.6140417529346579
+tcga_10x_256,pwcca,architecture (exact),nan,0,15,nan,nan
+tcga_10x_256,procrustes,objective,0.060159766754912525,4,11,0.6502994939435596,0.590139727188647
+tcga_10x_256,procrustes,architecture (backbone),-0.013121364923019851,6,9,0.5983095127028119,0.6114308776258317
+tcga_10x_256,procrustes,architecture (exact),nan,0,15,nan,nan
+tcga_10x_256,cosine_rsa,objective,0.04226489317247906,4,11,0.6443232896036757,0.6020583964311966
+tcga_10x_256,cosine_rsa,architecture (backbone),0.0038078425602932064,6,9,0.6156137401467002,0.611805897586407
+tcga_10x_256,cosine_rsa,architecture (exact),nan,0,15,nan,nan
+tcga_10x_256,distance_correlation,objective,0.03125202059671428,4,11,0.8477886722383405,0.8165366516416263
+tcga_10x_256,distance_correlation,architecture (backbone),0.01372660136661219,6,9,0.8331064846207173,0.8193798832541052
+tcga_10x_256,distance_correlation,architecture (exact),nan,0,15,nan,nan
+tcga_10x_512,linear_cka,objective,nan,1,0,nan,nan
+tcga_10x_512,linear_cka,architecture (backbone),nan,1,0,nan,nan
+tcga_10x_512,linear_cka,architecture (exact),nan,0,1,nan,nan
+tcga_10x_512,kernel_cka,objective,nan,1,0,nan,nan
+tcga_10x_512,kernel_cka,architecture (backbone),nan,1,0,nan,nan
+tcga_10x_512,kernel_cka,architecture (exact),nan,0,1,nan,nan
+tcga_10x_512,svcca,objective,nan,1,0,nan,nan
+tcga_10x_512,svcca,architecture (backbone),nan,1,0,nan,nan
+tcga_10x_512,svcca,architecture (exact),nan,0,1,nan,nan
+tcga_10x_512,pwcca,objective,nan,1,0,nan,nan
+tcga_10x_512,pwcca,architecture (backbone),nan,1,0,nan,nan
+tcga_10x_512,pwcca,architecture (exact),nan,0,1,nan,nan
+tcga_10x_512,procrustes,objective,nan,1,0,nan,nan
+tcga_10x_512,procrustes,architecture (backbone),nan,1,0,nan,nan
+tcga_10x_512,procrustes,architecture (exact),nan,0,1,nan,nan
+tcga_10x_512,cosine_rsa,objective,nan,1,0,nan,nan
+tcga_10x_512,cosine_rsa,architecture (backbone),nan,1,0,nan,nan
+tcga_10x_512,cosine_rsa,architecture (exact),nan,0,1,nan,nan
+tcga_10x_512,distance_correlation,objective,nan,1,0,nan,nan
+tcga_10x_512,distance_correlation,architecture (backbone),nan,1,0,nan,nan
+tcga_10x_512,distance_correlation,architecture (exact),nan,0,1,nan,nan
+tcga_20x_224,linear_cka,objective,nan,6,0,nan,nan
+tcga_20x_224,linear_cka,architecture (backbone),nan,6,0,nan,nan
+tcga_20x_224,linear_cka,architecture (exact),-0.19667667085902196,1,5,0.29490527785829507,0.49158194871731703
+tcga_20x_224,kernel_cka,objective,nan,6,0,nan,nan
+tcga_20x_224,kernel_cka,architecture (backbone),nan,6,0,nan,nan
+tcga_20x_224,kernel_cka,architecture (exact),-0.1823168025165351,1,5,0.3363637257766036,0.5186805282931387
+tcga_20x_224,svcca,objective,nan,6,0,nan,nan
+tcga_20x_224,svcca,architecture (backbone),nan,6,0,nan,nan
+tcga_20x_224,svcca,architecture (exact),-0.0049089204667658315,1,5,0.5643741848595938,0.5692831053263596
+tcga_20x_224,pwcca,objective,nan,6,0,nan,nan
+tcga_20x_224,pwcca,architecture (backbone),nan,6,0,nan,nan
+tcga_20x_224,pwcca,architecture (exact),-0.04979859579624335,1,5,0.7255280981839197,0.7753266939801631
+tcga_20x_224,procrustes,objective,nan,6,0,nan,nan
+tcga_20x_224,procrustes,architecture (backbone),nan,6,0,nan,nan
+tcga_20x_224,procrustes,architecture (exact),0.02360126570556864,1,5,0.6694364051174326,0.645835139411864
+tcga_20x_224,cosine_rsa,objective,nan,6,0,nan,nan
+tcga_20x_224,cosine_rsa,architecture (backbone),nan,6,0,nan,nan
+tcga_20x_224,cosine_rsa,architecture (exact),-0.14980617478771435,1,5,0.2715244268442827,0.42133060163199704
+tcga_20x_224,distance_correlation,objective,nan,6,0,nan,nan
+tcga_20x_224,distance_correlation,architecture (backbone),nan,6,0,nan,nan
+tcga_20x_224,distance_correlation,architecture (exact),-0.13325037448615207,1,5,0.5821030865954961,0.7153534610816482
+tcga_20x_256,linear_cka,objective,0.0795434835210147,4,11,0.7095349722374504,0.6299914887164357
+tcga_20x_256,linear_cka,architecture (backbone),-0.013627709502068708,6,9,0.6430264586207984,0.6566541681228671
+tcga_20x_256,linear_cka,architecture (exact),0.079097492522895,1,14,0.7250274106767417,0.6459299181538467
+tcga_20x_256,kernel_cka,objective,0.06781153542496565,4,11,0.7264973470845012,0.6586858116595355
+tcga_20x_256,kernel_cka,architecture (backbone),-0.020697033749195848,6,9,0.6643506675233423,0.6850477012725381
+tcga_20x_256,kernel_cka,architecture (exact),0.07771608157698906,1,14,0.7493038972447165,0.6715878156677274
+tcga_20x_256,svcca,objective,0.0376945779622061,4,11,0.5915593474932386,0.5538647695310325
+tcga_20x_256,svcca,architecture (backbone),0.11067190647035674,6,9,0.6303198008698349,0.5196478943994781
+tcga_20x_256,svcca,architecture (exact),0.06571333075155195,1,14,0.6252490990224027,0.5595357682708507
+tcga_20x_256,pwcca,objective,0.025549773014361454,4,11,0.6210801533033273,0.5955303802889659
+tcga_20x_256,pwcca,architecture (backbone),0.03887482988631796,6,9,0.6256685510245864,0.5867937211382684
+tcga_20x_256,pwcca,architecture (exact),-0.06914617408209123,1,14,0.5378072239495104,0.6069533980316016
+tcga_20x_256,procrustes,objective,0.0495150213024621,4,11,0.6127846308702899,0.5632696095678278
+tcga_20x_256,procrustes,architecture (backbone),-0.04161297886279525,6,9,0.5515058279308073,0.5931188067936025
+tcga_20x_256,procrustes,architecture (exact),0.03165831330754143,1,14,0.606021374335523,0.5743630610279816
+tcga_20x_256,cosine_rsa,objective,0.0385924020858347,4,11,0.6755190587608035,0.6369266566749688
+tcga_20x_256,cosine_rsa,architecture (backbone),-0.047212193449565065,6,9,0.618890647828119,0.666102841277684
+tcga_20x_256,cosine_rsa,architecture (exact),0.08650871774514735,1,14,0.727959433793329,0.6414507160481816
+tcga_20x_256,distance_correlation,objective,0.04087324517754887,4,11,0.8529570183461554,0.8120837731686066
+tcga_20x_256,distance_correlation,architecture (backbone),-0.012363613635448134,6,9,0.815565137034684,0.8279287506701322
+tcga_20x_256,distance_correlation,architecture (exact),0.04699112591804189,1,14,0.8668416894061253,0.8198505634880834
+tcga_20x_512,linear_cka,objective,nan,1,0,nan,nan
+tcga_20x_512,linear_cka,architecture (backbone),nan,1,0,nan,nan
+tcga_20x_512,linear_cka,architecture (exact),nan,0,1,nan,nan
+tcga_20x_512,kernel_cka,objective,nan,1,0,nan,nan
+tcga_20x_512,kernel_cka,architecture (backbone),nan,1,0,nan,nan
+tcga_20x_512,kernel_cka,architecture (exact),nan,0,1,nan,nan
+tcga_20x_512,svcca,objective,nan,1,0,nan,nan
+tcga_20x_512,svcca,architecture (backbone),nan,1,0,nan,nan
+tcga_20x_512,svcca,architecture (exact),nan,0,1,nan,nan
+tcga_20x_512,pwcca,objective,nan,1,0,nan,nan
+tcga_20x_512,pwcca,architecture (backbone),nan,1,0,nan,nan
+tcga_20x_512,pwcca,architecture (exact),nan,0,1,nan,nan
+tcga_20x_512,procrustes,objective,nan,1,0,nan,nan
+tcga_20x_512,procrustes,architecture (backbone),nan,1,0,nan,nan
+tcga_20x_512,procrustes,architecture (exact),nan,0,1,nan,nan
+tcga_20x_512,cosine_rsa,objective,nan,1,0,nan,nan
+tcga_20x_512,cosine_rsa,architecture (backbone),nan,1,0,nan,nan
+tcga_20x_512,cosine_rsa,architecture (exact),nan,0,1,nan,nan
+tcga_20x_512,distance_correlation,objective,nan,1,0,nan,nan
+tcga_20x_512,distance_correlation,architecture (backbone),nan,1,0,nan,nan
+tcga_20x_512,distance_correlation,architecture (exact),nan,0,1,nan,nan
+tcga_5x_224,linear_cka,objective,nan,3,0,nan,nan
+tcga_5x_224,linear_cka,architecture (backbone),nan,3,0,nan,nan
+tcga_5x_224,linear_cka,architecture (exact),nan,0,3,nan,nan
+tcga_5x_224,kernel_cka,objective,nan,3,0,nan,nan
+tcga_5x_224,kernel_cka,architecture (backbone),nan,3,0,nan,nan
+tcga_5x_224,kernel_cka,architecture (exact),nan,0,3,nan,nan
+tcga_5x_224,svcca,objective,nan,3,0,nan,nan
+tcga_5x_224,svcca,architecture (backbone),nan,3,0,nan,nan
+tcga_5x_224,svcca,architecture (exact),nan,0,3,nan,nan
+tcga_5x_224,pwcca,objective,nan,3,0,nan,nan
+tcga_5x_224,pwcca,architecture (backbone),nan,3,0,nan,nan
+tcga_5x_224,pwcca,architecture (exact),nan,0,3,nan,nan
+tcga_5x_224,procrustes,objective,nan,3,0,nan,nan
+tcga_5x_224,procrustes,architecture (backbone),nan,3,0,nan,nan
+tcga_5x_224,procrustes,architecture (exact),nan,0,3,nan,nan
+tcga_5x_224,cosine_rsa,objective,nan,3,0,nan,nan
+tcga_5x_224,cosine_rsa,architecture (backbone),nan,3,0,nan,nan
+tcga_5x_224,cosine_rsa,architecture (exact),nan,0,3,nan,nan
+tcga_5x_224,distance_correlation,objective,nan,3,0,nan,nan
+tcga_5x_224,distance_correlation,architecture (backbone),nan,3,0,nan,nan
+tcga_5x_224,distance_correlation,architecture (exact),nan,0,3,nan,nan
+tcga_5x_256,linear_cka,objective,0.031732050024592895,3,7,0.6996784045463297,0.6679463545217368
+tcga_5x_256,linear_cka,architecture (backbone),0.0022437339041905258,3,7,0.679036583262048,0.6767928493578574
+tcga_5x_256,linear_cka,architecture (exact),nan,0,10,nan,nan
+tcga_5x_256,kernel_cka,objective,0.04718654471741168,3,7,0.7389913708317376,0.6918048261143259
+tcga_5x_256,kernel_cka,architecture (backbone),0.007939011056270928,3,7,0.7115180972689391,0.7035790862126682
+tcga_5x_256,kernel_cka,architecture (exact),nan,0,10,nan,nan
+tcga_5x_256,svcca,objective,0.11820810332900666,3,7,0.6240748840174468,0.5058667806884402
+tcga_5x_256,svcca,architecture (backbone),0.043191400887415576,3,7,0.5715631923083331,0.5283717914209175
+tcga_5x_256,svcca,architecture (exact),nan,0,10,nan,nan
+tcga_5x_256,pwcca,objective,0.0761963227293061,3,7,0.6859635358524722,0.6097672131231661
+tcga_5x_256,pwcca,architecture (backbone),0.0364550521837238,3,7,0.6581446464705647,0.6216895942868409
+tcga_5x_256,pwcca,architecture (exact),nan,0,10,nan,nan
+tcga_5x_256,procrustes,objective,0.056788888976786134,3,7,0.6813792576219871,0.624590368645201
+tcga_5x_256,procrustes,architecture (backbone),0.004352967327144408,3,7,0.6446741124672379,0.6403211451400935
+tcga_5x_256,procrustes,architecture (exact),nan,0,10,nan,nan
+tcga_5x_256,cosine_rsa,objective,0.052676327701786874,3,7,0.6849598092598748,0.6322834815580879
+tcga_5x_256,cosine_rsa,architecture (backbone),-0.01217094775534533,3,7,0.6395667164398823,0.6517376641952276
+tcga_5x_256,cosine_rsa,architecture (exact),nan,0,10,nan,nan
+tcga_5x_256,distance_correlation,objective,0.029087282315786278,3,7,0.8617132773571522,0.8326259950413659
+tcga_5x_256,distance_correlation,architecture (backbone),0.003047888334296034,3,7,0.8434857015701089,0.8404378132358129
+tcga_5x_256,distance_correlation,architecture (exact),nan,0,10,nan,nan
+tcga_5x_512,linear_cka,objective,nan,1,0,nan,nan
+tcga_5x_512,linear_cka,architecture (backbone),nan,1,0,nan,nan
+tcga_5x_512,linear_cka,architecture (exact),nan,0,1,nan,nan
+tcga_5x_512,kernel_cka,objective,nan,1,0,nan,nan
+tcga_5x_512,kernel_cka,architecture (backbone),nan,1,0,nan,nan
+tcga_5x_512,kernel_cka,architecture (exact),nan,0,1,nan,nan
+tcga_5x_512,svcca,objective,nan,1,0,nan,nan
+tcga_5x_512,svcca,architecture (backbone),nan,1,0,nan,nan
+tcga_5x_512,svcca,architecture (exact),nan,0,1,nan,nan
+tcga_5x_512,pwcca,objective,nan,1,0,nan,nan
+tcga_5x_512,pwcca,architecture (backbone),nan,1,0,nan,nan
+tcga_5x_512,pwcca,architecture (exact),nan,0,1,nan,nan
+tcga_5x_512,procrustes,objective,nan,1,0,nan,nan
+tcga_5x_512,procrustes,architecture (backbone),nan,1,0,nan,nan
+tcga_5x_512,procrustes,architecture (exact),nan,0,1,nan,nan
+tcga_5x_512,cosine_rsa,objective,nan,1,0,nan,nan
+tcga_5x_512,cosine_rsa,architecture (backbone),nan,1,0,nan,nan
+tcga_5x_512,cosine_rsa,architecture (exact),nan,0,1,nan,nan
+tcga_5x_512,distance_correlation,objective,nan,1,0,nan,nan
+tcga_5x_512,distance_correlation,architecture (backbone),nan,1,0,nan,nan
+tcga_5x_512,distance_correlation,architecture (exact),nan,0,1,nan,nan
