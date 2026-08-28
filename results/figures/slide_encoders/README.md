@@ -12,5 +12,4 @@ to the floor for SVCCA and PWCCA, which saturate as n approaches d.
 
 | figure | cohort | encoders | source |
 |---|---|---|---|
-| `cptac_slide_encoders.pdf` | CPTAC | 6 | `results/slide_encoders/cptac_benchmark/matrices` |
-| `tcga_slide_encoders.pdf` | TCGA | 8 | `results/slide_encoders/master_benchmark/matrices` |
+| `tcga_slide_encoders.pdf` | TCGA | 6 | `results/slide_encoders/master_benchmark/matrices` |

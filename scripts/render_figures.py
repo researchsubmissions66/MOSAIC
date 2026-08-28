@@ -543,7 +543,13 @@ def fig_downstream(out: Path, fmt: str, metric: str = "auc") -> None:
     # concat and shared — a clean 3-way that makes the representation the point.
     rows = []
     for task, g in data.groupby("task"):
-        single = g[g.condition == "single"].groupby("encoders")["v"].mean()
+        # KEEP is excluded so that "Best single" is a max over the same five
+        # encoders in both cohorts: the TCGA runs never included it, and a max
+        # over six is biased upward against a max over five. This only fixes the
+        # single-encoder bars -- the CPTAC concat/shared conditions were fitted
+        # on all six and cannot be corrected here, only recomputed.
+        sg = g[(g.condition == "single") & (g.encoders != DOWNSTREAM_EXCLUDE)]
+        single = sg.groupby("encoders")["v"].mean()
         rows += [
             {"task": task, "series": "Best single",
              "value": single.max() if len(single) else np.nan},
@@ -1411,6 +1417,11 @@ def figs_similarity_by_subcohort(out: Path, fmt: str, metric: str = "linear_cka"
 #: other more than with the control" claim is measured against this row.
 CONTROL_ENCODER = "ResNet50 (ImageNet)"
 
+#: Dropped from the single-encoder comparison: present on CPTAC, absent
+#: from the TCGA runs, so including it would compare best-of-6 against
+#: best-of-5. Registry key, as it appears in the results tables.
+DOWNSTREAM_EXCLUDE = "keep"
+
 
 def fig_control_gap(out: Path, fmt: str, metric: str = "linear_cka") -> None:
     """How far the pathology encoders sit from the ImageNet control, per subcohort.
@@ -1468,6 +1479,47 @@ def fig_control_gap(out: Path, fmt: str, metric: str = "linear_cka") -> None:
         print(f"      {n.splitlines()[0]:14s} patho={pp:.3f} control={vc:.3f} gap={pp - vc:.3f}")
 
 
+def fig_slide_retrieval(out: Path, fmt: str, cohort: str = "cptac_benchmark") -> None:
+    """Cross-model retrieval between slide encoders, per aligner.
+
+    Distinct from fig2: that one retrieves a *patch* across patch encoders,
+    this one retrieves a *slide* across slide encoders. The units, the encoders
+    and the database size all differ, so the two are not comparable and are
+    filed apart.
+    """
+    root = Path(__file__).resolve().parents[1]
+    f = root / f"results/slide_encoders/{cohort}/retrieval_summary.csv"
+    if not f.exists():
+        print(f"  skip slide retrieval ({cohort}): no summary")
+        return
+    df = pd.read_csv(f, index_col=0)
+    metrics = ["recall@1", "recall@5", "recall@10", "map", "ndcg"]
+    conds = [c for c in ALIGN_ORDER if c in df.index]
+    label = "CPTAC" if "cptac" in cohort else "TCGA"
+
+    long = pd.DataFrame([
+        {"metric": clean_label(m), "condition": clean_label(c),
+         "value": df.loc[c, m] * 100}
+        for c in conds for m in metrics if m in df.columns
+    ])
+    nq = int(df["n_query"].iloc[0]) if "n_query" in df.columns else None
+    fig, ax = grouped_bars(
+        long, x="metric", y="value", group="condition",
+        group_order=[clean_label(c) for c in conds], highlight="GCCA",
+        ramp="purple", value_fmt="{:.0f}", ylab="Score (%)",
+        figsize=(9.6, 5.0), label_size=7,
+    )
+    ax.set_ylim(0, 108)
+    sub = f"{len(conds)} conditions"
+    if nq:
+        sub += f" · {nq} queries"
+    ax.set_title(f"Slide-encoder retrieval in the shared space · {label} · {sub}",
+                 fontsize=13, fontweight="bold")
+    emit(fig, out, f"fig_slide_retrieval_{label.lower()}", fmt)
+    plt.close(fig)
+    print(f"    conditions: {conds}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Render the MOSAIC figure set.")
     parser.add_argument("--out", type=Path, default=Path("results/figures"))
@@ -1495,6 +1547,8 @@ def main() -> None:
         figs_similarity_by_grid(args.out, args.format)
         table_similarity_all(args.out, args.format)
         figs_slide_encoder_similarity(args.out, args.format)
+        for _c in ("cptac_benchmark", "master_benchmark"):
+            fig_slide_retrieval(args.out, args.format, _c)
         figs_similarity_by_subcohort(args.out, args.format)
         fig_control_gap(args.out, args.format)
         print("\nPer-series magnification figures:")

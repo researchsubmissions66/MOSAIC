@@ -410,6 +410,8 @@ def heatmap_row(
     suptitle: str | None = None,
     rotate_xticks: float = 0.0,
     n_cols: int | None = None,
+    row_gap: float = 0.28,
+    col_gap: float = 1.05,
 ) -> Figure:
     """A row -- or grid -- of heatmap panels, each with an independent colourbar.
 
@@ -442,6 +444,14 @@ def heatmap_row(
         Figure title.
     rotate_xticks : float, default 0.0
         Rotation for x tick labels; use 45 for long encoder names.
+    row_gap : float, default 0.28
+        Vertical space between rows, as a fraction of panel height. Lower packs
+        the rows tighter; the x tick labels of the upper row set the floor.
+    col_gap : float, default 1.05
+        Horizontal space between panels, as a fraction of panel width. Each
+        panel carries its own colourbar on the right, so this has to clear the
+        colourbar *and* the next panel's y tick labels; too small and the
+        labels are clipped ("Madeleine" -> "deleine").
     n_cols : int, optional
         Wrap onto multiple rows at this width. A single row of seven panels is
         ~27in wide, which forces the panels and their labels down until neither
@@ -466,17 +476,24 @@ def heatmap_row(
 
     ncol = len(names) if n_cols is None else max(1, min(n_cols, len(names)))
     nrow = math.ceil(len(names) / ncol)
-    fig, axes = plt.subplots(
-        nrow,
-        ncol,
-        figsize=(panel_size[0] * ncol, panel_size[1] * nrow),
-        squeeze=False,
-    )
-    flat = axes.ravel()
-    for ax in flat[len(names):]:      # trailing cells of a partly-filled row
-        ax.axis("off")
+
+    # Half-column grid so a partly-filled last row can be centred rather than
+    # left-aligned against an empty cell: each panel spans two half-columns, and
+    # a row holding k < ncol panels starts (ncol - k) half-columns in.
+    fig = plt.figure(figsize=(panel_size[0] * ncol, panel_size[1] * nrow))
+    gs = fig.add_gridspec(nrow, 2 * ncol, hspace=row_gap, wspace=col_gap)
+
+    flat, pos = [], []
+    for r in range(nrow):
+        k = min(ncol, len(names) - r * ncol)
+        offset = ncol - k
+        for j in range(k):
+            c0 = offset + 2 * j
+            flat.append(fig.add_subplot(gs[r, c0:c0 + 2]))
+            pos.append((r, j, k))
 
     for i, (ax, name) in enumerate(zip(flat, names)):
+        _row, _col, _k = pos[i]
         heatmap_panel(
             ax,
             matrices[name],
@@ -486,10 +503,9 @@ def heatmap_row(
             limits=limits,
             mask=mask,
             xlab=xlab,
-            ylab=ylab if i % ncol == 0 else "",
+            ylab=ylab if _col == 0 else "",
             label_size=label_size,
-            cbar_label=cbar_label if (i % ncol == ncol - 1
-                                      or i == len(names) - 1) else "",
+            cbar_label=cbar_label if _col == _k - 1 else "",
         )
         if rotate_xticks:
             for lab in ax.get_xticklabels():
@@ -498,10 +514,10 @@ def heatmap_row(
 
     if suptitle:
         fig.suptitle(suptitle, fontsize=base_size + 3, fontweight="bold")
-    # Rotated tick labels and per-panel colourbars both eat space that
-    # tight_layout's defaults do not budget for, so pad explicitly.
-    fig.tight_layout(pad=1.4, w_pad=2.0, h_pad=2.2,
-                     rect=(0, 0, 1, 0.94 if suptitle else 1.0))
+    # No tight_layout here: it recomputes the geometry and would discard both
+    # the centring and `row_gap`. The gridspec already carries the spacing.
+    if suptitle:
+        fig.subplots_adjust(top=0.90 if nrow > 1 else 0.88)
     return fig
 
 
