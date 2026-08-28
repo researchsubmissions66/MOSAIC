@@ -622,10 +622,17 @@ def fig_downstream(out: Path, fmt: str, metric: str = "auc") -> None:
 # ---------------------------------------------------------------------------
 
 
-def fig_magnification(out: Path, fmt: str) -> None:
-    f = RESULTS / "magnification/cptac_benchmark_256px/magnification_summary.csv"
+def fig_magnification(out: Path, fmt: str, series: str = "cptac_benchmark_256px",
+                     key: str | None = None) -> None:
+    """Agreement against magnification for one series.
+
+    `series` selects the cohort/grid; the TCGA counterpart is rendered from the
+    same data and code so the two are directly comparable. Only the CPTAC one
+    carries the fig4 name, since that is what the paper references.
+    """
+    f = RESULTS / f"magnification/{series}/magnification_summary.csv"
     if not f.exists():
-        print("  skip magnification"); return
+        print(f"  skip magnification ({series})"); return
     df = pd.read_csv(f)
     metrics = ["linear_cka", "kernel_cka", "svcca", "pwcca",
                "procrustes", "cosine_rsa", "distance_correlation"]
@@ -657,7 +664,9 @@ def fig_magnification(out: Path, fmt: str) -> None:
     ax.minorticks_off()
     ax.set_xlabel("Magnification", fontweight="bold")
     ax.set_ylabel("Cross-model similarity", fontweight="bold")
-    ax.set_title("Agreement decreases with magnification",
+    _label = "CPTAC" if series.startswith("cptac") else "TCGA"
+    _px = series.rsplit("_", 1)[-1]
+    ax.set_title(f"Agreement decreases with magnification  ·  {_label} · {_px}",
                  fontweight="bold", fontsize=13, pad=10)
     ax.grid(axis="y", alpha=0.28, lw=0.6)
     ax.set_axisbelow(True)
@@ -670,7 +679,7 @@ def fig_magnification(out: Path, fmt: str) -> None:
         fontsize=9, handlelength=1.6, borderaxespad=0, labelspacing=0.7,
     )
     fig.tight_layout()
-    emit(fig, out, "fig4_magnification", fmt)
+    emit(fig, out, key or "fig4_magnification", fmt)
 
 
 # ---------------------------------------------------------------------------
