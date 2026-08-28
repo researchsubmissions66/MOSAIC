@@ -122,39 +122,94 @@ Written to sit next to the data they describe rather than in this file:
 | `results/groups/tcga_20x_224/alignment/README.md` | the **11** alignment metrics — definitions, line refs, which failure each catches |
 | `results/figures/groups/tcga_20x_224px/README.md` | every number behind that group's four figures, and the two-block metric finding |
 | `results/figures/FIGURE_INVENTORY.md` | cohort, grid and encoder set for every figure, original ones included |
+| `results/full_run/analysis/arch_vs_objective/README.md` | RQ2 — architecture vs pretraining objective, with the three limits |
 | `results/figures/similarity_by_grid/README.md` | the all-grids similarity table |
 | `results/full_run/analysis/similarity_by_subcohort/README.md` | the pooling finding |
 
-## 📊 Status — 2026-08-28
+## 📊 Status — 2026-08-28 (evening)
 
 ### ✅ Finished and safe to write up
 
 | result | where | note |
 |---|---|---|
-| **CPTAC flagship, all 4 stages** | `results/full_run/analysis/{similarity,alignment,transfer,retrieval}/` | recomputed post-withholding 08-28 06:45-08:11, 6 encoders. fig1/2/5/7 current. |
-| **Downstream MIL, 13 tasks** | `results/full_run/downstream/downstream/` | 3 conditions x 2 MIL heads. Unaffected by the withholdings (each task cohort-filters to its own subcohort). |
-| **Magnification, both cohorts, all 3 grids** | `results/magnification/` | CPTAC 224/256/512px landed 08-27/28. **fig4 is no longer provisional.** |
+| **CPTAC flagship, all 4 stages** | `results/full_run/analysis/{similarity,alignment,transfer,retrieval}/` | recomputed post-withholding, 6 encoders. fig1/2/5/7 current. |
+| **14 of 18 groups, all 4 stages** | `results/groups/` | complete table in `results/groups/README.md` |
+| **Downstream MIL, 13 tasks** | `results/full_run/downstream/downstream/` | 3 conditions x 2 MIL heads. Unaffected by the withholdings. |
+| **Magnification, both cohorts, all 3 grids** | `results/magnification/` | **fig4 is no longer provisional.** |
 | **Slide encoders, both cohorts, all 4 stages** | `results/slide_encoders/{cptac,master}_benchmark/` | 6 encoders, 5 aligners, 2162 / 2169 slides. |
-| **11 of 18 groups, all 4 stages** | `results/groups/` | see the table in `results/groups/README.md` |
+| **Architecture vs objective (RQ2)** | `results/full_run/analysis/arch_vs_objective/` | new; `scripts/architecture_vs_objective.py`, stdlib-only |
 | **Layer-wise (fig10)** | `results/layerwise/tcga_10x_256_{cls,mean}/` | both pooling modes. |
 | **Per-subcohort similarity** | `results/full_run/analysis/similarity_by_subcohort/` | 14 of 15 CPTAC cells; carries the pooling finding. |
-| **All figures** | `results/figures/` | 88 re-rendered 08-28 08:52, in the restored rounded-tile style. |
+| **All figures** | `results/figures/` | re-rendered in the restored rounded-tile style. |
 
-### ⏳ Pending
+The four incomplete groups are `cptac_20x_224`, `cptac_5x_256`, `tcga_20x_256`
+and `tcga_5x_256` — each missing retrieval and/or transfer, all requeued. No
+finding in this file depends on them.
 
-| job | state | produces |
-|---|---|---|
-| `mos-grp-tcga_5x_256` · `tcga_20x_256` · `cptac_5x_256` | running | the last three incomplete groups |
-| `mos-dn-tcga_20x_224` · `mos-dn-cptac_20x_512` | running | downstream on non-flagship grids -> `results/downstream_other/` |
-| `21544821/2/3` | queued | the retrieval/transfer stages that timed out on three CPTAC groups |
-| `21544865` | queued | CPTAC 20x/224 downstream, resumable (skips finished tasks) |
-| `21502445 mosaic-subcohort` | queued | the last subcohort cell + slide-encoder subcohorts |
+### ⏳ Pending — 9 jobs
 
-**Time limits were the main failure mode overnight**: five jobs hit TIMEOUT, none
-crashed. When requeueing a partial group, pass only the missing `--stages` — a
-full rerun repeats hours of completed work. Check which stages exist first.
+| job | produces |
+|---|---|
+| `21561159` | cptac_20x_224 retrieval + transfer |
+| `21561161` · `21561163` | cptac_5x_256 · tcga_20x_256 — alignment, retrieval, transfer |
+| `21561164` | tcga_5x_256 retrieval + transfer |
+| `21561170` · `21561171` · `21544865` | downstream on non-flagship grids -> `results/downstream_other/` |
+| `21562060` | label-mode retrieval, 3 tasks -> `analysis/retrieval/label_*` |
+| `21502445` | the last subcohort cell |
+
+**Time limits are the whole failure mode — twelve TIMEOUTs so far, zero
+crashes.** Two rules learned the hard way:
+
+- *Scale the limit to the alignment stage, not the encoder count.* Similarity is
+  cheap and finishes in minutes; alignment on five or six views does not fit in
+  3h30. The 256px groups timed out twice before being given 8h.
+- *Always requeue with only the missing `--stages`, and check the disk first.*
+  `run_study.py` writes each stage as it completes, so a timeout keeps what
+  finished — `tcga_5x_256` kept its alignment and needed only the last two
+  stages. A blind full rerun repeats hours of finished work.
+
+Downstream needs a resume guard (`[ -f .../results.csv ] && continue`): three
+jobs died at 1-4 of 9 tasks, and without the guard a requeue restarts from zero.
+`downstream_mil.py` takes **one `--task` per invocation** — loop in the wrapper
+with a per-task `--out`.
+
+### 🗂️ Uncommitted on purpose
+
+- `configs/encoders.yaml`, `utils/labels.py` — hold the local `feature_root` and
+  datasets path; they ship with `/path/to/...` placeholders. Never stage the
+  working-tree version.
+- `results/groups/cptac_20x_224/{retrieval,transfer}` deletions — `21561159`
+  refills them.
+- `results/full_run/analysis/retrieval/label_*` deletions — these had **no job**
+  until `21562060`; the archiving was silent data loss rather than a pending
+  refill. Do not commit the deletions to tidy the tree; wait for the job.
+
+The flat `analysis/similarity_{224,512}px/<group>/` trees whose per-group
+equivalents finished have been retired (commit `d880b2c`). That also closed a
+hazard in `_similarity_dirs()`: it prefers whichever layout has more encoders,
+but with `n > found[key][0]`, an equal-encoder tie fell to glob order, and
+`results/full_run` sorts before `results/groups` — so a tie handed the stale
+flat tree the win.
 
 ### 🔬 Findings worth carrying into the write-up
+
+**RQ2 — the pretraining objective shapes geometry; the architecture does not.**
+Δ_obj is positive in **all 42 defined cells** (every group, every metric, mean
++0.076); Δ_arch by backbone averages +0.051 and goes negative seven times. Where
+the two separate, objective wins: on TCGA 20x/256px Δ_arch is −0.014 while Δ_obj
+is +0.080. The clean test is the 224px groups, which hold objective constant —
+all four encoders are `vision_ssl`, so Δ_obj has no contrast and exactly one pair
+shares an architecture (Virchow / Virchow2, both ViT-H/14, both 2560-d, same lab,
+differing only in pretraining scale). Δ_arch(exact) is **−0.216** on CPTAC and
+**−0.197** on TCGA for linear CKA: the two encoders sharing an architecture
+exactly are the *least* similar pair in the group, on both cohorts.
+
+Three limits, all recorded in that folder's README. Δ_arch(exact) rests on **one
+pair** replicated across two cohorts — an existence proof, not an average effect.
+Δ_obj rests on 3-6 pairs per group. And **never cite the flagship for this**: its
+two deltas are near-equal (+0.138 vs +0.134), which reads as agreement but is a
+confound — the only supervised encoder is also the only pure CNN, so both
+partitions largely reduce to whether the ImageNet control is in the pair.
 
 **The seven similarity metrics form two blocks that rank encoder pairs in
 opposite orders.** On TCGA 20x/224px, `metric_agreement.csv` gives Linear CKA,
