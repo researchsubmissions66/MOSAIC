@@ -1,0 +1,3 @@
+query,database,recall@1,recall@5,recall@10,mrr,median_rank,n
+conch_v1,conch_v15,0.916,0.9815,0.9925,0.9449440988966756,1.0,2000.0
+conch_v15,conch_v1,0.9455,0.994,0.9975,0.9661885389345457,1.0,2000.0

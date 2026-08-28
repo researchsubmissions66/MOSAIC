@@ -61,11 +61,13 @@ DEFAULT_MUTATION_CSV = (
 
 #: cohort -> genes for the CPTAC mutation-prediction panel.
 #:
-#: CPTAC-LSCC is deliberately absent. Only 134 of its 1081 slides have features
-#: extracted, leaving 28 patients — too few to split, train and evaluate — and
-#: TP53 is mutated in 94% of LSCC, so that task has almost no negative class.
-#: Re-add it here once the LSCC cohort is fully extracted; the mutation labels
-#: already cover 108 LSCC patients and are downloaded.
+#: CPTAC-LSCC is dropped from the study, not pending. Only 134 of its 1081
+#: slides ever had features (~12%), which left every LSCC task either
+#: unusable or severely imbalanced -- TP53 is mutated in 94% of LSCC, so that
+#: task has almost no negative class, and `cptac_nsclc` ran 1139 LUAD vs 134
+#: LSCC. Completing the cohort was possible (the slides download fine) but
+#: was judged not worth the extraction; do not re-add LSCC tasks here without
+#: reversing that decision.
 CPTAC_MUTATION_PANEL: dict[str, tuple[str, ...]] = {
     "CPTAC-BRCA": ("PIK3CA", "MAP3K1", "GATA3"),
     "CPTAC-COAD": ("KRAS", "PIK3CA", "TP53"),
@@ -130,22 +132,6 @@ TASK_REGISTRY: dict[str, Task] = {
         notes=(
             "The standard computational-pathology benchmark, and the only "
             "balanced task here (531/512 slides, 946 patients)."
-        ),
-    ),
-    "cptac_nsclc": Task(
-        name="cptac_nsclc",
-        store_cohort="cptac_benchmark",
-        source="cptac",
-        column="collection",
-        classes=("CPTAC-LUAD", "CPTAC-LSCC"),
-        description="CPTAC NSCLC subtyping: adenocarcinoma vs squamous cell carcinoma",
-        notes=(
-            "The external-validation counterpart to tcga_nsclc: train on TCGA, "
-            "test here, to show a shared latent space transfers across cohorts. "
-            "SEVERELY IMBALANCED as extracted (1139 LUAD vs 134 LSCC) because "
-            "only ~12% of the LSCC cohort has features — report balanced "
-            "accuracy and AUC, never accuracy. Extracting the rest of LSCC "
-            "fixes it."
         ),
     ),
     # --- requires configs/clinical/tcga_clinical.csv (scripts/download_clinical.py) ---

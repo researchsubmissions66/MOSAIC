@@ -1,0 +1,7 @@
+query,database,recall@1,recall@5,recall@10,mrr,median_rank,n
+gpfm,hoptimus0,0.9995,1.0,1.0,0.99975,1.0,2000.0
+hoptimus0,gpfm,1.0,1.0,1.0,1.0,1.0,2000.0
+gpfm,virchow2,0.9995,1.0,1.0,0.99975,1.0,2000.0
+virchow2,gpfm,0.9995,1.0,1.0,0.99975,1.0,2000.0
+hoptimus0,virchow2,0.998,1.0,1.0,0.998875,1.0,2000.0
+virchow2,hoptimus0,0.9985,1.0,1.0,0.9990416666666667,1.0,2000.0

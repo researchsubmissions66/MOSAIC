@@ -39,16 +39,16 @@
   "group": "cptac_benchmark/10x_256px",
   "series": "best",
   "seed": 0,
-  "started_utc": "2026-08-27T14:10:19.977348+00:00",
-  "finished_utc": "2026-08-27T16:15:37.974537+00:00",
-  "total_minutes": 125.3,
+  "started_utc": "2026-08-28T11:13:31.742530+00:00",
+  "finished_utc": "2026-08-28T13:20:38.082355+00:00",
+  "total_minutes": 127.11,
   "stages": [
     {
       "stage": "similarity",
       "command": "python scripts/representation_similarity.py --group cptac_benchmark/10x_256px --n-patches 50000 --max-slides 500 --max-samples 8000 --seed 0 --no-umap --out results/full_run/analysis/similarity",
       "status": "ok",
       "returncode": 0,
-      "minutes": 31.88,
+      "minutes": 32.26,
       "log": "results/full_run/analysis/logs/similarity.log"
     },
     {
@@ -56,7 +56,7 @@
       "command": "python scripts/shared_latent_space.py --group cptac_benchmark/10x_256px --n-patches 50000 --max-slides 500 --latent-dim 64 --methods joint_pca gcca mcca procrustes autoencoder --seed 0 --save-aligners --out results/full_run/analysis/alignment",
       "status": "ok",
       "returncode": 0,
-      "minutes": 30.04,
+      "minutes": 24.22,
       "log": "results/full_run/analysis/logs/alignment.log"
     },
     {
@@ -64,7 +64,7 @@
       "command": "python scripts/cross_model_transfer.py --group cptac_benchmark/10x_256px --n-patches 50000 --max-slides 500 --latent-dim 64 --aligner autoencoder --query-samples 5000 --seed 0 --out results/full_run/analysis/transfer",
       "status": "ok",
       "returncode": 0,
-      "minutes": 26.52,
+      "minutes": 23.61,
       "log": "results/full_run/analysis/logs/transfer.log"
     },
     {
@@ -72,7 +72,7 @@
       "command": "python scripts/cross_model_retrieval.py --group cptac_benchmark/10x_256px --n-patches 50000 --max-slides 500 --latent-dim 64 --methods joint_pca gcca mcca procrustes autoencoder --query-samples 5000 --seed 0 --out results/full_run/analysis/retrieval",
       "status": "ok",
       "returncode": 0,
-      "minutes": 36.85,
+      "minutes": 46.79,
       "log": "results/full_run/analysis/logs/retrieval.log"
     }
   ]

@@ -15,3 +15,7 @@ scripts/mosaic_*.sh
 # Stray render target: render_figures.py --out results/figures_png was used for a
 # one-off PNG preview; results/figures is the canonical output.
 results/figures_png/
+
+# Fitted aligner objects: ~1 GB across the group trees, refittable from the
+# committed tables by run_study.py. Never needed to reproduce a figure.
+*.joblib

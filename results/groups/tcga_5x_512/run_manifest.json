@@ -1,0 +1,79 @@
+{
+  "preset": "full",
+  "config": {
+    "n_patches": 50000,
+    "max_slides": 500,
+    "max_samples": 8000,
+    "latent_dim": 64,
+    "query_samples": 5000,
+    "mil_epochs": 80,
+    "mil_max_patches": 4000,
+    "align_patches": 50000,
+    "tasks": [
+      "cptac_brca_gata3",
+      "cptac_brca_map3k1",
+      "cptac_brca_pik3ca",
+      "cptac_coad_kras",
+      "cptac_coad_pik3ca",
+      "cptac_coad_tp53",
+      "cptac_luad_kras",
+      "cptac_luad_stk11",
+      "cptac_luad_tp53",
+      "tcga_brca_stage",
+      "tcga_brca_subtype",
+      "tcga_nsclc",
+      "tcga_nsclc_stage"
+    ],
+    "methods": [
+      "joint_pca",
+      "gcca",
+      "mcca",
+      "procrustes",
+      "autoencoder"
+    ],
+    "mil": [
+      "abmil",
+      "transmil"
+    ]
+  },
+  "group": "master_benchmark/5x_512px",
+  "series": "best",
+  "seed": 0,
+  "started_utc": "2026-08-28T06:48:40.165861+00:00",
+  "finished_utc": "2026-08-28T07:03:51.176304+00:00",
+  "total_minutes": 15.18,
+  "stages": [
+    {
+      "stage": "similarity",
+      "command": "python scripts/representation_similarity.py --group master_benchmark/5x_512px --n-patches 50000 --max-slides 500 --max-samples 8000 --seed 0 --no-umap --out results/groups/tcga_5x_512/similarity",
+      "status": "ok",
+      "returncode": 0,
+      "minutes": 4.14,
+      "log": "results/groups/tcga_5x_512/logs/similarity.log"
+    },
+    {
+      "stage": "alignment",
+      "command": "python scripts/shared_latent_space.py --group master_benchmark/5x_512px --n-patches 50000 --max-slides 500 --latent-dim 64 --methods joint_pca gcca mcca procrustes autoencoder --seed 0 --save-aligners --out results/groups/tcga_5x_512/alignment",
+      "status": "ok",
+      "returncode": 0,
+      "minutes": 7.4,
+      "log": "results/groups/tcga_5x_512/logs/alignment.log"
+    },
+    {
+      "stage": "transfer",
+      "command": "python scripts/cross_model_transfer.py --group master_benchmark/5x_512px --n-patches 50000 --max-slides 500 --latent-dim 64 --aligner autoencoder --query-samples 5000 --seed 0 --out results/groups/tcga_5x_512/transfer",
+      "status": "ok",
+      "returncode": 0,
+      "minutes": 1.28,
+      "log": "results/groups/tcga_5x_512/logs/transfer.log"
+    },
+    {
+      "stage": "retrieval",
+      "command": "python scripts/cross_model_retrieval.py --group master_benchmark/5x_512px --n-patches 50000 --max-slides 500 --latent-dim 64 --methods joint_pca gcca mcca procrustes autoencoder --query-samples 5000 --seed 0 --out results/groups/tcga_5x_512/retrieval",
+      "status": "ok",
+      "returncode": 0,
+      "minutes": 2.37,
+      "log": "results/groups/tcga_5x_512/logs/retrieval.log"
+    }
+  ]
+}

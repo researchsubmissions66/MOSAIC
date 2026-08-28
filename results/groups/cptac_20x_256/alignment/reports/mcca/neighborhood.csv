@@ -1,6 +1,6 @@
 ,neighborhood_preservation
-ctranspath,0.5932999999999999
-gigapath,0.6235499999999999
-keep,0.5452
-resnet50,0.47
-uni_v2,0.6205499999999999
+ctranspath,0.58835
+gigapath,0.61215
+keep,0.53995
+resnet50,0.4613
+uni_v2,0.6098
