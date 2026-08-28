@@ -32,6 +32,7 @@ from utils.paperfigs import (  # noqa: E402
     save_plot,
 )
 
+ROOT = Path(__file__).resolve().parents[1]
 RESULTS = Path("results")
 
 #: All seven metrics the study computes. Figures previously showed only
@@ -1198,9 +1199,8 @@ def _similarity_dirs() -> dict:
     describe the same group the richer one wins, since one carries six encoders
     and the other five for TCGA 10x/256px.
     """
-    root = Path(__file__).resolve().parents[1]
     found: dict = {}
-    for f in sorted(root.glob("results/**/matrices/linear_cka.csv")):
+    for f in sorted(ROOT.glob("results/**/matrices/linear_cka.csv")):
         mdir = f.parent
         tag = mdir.parent.name
         if tag == "similarity":                       # results/groups/<tag>/similarity
@@ -1260,13 +1260,12 @@ def figs_similarity_by_grid(out: Path, fmt: str) -> None:
                   "| figure | cohort | magnification | encoders | source |",
                   "|---|---|---|---|---|"]
         for name, cohort, mag, n, mdir in sorted(index[px], key=lambda r: (r[1], int(r[2][:-1]))):
-            rel = mdir.relative_to(root) if mdir.is_absolute() else mdir
+            rel = mdir.relative_to(ROOT) if mdir.is_absolute() else mdir
             lines.append(f"| `{px}/{name}.{fmt}` | {cohort.upper()} | {mag} | {n} | `{rel}` |")
         lines.append("")
     lines += ["## Not represented", "",
-              "- **384px** — MUSK is the only encoder on it, so similarity is undefined.",
-              "- **5x/256px** — covered by the magnification series rather than a",
-              "  standalone matrix; see `results/figures/magnification/`.", ""]
+              "- **384px** — MUSK is the only encoder on it, so similarity is undefined;",
+              "  a one-encoder grid has no off-diagonal.", ""]
     (out / "similarity_by_grid" / "README.md").write_text("\n".join(lines))
     print(f"  similarity_by_grid/README.md  ({sum(len(v) for v in index.values())} figures indexed)")
 
