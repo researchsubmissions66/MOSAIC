@@ -110,42 +110,83 @@ Every figure regenerates from a committed table in `results/`:
 All `results/*.csv` are committed, so `render_figures.py` reproduces every figure
 from this repository alone. Only the feature store (Step 0) requires the raw data.
 
-## ✅ Tasks to do
+## 📊 Status — 2026-08-27
 
-Prioritized remaining work to complete coverage and the result set:
+### ✅ Finished and safe to write up
 
-1. ~~Complete the CPTAC-LSCC cohort.~~ **Dropped 2026-08-25.** LSCC is out of
-   the study: only 134 of 1081 slides ever had features, which made every LSCC
-   task unusable or severely imbalanced. The `cptac_nsclc` task (LUAD vs LSCC,
-   1139:134) has been removed from the registry and its results deleted, so the
-   downstream set is **13 tasks, not 14**. The decision was not forced by
-   access — the slides download fine from TCIA pathdb, verified on
-   `C3L-00081-21.svs` — it was a scope call. The 134 LSCC feature files remain
-   on disk, unused.
-2. **Populate the CPTAC `10x/256px` feature store** (`features_{conch_v1,
-   ctranspath, gigapath, keep, resnet50, uni_v2}`) before running any
-   six-encoder CPTAC analysis or the `concat` / `shared` downstream conditions.
-3. **Fill `cptac_luad_kras` concat + shared.** Once task 2 holds, run
-   `downstream_mil.py --task cptac_luad_kras --conditions concat shared`.
-   Only the `single` condition is currently recorded for this task.
-4. **Run Phase VII label-mode retrieval.**
-   `cross_model_retrieval.py --mode label --task <task>`. Only `identity` mode
-   has been run so far; label mode makes mAP and NDCG distinct and tests
-   semantic (same-class) neighbourhood preservation.
-5. **Bring the stranded encoders into the flagship comparison** by re-extracting
-   at `10x/256px`: MUSK (currently `384px` only), CONCH v1.5 (`512px` only), and
-   the Virchow / Virchow2 / H-optimus-0 / GPFM family (currently `224px` only).
-6. **Confirm both cohorts share the same six-encoder set** at `10x/256px`
-   (add KEEP to the TCGA grid if missing) so CPTAC and TCGA analyses are
-   directly comparable.
-7. **Regenerate all figures and result tables** (`render_figures.py`) after the
-   above.
+| result | where | note |
+|---|---|---|
+| **Downstream MIL, 13 tasks** | `results/full_run/downstream/downstream/` | 3 conditions x 2 MIL heads, all 13 complete. Unaffected by the withholdings below (each task cohort-filters to its own subcohort). |
+| **fig3 downstream** | `results/figures/fig3_downstream_auc/*.pdf` | current as of 08-27 16:36. **Use the PDF, not `images/figures/fig3_downstream_auc.png`** — the site PNG is a render behind and shows LUAD KRAS with one bar instead of three. |
+| **Per-subcohort similarity, patch level** | `results/full_run/analysis/similarity_by_subcohort/` | 14 of 51 runs, all CPTAC. Carries the pooling finding (below). |
+| **TCGA slide-encoder similarity** | `results/slide_encoders/master_benchmark/matrices/` | 6 encoders, 2169 slides, 7 metrics. |
+| **Layer-wise (fig10)** | `results/layerwise/tcga_10x_256_{cls,mean}/` | both pooling modes. |
+| **TCGA magnification** | `results/magnification/master_benchmark_{224,256}px/` | TCGA groups were never affected. |
+
+### ⏳ Pending — 12 jobs queued
+
+| job | produces |
+|---|---|
+| `mos-flagship-lscc` | CPTAC similarity / alignment / transfer / retrieval, LSCC withheld |
+| `mos-grp-*` (5) | the `results/groups/` trees; `tcga_10x_256` finally includes KEEP |
+| `mos-mag-cptac_*` (3) | CPTAC magnification, 224/256/512px |
+| `mosaic-slide-align` | both slide-encoder cohorts, all 5 aligners — similarity, alignment, transfer, retrieval |
+| `mosaic-subcohort` | remaining 37 subcohort runs incl. slide encoders |
+| `mos-figures` | all figures, on dependency |
+
+Nothing CPTAC at patch level is on disk right now; the stale versions were moved to
+an off-repo archive directory (649 files, 147 MB) rather than deleted, so
+before/after comparison stays possible.
+
+### 🔬 Two findings worth carrying into the write-up
+
+**Pooling inflates the ImageNet control gap.** Linear CKA on the flagship six:
+
+    pooled       0.199        CPTAC-COAD   0.073
+    CPTAC-LUAD   0.149        CPTAC-BRCA   0.045
+
+The pooled gap exceeds *every* subcohort's — not an average of them. Pooling barely moves
+pathology-to-pathology agreement but drives the ResNet50 column down, because the control
+separates tissue types more sharply than the pathology encoders do. Most of the headline gap
+is between-tissue variance, and on breast the control is closer to CONCH (0.72) than CONCH is
+to GigaPath (0.68). See `results/full_run/analysis/similarity_by_subcohort/README.md`.
+
+**The TCGA slide-encoder CCA degeneracy was not sample size.** It was two unregistered
+encoders. `care` and `prism2` exist only for breast slides, so requiring them in the encoder
+intersection pinned TCGA to 1126 pure-BRCA slides. Excluding them gives 2169 across
+BRCA/LUAD/LUSC, and PWCCA goes from 13-of-28 pairs saturated above 0.98 to 0-of-15.
+
+### ⚠️ Known issues, not yet fixed
+
+- `images/figures/fig3_downstream_auc.png` (the site copy) is stale — LUAD KRAS shows one bar.
+  The paper PDF is correct. Regenerate before the site is used as a reference.
+- fig3's `Concat` and `MOSAIC` bars are **6 encoders on CPTAC, 5 on TCGA**: KEEP is fitted into
+  the CPTAC concatenation and GCCA space, so no figure-level filter reaches it. `Best single`
+  *is* symmetric (KEEP excluded; it never wins a task).
+- The committed TCGA slide-encoder PDF has clipped y-axis labels — rendered before the
+  `col_gap` fix. The code is correct; the figure is one render behind.
+- `results/full_run/analysis/magnification/` is an older flat-layout duplicate of the
+  `results/magnification/<series>/` trees. Decide which is canonical.
+- ~640 files show as deleted in git (the archived staleness). They refill as the jobs land;
+  do not commit the deletions in the meantime.
+
+## 🚫 Out of scope — decided, do not re-add without reversing
+
+- **TCGA-RCC (kidney)** and **CPTAC-LSCC** — withheld study-wide via
+  `configs/excluded_slides.txt` (1074 slides). Features stay on disk.
+- **`cptac_nsclc`** — removed with LSCC. The downstream set is **13 tasks, not 14**;
+  `tests/test_downstream.py` locks that.
+- **Unregistered encoders** — `plip`, `quiltnet-b16`, `clip_rn50`, `uni_v1`, `virchow2-cls`
+  (patch) and `care`, `prism2` (slide). Filtered by `configs/encoders.yaml`.
+- **Optimal transport** — registered in `ALIGNER_REGISTRY`, in no preset, deliberately unrun.
+- **`mean` MIL head** — implemented, deliberately not part of the evaluation.
 
 ## 🟢 Already done
 
-- Result tables for every figure are committed under `results/`, so the figures
-  reproduce from this repo without rerunning the pipeline.
+- Result tables for every figure are committed under `results/`, so the figures reproduce
+  from this repo without rerunning the pipeline.
 - Layer-wise (Phase IV) pooling sweep complete for both `cls` and `mean`.
-- CTransPath and GigaPath enabled in the layer-wise analysis (five-encoder
-  depth study).
-- Static publication figures generated for every stage and cohort.
+- CTransPath and GigaPath enabled in the layer-wise analysis.
+- CPTAC `10x/256px` feature store populated (6 encoders, 2296 slides on disk, 2162 in scope).
+- Both cohorts confirmed to share the same six-encoder set at `10x/256px` — but note the
+  TCGA *analyses* still omit KEEP until `mos-grp-tcga_10x_256` lands.
