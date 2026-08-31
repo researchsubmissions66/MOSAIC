@@ -254,7 +254,7 @@
                 <!-- RQ3 -->
                 <div class="rq-card" onclick="openRqModal(2)">
                     <div class="rq-badge" style="color: #0d9488;">RQ3 · Alignment</div>
-                    <p class="rq-text">Can GCCA, Procrustes, optimal transport and other methods align several models into one shared latent space?</p>
+                    <p class="rq-text">Can the evaluated alignment methods align several models into one shared latent space?</p>
                     <button class="rq-expand" aria-label="Expand">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </button>
@@ -557,7 +557,7 @@
     <section id="theory-methods" class="animate-up" style="padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; border-bottom: 1px solid #eee;">
         <h2 class="section-title">Theory & Methods</h2>
         <p class="section-desc" style="max-width: 800px; margin-bottom: 3rem;">
-            An overview of the 7 similarity metrics and 6 alignment methods used to compare and align cross-encoder representations.
+            An overview of the 7 similarity metrics and 5 alignment methods used to compare and align cross-encoder representations.
         </p>
 
         <!-- Similarity Metrics -->
@@ -609,7 +609,7 @@
         <!-- Alignment Methods -->
         <h3 class="bench-category-title" style="margin-top: 2rem;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
-            6 Alignment Methods
+            5 Alignment Methods
         </h3>
         <div style="background: #fff; border-radius: 16px; border: 1px solid #e2e8f0; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.03); overflow-x: auto;">
             <table class="premium-table">
@@ -639,10 +639,6 @@
                     <tr>
                         <td class="font-bold">Shared Autoencoder</td>
                         <td>Learns non-linear mappings into a shared bottleneck capable of reconstructing all modalities.</td>
-                    </tr>
-                    <tr>
-                        <td class="font-bold">Optimal Transport</td>
-                        <td>Finds the minimum-cost plan for transporting probability mass from one space to another.</td>
                     </tr>
                 </tbody>
             </table>

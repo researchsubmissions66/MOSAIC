@@ -1903,7 +1903,7 @@ const RQ_DETAILS = [
     body: `
       <div class="rq-detail-row">
         <div class="rq-detail-icon" style="background: rgba(13,148,136,0.1); color: #0d9488;">🔗</div>
-        <div><strong>Method:</strong> We benchmark <strong>6 alignment methods</strong>: GCCA, MCCA, generalized Procrustes, joint PCA, shared autoencoder, and optimal transport.</div>
+        <div><strong>Method:</strong> We benchmark <strong>5 alignment methods</strong>: GCCA, MCCA, generalized Procrustes, joint PCA, and shared autoencoder.</div>
       </div>
       <div class="rq-detail-row">
         <div class="rq-detail-icon" style="background: rgba(13,148,136,0.1); color: #0d9488;">📏</div>
