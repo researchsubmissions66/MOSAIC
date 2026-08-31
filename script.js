@@ -1829,7 +1829,17 @@ function initializeTabList(tablist) {
     );
     if (!tabs.length) return;
 
-    const activate = (tab, moveFocus = false) => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const replayPanelTransition = panel => {
+        if (reducedMotion) return;
+        panel.classList.remove('tab-enter');
+        void panel.offsetWidth;
+        panel.classList.add('tab-enter');
+    };
+
+    const activate = (tab, moveFocus = false, animate = false) => {
+        const selectionChanged = tab.getAttribute('aria-selected') !== 'true';
         tabs.forEach(candidate => {
             const selected = candidate === tab;
             candidate.setAttribute('aria-selected', String(selected));
@@ -1837,13 +1847,20 @@ function initializeTabList(tablist) {
 
             const panelId = candidate.getAttribute('aria-controls');
             const panel = panelId ? document.getElementById(panelId) : null;
-            if (panel) panel.hidden = !selected;
+            if (!panel) return;
+
+            panel.hidden = !selected;
+            if (!selected) {
+                panel.classList.remove('tab-enter');
+            } else if (animate && selectionChanged) {
+                replayPanelTransition(panel);
+            }
         });
         if (moveFocus) tab.focus();
     };
 
     tabs.forEach((tab, index) => {
-        tab.addEventListener('click', () => activate(tab));
+        tab.addEventListener('click', () => activate(tab, false, true));
         tab.addEventListener('keydown', event => {
             let nextTab = null;
             if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
@@ -1858,7 +1875,7 @@ function initializeTabList(tablist) {
 
             if (nextTab) {
                 event.preventDefault();
-                activate(nextTab, true);
+                activate(nextTab, true, true);
             }
         });
     });

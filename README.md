@@ -1,9 +1,9 @@
-# 🧬 MOSAIC
+# MOSAIC
 
-> ### Towards a Universal Latent Space for Computational Pathology Foundation Models
+> **Towards a Universal Latent Space for Computational Pathology Foundation Models**
 
 <div align="center">
-  <img src="images/mosaic.jpg" alt="MOSAIC" width="360"/>
+  <img src="images/mosaic-hero.svg" alt="MOSAIC: 18 pathology encoders aligned into a shared latent space" width="820"/>
   <br/><br/>
   <img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python">
   <img src="https://img.shields.io/badge/status-under%20review%20%40%20WACV-orange.svg" alt="Status">
@@ -11,31 +11,59 @@
 
 <div align="center">
 
-**🔬 18 encoders · 🩻 2 cohorts · 🧫 4,331 slides · 🎯 13 tasks**
+**18 encoders · 2 cohorts · 4,331 slides · 13 tasks**
 
 </div>
 
-MOSAIC tests whether independently trained computational-pathology foundation
-models converge to a shared latent morphology space. This README is a practical
-guide to **installing the code and running the study**. For the full method,
-encoder registry, datasets, metrics and research questions, see the
+MOSAIC asks whether independently trained computational-pathology foundation
+models preserve enough common morphology to support a shared representation
+space. The study follows that question from geometry to utility:
+
+| Lens | Scientific question | Evidence produced |
+|---|---|---|
+| **Similarity** | Do encoders organize the same tissue in comparable ways? | Seven complementary representational-similarity metrics |
+| **Alignment** | Can model-specific coordinates be mapped into one shared space? | Five multiview alignment methods and cross-model identity retrieval |
+| **Translation** | Does the shared space preserve information unique to each encoder? | Directional cross-encoder representation translation |
+| **Downstream utility** | Is the shared space useful beyond geometric agreement? | Best-single, concatenated, and MOSAIC MIL comparisons across 13 tasks |
+
+The central workflow is:
+
+```text
+model-specific spaces → geometry audit → multiview alignment → shared latent space
+                                                            ↘ retrieval · translation · MIL
+```
+
+## Study scope
+
+| Cohort | Included subcohorts | Slides |
+|---|---|---:|
+| TCGA | BRCA (1,126), LUAD/LUSC (1,043) | 2,169 |
+| CPTAC | BRCA (654), LUAD (1,139), COAD (369) | 2,162 |
+| **Total** | **5 included subcohorts across 2 cohorts** | **4,331** |
+
+The benchmark reports **13 downstream tasks**: 4 morphological/clinical tasks
+and 9 molecular-prediction tasks. TCGA-RCC and CPTAC-LSCC are excluded from
+the reported study scope and slide total.
+
+This repository contains the experiment orchestration, analysis code, tests,
+and interactive project page needed to reproduce that workflow. For the full
+encoder registry, datasets, metrics, results, and research questions, see the
 [project website](https://researchsubmissions66.github.io/MOSAIC/).
 
 ---
 
-## 📑 Contents
+## Contents
 
-- [🔧 Setup](#-setup)
-- [🚀 Run the full study](#-run-the-full-study)
-- [🧩 Run a single stage](#-run-a-single-stage)
-- [🩻 Layer-wise analysis (Phase IV)](#-layer-wise-analysis-phase-iv)
-- [📊 Figures](#-figures)
-- [🧪 Tests](#-tests)
-- [📁 Repository layout](#-repository-layout)
+- [Setup](#setup)
+- [Run the full study](#run-the-full-study)
+- [Run one analysis](#run-one-analysis)
+- [Reproduce figures](#reproduce-figures)
+- [Tests](#tests)
+- [Repository map](#repository-map)
 
 ---
 
-## 🔧 Setup
+## Setup
 
 ```bash
 # 1. environment (Python 3.10+)
@@ -49,9 +77,7 @@ pip install -r requirements.txt
 ```
 
 Core dependencies: numpy, scipy, scikit-learn, pandas, matplotlib, seaborn,
-umap-learn, h5py, torch, pyyaml, joblib. The layer-wise stage additionally needs
-`openslide` and a [trident](https://github.com/mahmoodlab/trident) checkout for
-the model zoo.
+umap-learn, h5py, torch, pyyaml, joblib.
 
 Verify what features are on disk before running anything:
 
@@ -61,7 +87,7 @@ python scripts/scan_features.py --verify 2      # inventory + coordinate-pairing
 
 ---
 
-## 🚀 Run the full study
+## Run the full study
 
 One command runs all seven stages in order: `inventory`, `similarity`,
 `magnification`, `alignment`, `transfer`, `retrieval`, `downstream`.
@@ -72,7 +98,7 @@ python scripts/run_study.py --out results/main  --preset standard
 python scripts/run_study.py --out results/paper --preset full      # all 13 tasks, all aligners
 ```
 
-| Preset | patches | latent dim | MIL epochs | tasks | aligners |
+| Preset | Patches | Latent dimension | MIL epochs | Tasks | Aligners |
 |---|---|---|---|---|---|
 | `smoke` | 3k | 32 | 5 | 1 | joint_pca, gcca |
 | `standard` | 20k | 64 | 50 | 4 | + procrustes |
@@ -100,7 +126,7 @@ exactly what ran.
 
 ---
 
-## 🧩 Run a single stage
+## Run one analysis
 
 ```bash
 python scripts/representation_similarity.py --group best --n-patches 20000 --out results/sim
@@ -120,26 +146,7 @@ python scripts/downstream_mil.py --list-tasks
 
 ---
 
-## 🩻 Layer-wise analysis (Phase IV)
-
-This is the only stage that does **not** read the feature store: intermediate
-block activations were never saved, so it re-runs the models with forward hooks
-on re-cropped patches. It needs a few slides (already in the store) plus a trident
-checkout for the weights.
-
-```bash
-python scripts/download_slides.py --n 4        # ~77 MB, slides already in the store
-python scripts/layerwise_alignment.py \
-    --encoders uni_v2 gigapath conch_v1 ctranspath resnet50 \
-    --n-patches 512 --pool cls --out results/layerwise
-```
-
-`--pool {cls,mean,cls_mean}` selects how each block's tokens are reduced and
-materially changes the result, so sweep it.
-
----
-
-## 📊 Figures
+## Reproduce figures
 
 ```bash
 python scripts/make_figures.py --run results/full_run --out results/figures --format pdf
@@ -147,7 +154,7 @@ python scripts/make_figures.py --run results/full_run --out results/figures --fo
 
 ---
 
-## 🧪 Tests
+## Tests
 
 ```bash
 python -m pytest tests/ -q                 # full suite
@@ -160,7 +167,7 @@ patient-split leakage, ranking-metric correctness), not just output shapes.
 
 ---
 
-## 📁 Repository layout
+## Repository map
 
 ```
 scripts/    entry points: run_study.py plus one script per stage
