@@ -41,15 +41,14 @@ model-specific spaces → geometry audit → multiview alignment → shared late
 
 ## Study scope
 
-| Cohort | Included subcohorts | Slides |
+| Cohort | Subcohorts | Slides |
 |---|---|---:|
 | TCGA | BRCA (1,126), LUAD/LUSC (1,043) | 2,169 |
 | CPTAC | BRCA (654), LUAD (1,139), COAD (369) | 2,162 |
-| **Total** | **5 included subcohorts across 2 cohorts** | **4,331** |
+| **Total** | **5 subcohorts across 2 cohorts** | **4,331** |
 
 The benchmark reports **13 downstream tasks**: 4 morphological/clinical tasks
-and 9 molecular-prediction tasks. TCGA-RCC and CPTAC-LSCC are excluded from
-the reported study scope and slide total.
+and 9 molecular-prediction tasks.
 
 This repository contains the experiment orchestration, analysis code, tests,
 and interactive project page needed to reproduce that workflow. For the full
