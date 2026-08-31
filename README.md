@@ -3,7 +3,7 @@
 > **Towards a Universal Latent Space for Computational Pathology Foundation Models**
 
 <div align="center">
-  <img src="images/mosaic-hero.svg" alt="MOSAIC: 18 pathology encoders aligned into a shared latent space" width="820"/>
+  <img src="images/mosaic.jpg" alt="MOSAIC" width="360"/>
   <br/><br/>
   <img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python">
   <img src="https://img.shields.io/badge/status-under%20review%20%40%20WACV-orange.svg" alt="Status">
