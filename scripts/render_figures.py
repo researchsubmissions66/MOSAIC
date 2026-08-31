@@ -380,8 +380,8 @@ FIG_META: dict[str, dict[str, str]] = {
             "(20x/224px), GigaPath-slide (20x/256px), TITAN, Feather "
             "(20x/512px).\n"
             "- **Data:** one embedding per slide, paired by slide id across "
-            "2,169 TCGA / 2,296 CPTAC slides (all slides, no subsampling of "
-            "slides).\n"
+            "2,169 TCGA / 2,162 CPTAC slides after excluding TCGA-RCC and "
+            "CPTAC-LSCC (all included slides, no slide subsampling).\n"
             "- **Metric:** linear CKA on column-centered slide embeddings; "
             "lower triangle shown.\n"
             "- **Caveat:** n ≈ 2,200 slides against 512–1280 dims is comfortable "
@@ -469,7 +469,8 @@ def fig_similarity(out: Path, fmt: str) -> None:
     fig = heatmap_row(
         mats, value_fmt="{:.2f}", mask="lower", ylab="Encoder",
         cbar_label="Similarity", rotate_xticks=40,
-        panel_size=(3.5, 3.9), label_size=7.5, base_size=10,
+        panel_size=(4.3, 4.0), label_size=7.5, base_size=10,
+        n_cols=4, row_gap=0.45, col_gap=1.55, repeat_ylabels=False,
     )
     emit(fig, out, "fig1_similarity", fmt)
 
@@ -701,11 +702,10 @@ def fig_transfer(out: Path, fmt: str) -> None:
         print("  skip transfer"); return
     fig = heatmap_row(
         mats, value_fmt="{:.2f}", ylab="Source encoder", xlab="Target encoder",
-        cbar_label="", rotate_xticks=40, panel_size=(4.6, 4.8), label_size=8.0,
+        cbar_label="", rotate_xticks=40, panel_size=(5.4, 4.8), label_size=8.0,
+        col_gap=2.2, repeat_ylabels=False,
+        suptitle="Cross-model transfer  (source → target)",
     )
-    fig.suptitle("Cross-model transfer  (source → target)",
-                 fontsize=13, fontweight="bold")
-    fig.tight_layout()
     emit(fig, out, "fig5_transfer", fmt)
 
 
@@ -726,11 +726,10 @@ def fig_slide(out: Path, fmt: str) -> None:
     fig = heatmap_row(
         mats, value_fmt="{:.2f}", mask="lower", ylab="Slide encoder",
         cbar_label="Linear CKA", rotate_xticks=40,
-        panel_size=(4.4, 4.6), label_size=8.0,
+        panel_size=(5.2, 4.6), label_size=8.0, col_gap=2.2,
+        repeat_ylabels=False,
+        suptitle="Slide-level encoders — all six, across four patch grids",
     )
-    fig.suptitle("Slide-level encoders — all six, across four patch grids",
-                 fontsize=13, fontweight="bold")
-    fig.tight_layout()
     emit(fig, out, "fig6_slide_encoders", fmt)
 
 

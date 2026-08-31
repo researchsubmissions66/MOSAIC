@@ -1823,6 +1823,107 @@ function switchMetric(btn, metricKey) {
     buildHeatmap(metricKey);
 }
 
+function initializeTabList(tablist) {
+    const tabs = Array.from(tablist.children).filter(
+        element => element.getAttribute('role') === 'tab'
+    );
+    if (!tabs.length) return;
+
+    const activate = (tab, moveFocus = false) => {
+        tabs.forEach(candidate => {
+            const selected = candidate === tab;
+            candidate.setAttribute('aria-selected', String(selected));
+            candidate.tabIndex = selected ? 0 : -1;
+
+            const panelId = candidate.getAttribute('aria-controls');
+            const panel = panelId ? document.getElementById(panelId) : null;
+            if (panel) panel.hidden = !selected;
+        });
+        if (moveFocus) tab.focus();
+    };
+
+    tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => activate(tab));
+        tab.addEventListener('keydown', event => {
+            let nextTab = null;
+            if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+                nextTab = tabs[(index + 1) % tabs.length];
+            } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+                nextTab = tabs[(index - 1 + tabs.length) % tabs.length];
+            } else if (event.key === 'Home') {
+                nextTab = tabs[0];
+            } else if (event.key === 'End') {
+                nextTab = tabs[tabs.length - 1];
+            }
+
+            if (nextTab) {
+                event.preventDefault();
+                activate(nextTab, true);
+            }
+        });
+    });
+
+    const initialTab = tabs.find(tab => tab.getAttribute('aria-selected') === 'true') || tabs[0];
+    activate(initialTab);
+}
+
+function initializeHeroParticles() {
+    const particleHost = document.getElementById('hero-particles');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!particleHost || reducedMotion || typeof tsParticles === 'undefined') return;
+
+    tsParticles.load('hero-particles', {
+        fullScreen: { enable: false },
+        fpsLimit: 60,
+        particles: {
+            number: {
+                value: 80,
+                density: { enable: true, area: 800 }
+            },
+            color: { value: ['#3b82f6', '#7c3aed', '#0d9488'] },
+            opacity: {
+                value: { min: 0.12, max: 0.42 },
+                animation: {
+                    enable: true,
+                    speed: 0.5,
+                    minimumValue: 0.08,
+                    sync: false
+                }
+            },
+            size: { value: { min: 1.5, max: 4 } },
+            move: {
+                enable: true,
+                speed: 0.4,
+                direction: 'none',
+                outModes: { default: 'out' },
+                random: true,
+                straight: false
+            },
+            links: {
+                enable: true,
+                color: '#6366f1',
+                opacity: 0.16,
+                distance: 150,
+                width: 1
+            },
+            shape: { type: 'circle' }
+        },
+        interactivity: {
+            events: {
+                onHover: { enable: true, mode: 'grab' },
+                resize: true
+            },
+            modes: {
+                grab: {
+                    distance: 160,
+                    links: { opacity: 0.34 }
+                }
+            }
+        },
+        detectRetina: true
+    });
+}
+
 // ──────────────────────────────────────────────
 // Initialize on page load
 // ──────────────────────────────────────────────
@@ -1830,6 +1931,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Build default charts
     buildResultsChart('tcga_brca_subtype');
     buildHeatmap('linear_cka');
+    document.querySelectorAll('[data-tabs]').forEach(initializeTabList);
+    initializeHeroParticles();
 
     // Scroll animations (IntersectionObserver)
     const observer = new IntersectionObserver((entries) => {
@@ -1922,7 +2025,7 @@ const RQ_DETAILS = [
     body: `
       <div class="rq-detail-row">
         <div class="rq-detail-icon" style="background: rgba(225,29,72,0.1); color: #e11d48;">🎯</div>
-        <div><strong>Experiment:</strong> Run <strong>14 downstream tasks</strong> (5 morphological + 9 molecular) using ABMIL and TransMIL aggregators, comparing single-encoder, concatenated, and shared-space features.</div>
+        <div><strong>Experiment:</strong> Run <strong>13 downstream tasks</strong> (4 morphological + 9 molecular) using ABMIL and TransMIL aggregators, comparing single-encoder, concatenated, and shared-space features.</div>
       </div>
       <div class="rq-detail-row">
         <div class="rq-detail-icon" style="background: rgba(225,29,72,0.1); color: #e11d48;">🧬</div>

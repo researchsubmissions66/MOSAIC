@@ -412,6 +412,7 @@ def heatmap_row(
     n_cols: int | None = None,
     row_gap: float = 0.28,
     col_gap: float = 1.05,
+    repeat_ylabels: bool = True,
 ) -> Figure:
     """A row -- or grid -- of heatmap panels, each with an independent colourbar.
 
@@ -452,6 +453,10 @@ def heatmap_row(
         panel carries its own colourbar on the right, so this has to clear the
         colourbar *and* the next panel's y tick labels; too small and the
         labels are clipped ("Madeleine" -> "deleine").
+    repeat_ylabels : bool, default True
+        Repeat row tick labels on every panel. Set to ``False`` when all
+        matrices use the same ordered rows; only the leftmost panel in each
+        row then carries the labels, leaving a cleaner inter-panel gutter.
     n_cols : int, optional
         Wrap onto multiple rows at this width. A single row of seven panels is
         ~27in wide, which forces the panels and their labels down until neither
@@ -511,6 +516,8 @@ def heatmap_row(
             for lab in ax.get_xticklabels():
                 lab.set_rotation(rotate_xticks)
                 lab.set_ha("right")
+        if not repeat_ylabels and _col > 0:
+            ax.tick_params(axis="y", labelleft=False, length=0)
 
     if suptitle:
         fig.suptitle(suptitle, fontsize=base_size + 3, fontweight="bold")

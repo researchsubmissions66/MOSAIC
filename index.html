@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MOSAIC: Towards a Universal Latent Space for Computational Pathology Foundation Models</title>
-    <meta name="description" content="Prompt-Guided Few-Shot Cancer Subtyping in Computational Pathology">
+    <meta name="description" content="MOSAIC benchmarks representational similarity, alignment, and transfer across pathology foundation models.">
     <link rel="stylesheet" href="style.css">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Hero particles (the lightweight particles.js successor used by PURGE) -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js" defer></script>
 </head>
 
 <body>
@@ -23,13 +25,15 @@
                 <a href="#key-idea">Key Idea</a>
                 <a href="#mosaic-bench">MOSAIC-Bench</a>
                 <a href="#results">Results</a>
-                <a href="#metrics">Metrics</a>
+                <a href="#theory-methods">Methods</a>
                 <a href="https://github.com/researchsubmissions66/MOSAIC" target="_blank">GitHub</a>
             </div>
         </div>
     </nav>
 
-    <header class="hero" style="min-height: 80vh; display: flex; flex-direction: column; justify-content: center;">
+    <header class="hero" style="min-height: 80vh; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden;">
+
+        <div id="hero-particles" class="hero-particles" aria-hidden="true"></div>
 
         <div class="logo-container animate-up" style="margin-bottom: 3rem; text-align: center;">
             <img src="images/mosaic.jpg" alt="MOSAIC Logo" class="floating-logo" style="max-height: 450px; width: auto;">
@@ -50,7 +54,7 @@
             <a href="https://github.com/researchsubmissions66/MOSAIC" class="btn btn-primary" target="_blank"><i
                     class="fab fa-github"></i> Code</a>
             <a href="#results" class="btn btn-secondary"><i class="fas fa-chart-bar"></i> Results</a>
-            <a href="#metrics" class="btn btn-secondary"><i class="fas fa-th"></i> Metrics</a>
+            <a href="#theory-methods" class="btn btn-secondary"><i class="fas fa-th"></i> Methods</a>
         </div>
     </header>
 
@@ -129,7 +133,7 @@
             <path d="M7 6H15M7 12H13M7 18H11" stroke="url(#grad-violet)" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
         </div>
-        <div class="metric-num">14</div>
+        <div class="metric-num">13</div>
         <div class="metric-label">Downstream Tasks</div>
       </div>
 
@@ -143,7 +147,7 @@
             <circle cx="13" cy="13" r="2" fill="url(#grad-teal)" opacity="0.6"/>
           </svg>
         </div>
-        <div class="metric-num">4,465</div>
+        <div class="metric-num">4,331</div>
         <div class="metric-label">Total Slides (TCGA & CPTAC)</div>
       </div>
 
@@ -226,7 +230,7 @@
                 <div class="callout-header">Method</div>
                 <div class="callout-underline"></div>
                 <div class="callout-box">
-                    Benchmark 18 state-of-the-art vision and vision-language pathology encoders across 4,465 TCGA and CPTAC whole-slide images, evaluating similarity, representation alignment, and downstream transferability.
+                    Benchmark 18 state-of-the-art vision and vision-language pathology encoders across 4,331 TCGA and CPTAC whole-slide images, evaluating similarity, representation alignment, and downstream transferability.
                 </div>
             </div>
 
@@ -301,12 +305,12 @@
     <section id="mosaic-bench" class="animate-up" style="padding: 3rem 2rem; max-width: 1100px; margin: 0 auto; border-bottom: 1px solid #eee;">
         <h2 class="section-title">MOSAIC-Bench</h2>
         <p class="section-desc" style="max-width: 800px; margin-bottom: 3rem;">
-            A rigorous benchmark comprising 4,465 whole-slide images and 14 downstream tasks across 3 organ types.
+            A rigorous benchmark comprising 4,331 whole-slide images and 13 downstream tasks across 3 organ types. TCGA-RCC and CPTAC-LSCC are excluded from the reported slide count.
         </p>
 
         <h3 class="bench-category-title" style="margin-top: 0;">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-            Cohorts (4,465 Slides Total)
+            Cohorts (4,331 Slides Total)
         </h3>
         
         <div class="bench-grid">
@@ -318,15 +322,11 @@
                 </div>
                 <div class="bench-stat-row">
                     <span class="bench-stat-label">Breast (BRCA)</span>
-                    <span class="bench-stat-value">1,098</span>
+                    <span class="bench-stat-value">1,126</span>
                 </div>
                 <div class="bench-stat-row">
                     <span class="bench-stat-label">Lung (LUAD / LUSC)</span>
-                    <span class="bench-stat-value">1,089</span>
-                </div>
-                <div class="bench-stat-row" style="border-bottom: none;">
-                    <span class="bench-stat-label">Colon (COAD)</span>
-                    <span class="bench-stat-value">466</span>
+                    <span class="bench-stat-value">1,043</span>
                 </div>
             </div>
 
@@ -334,26 +334,26 @@
             <div class="bench-card">
                 <div class="bench-card-header">
                     <h4 class="bench-card-title">CPTAC</h4>
-                    <span class="bench-badge" style="background: rgba(124,58,237,0.1); color: #7c3aed;">2,296 Slides</span>
+                    <span class="bench-badge" style="background: rgba(124,58,237,0.1); color: #7c3aed;">2,162 Slides</span>
                 </div>
                 <div class="bench-stat-row">
                     <span class="bench-stat-label">Breast (BRCA)</span>
-                    <span class="bench-stat-value">~760</span>
+                    <span class="bench-stat-value">654</span>
                 </div>
                 <div class="bench-stat-row">
-                    <span class="bench-stat-label">Lung (LUAD / LUSC)</span>
-                    <span class="bench-stat-value">~760</span>
+                    <span class="bench-stat-label">Lung (LUAD)</span>
+                    <span class="bench-stat-value">1,139</span>
                 </div>
                 <div class="bench-stat-row" style="border-bottom: none;">
                     <span class="bench-stat-label">Colon (COAD)</span>
-                    <span class="bench-stat-value">~776</span>
+                    <span class="bench-stat-value">369</span>
                 </div>
             </div>
         </div>
 
         <h3 class="bench-category-title">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-            14 Downstream Tasks
+            13 Downstream Tasks
         </h3>
 
         <div class="bench-grid">
@@ -648,135 +648,138 @@
     <!-- ============================================================
          RESULTS SECTION
     ============================================================ -->
-    <section id="results" class="animate-up" style="padding: 3rem 2rem; max-width: 1200px; margin: 0 auto;">
-        <h2 class="section-title">Results</h2>
-        <p class="section-desc" style="max-width: 820px; margin-bottom: 3rem;">
-            Publication figures over the full study: 12 patch + 6 slide encoders,
-            TCGA and CPTAC. Every panel is regenerated from the released result
-            tables by <code>scripts/render_figures.py</code>.
-        </p>
+    <section id="results" class="results-section animate-up">
+        <div class="results-heading">
+            <p class="results-kicker">Evidence browser</p>
+            <h2 class="section-title">Results by research question</h2>
+            <p class="section-desc">
+                Explore the released findings without scrolling through a wall of figures.
+                Select a research question, then switch cohort, patch grid, or evaluation view.
+                Every panel is regenerated from the released tables by
+                <code>scripts/render_figures.py</code>.
+            </p>
+        </div>
 
-        <div class="fig-stack">
+        <div class="results-summary" aria-label="Headline findings">
+            <div class="result-stat">
+                <strong>92.5–93.5%</strong>
+                <span>GCCA Recall@1 at 10× / 256px across CPTAC and TCGA</span>
+            </div>
+            <div class="result-stat">
+                <strong>7 / 7</strong>
+                <span>similarity measures decline from 5× to 20×</span>
+            </div>
+            <div class="result-stat">
+                <strong>13 tasks</strong>
+                <span>compare best single, concatenated, and MOSAIC features</span>
+            </div>
+        </div>
 
-            <figure class="fig-card">
-                <img src="images/figures/fig3_downstream_auc.png" alt="Downstream MIL across 13 tasks" loading="lazy">
-                <figcaption><div class="rq-badge" style="color: #e11d48;">RQ4 · Downstream Impact</div><strong>Downstream MIL: single encoder vs. concatenation vs. shared space.</strong>
-                    Slide-level AUC over the two difficulty regimes. Morphological/clinical
-                    tasks (top) saturate near 0.97 and the three representations are
-                    indistinguishable; molecular mutation tasks (bottom) are where
-                    representations separate: the shared space (MOSAIC) wins on some and
-                    loses on others. Dashed line = chance.</figcaption>
+        <div class="result-story-tabs" role="tablist" aria-label="Research questions" data-tabs>
+            <button id="result-tab-rq1" class="result-story-tab" type="button" role="tab" aria-selected="true" aria-controls="result-panel-rq1">RQ1 <span>Similarity</span></button>
+            <button id="result-tab-rq2" class="result-story-tab" type="button" role="tab" aria-selected="false" aria-controls="result-panel-rq2" tabindex="-1">RQ2 <span>Layerwise</span></button>
+            <button id="result-tab-rq3" class="result-story-tab" type="button" role="tab" aria-selected="false" aria-controls="result-panel-rq3" tabindex="-1">RQ3 <span>Alignment</span></button>
+            <button id="result-tab-rq4" class="result-story-tab" type="button" role="tab" aria-selected="false" aria-controls="result-panel-rq4" tabindex="-1">RQ4 <span>Downstream</span></button>
+            <button id="result-tab-rq5" class="result-story-tab" type="button" role="tab" aria-selected="false" aria-controls="result-panel-rq5" tabindex="-1">RQ5 <span>Transfer</span></button>
+        </div>
+
+        <div id="result-panel-rq1" class="result-story-panel" role="tabpanel" aria-labelledby="result-tab-rq1" tabindex="0">
+            <div class="result-panel-header">
+                <span class="result-number">01</span>
+                <div><h3>How similar are pathology encoder spaces?</h3><p>Patch encoders are compared only within matched coordinate grids; slide encoders can be compared directly across grids.</p></div>
+            </div>
+            <div class="result-figure-tabs" role="tablist" aria-label="Similarity views" data-tabs>
+                <button id="similarity-tab-256" class="result-figure-tab" type="button" role="tab" aria-selected="true" aria-controls="similarity-panel-256">Patch · 256px</button>
+                <button id="similarity-tab-224" class="result-figure-tab" type="button" role="tab" aria-selected="false" aria-controls="similarity-panel-224" tabindex="-1">Patch · 224px</button>
+                <button id="similarity-tab-slide" class="result-figure-tab" type="button" role="tab" aria-selected="false" aria-controls="similarity-panel-slide" tabindex="-1">Slide encoders</button>
+                <button id="similarity-tab-cptac-mag" class="result-figure-tab" type="button" role="tab" aria-selected="false" aria-controls="similarity-panel-cptac-mag" tabindex="-1">Scale · CPTAC</button>
+                <button id="similarity-tab-tcga-mag" class="result-figure-tab" type="button" role="tab" aria-selected="false" aria-controls="similarity-panel-tcga-mag" tabindex="-1">Scale · TCGA</button>
+            </div>
+
+            <figure id="similarity-panel-256" class="result-figure" role="tabpanel" aria-labelledby="similarity-tab-256">
+                <div class="result-figure-toolbar"><span>CPTAC · 10× · 256px · 6 encoders · 7 metrics</span><a class="result-figure-action" href="images/figures/fig1_similarity.png" target="_blank" rel="noopener">Open full resolution <span aria-hidden="true">↗</span></a></div>
+                <div class="result-figure-stage"><img src="images/figures/fig1_similarity.png" alt="Seven patch-encoder similarity matrices for the CPTAC 10x 256 pixel group" loading="lazy" decoding="async"></div>
+                <figcaption class="result-figure-caption"><strong>The shared morphology signal survives every similarity lens.</strong> ResNet50, the ImageNet-supervised control, is consistently least similar to the pathology encoders, while the seven metrics reveal complementary geometric relationships.</figcaption>
             </figure>
-
-            <figure class="fig-card">
-                <img src="images/figures/fig7_alignment_methods.png" alt="Alignment methods compared" loading="lazy">
-                <figcaption><div class="rq-badge" style="color: #0d9488;">RQ3 · Alignment</div><strong>Alignment methods · CPTAC · 10× · 256px.</strong>
-                    GCCA (darkest) is strongest on cross-model retrieval and shared-space
-                    agreement; rigid Procrustes is best on reconstruction and neighbourhood
-                    preservation but weakest on alignment: the alignment ↔ reconstruction
-                    trade-off, shown on both metric families at once.</figcaption>
+            <figure id="similarity-panel-224" class="result-figure" role="tabpanel" aria-labelledby="similarity-tab-224" hidden>
+                <div class="result-figure-toolbar"><span>20× · 224px · large vision-SSL models</span><a class="result-figure-action" href="images/figures/similarity_224px.png" target="_blank" rel="noopener">Open full resolution <span aria-hidden="true">↗</span></a></div>
+                <div class="result-figure-stage"><img src="images/figures/similarity_224px.png" alt="Similarity matrices for GPFM, H-optimus-0, Virchow, and Virchow2" loading="lazy" decoding="async"></div>
+                <figcaption class="result-figure-caption"><strong>Architecture alone does not determine the representation.</strong> Virchow and Virchow2 reach only about 0.30 linear CKA despite sharing an architecture, reflecting their class-token and mean-patch-token output construction.</figcaption>
             </figure>
-
-            <figure class="fig-card">
-                <img src="images/figures/fig9_alignment_tcga.png" alt="Alignment methods, TCGA" loading="lazy">
-                <figcaption><div class="rq-badge" style="color: #0d9488;">RQ3 · Alignment</div><strong>Alignment methods · TCGA · 10× · 256px.</strong>
-                    The TCGA counterpart (5 encoders, no KEEP at this grid). The method
-                    ranking matches CPTAC almost exactly, showing the alignment ↔
-                    reconstruction trade-off is not cohort-specific.</figcaption>
+            <figure id="similarity-panel-slide" class="result-figure" role="tabpanel" aria-labelledby="similarity-tab-slide" hidden>
+                <div class="result-figure-toolbar"><span>TCGA + CPTAC · 6 slide encoders</span><a class="result-figure-action" href="images/figures/fig6_slide_encoders.png" target="_blank" rel="noopener">Open full resolution <span aria-hidden="true">↗</span></a></div>
+                <div class="result-figure-stage"><img src="images/figures/fig6_slide_encoders.png" alt="Slide-level encoder linear CKA matrices for TCGA and CPTAC" loading="lazy" decoding="async"></div>
+                <figcaption class="result-figure-caption"><strong>Slide-level agreement replicates across cohorts.</strong> All six slide encoders are directly comparable because each emits one vector per slide; Feather and TITAN form the strongest pair.</figcaption>
             </figure>
-
-            <figure class="fig-card">
-                <img src="images/figures/fig2_retrieval.png" alt="Cross-model retrieval" loading="lazy">
-                <figcaption><div class="rq-badge" style="color: #0d9488;">RQ3 · Alignment</div><strong>Cross-model retrieval · CPTAC · 10× · 256px.</strong>
-                    Index with one encoder, query with another. Alignment lifts retrieval
-                    from chance (~0.1%) to Recall@1 ≈ 0.93; a rigid rotation (Procrustes) is
-                    clearly insufficient. Held-out patches, aligners fit on the train split.</figcaption>
+            <figure id="similarity-panel-cptac-mag" class="result-figure" role="tabpanel" aria-labelledby="similarity-tab-cptac-mag" hidden>
+                <div class="result-figure-toolbar"><span>CPTAC · 256px · 5× / 10× / 20×</span><a class="result-figure-action" href="images/figures/fig4_magnification.png" target="_blank" rel="noopener">Open full resolution <span aria-hidden="true">↗</span></a></div>
+                <div class="result-figure-stage"><img src="images/figures/fig4_magnification.png" alt="CPTAC cross-model agreement across magnifications" loading="lazy" decoding="async"></div>
+                <figcaption class="result-figure-caption"><strong>Agreement decreases as cellular detail increases.</strong> All seven measures decline from 5× to 20×: models agree most on coarse tissue architecture and diverge on fine nuclear detail.</figcaption>
             </figure>
-
-            <figure class="fig-card">
-                <img src="images/figures/fig8_retrieval_tcga.png" alt="Cross-model retrieval, TCGA" loading="lazy">
-                <figcaption><div class="rq-badge" style="color: #0d9488;">RQ3 · Alignment</div><strong>Cross-model retrieval · TCGA · 10× · 256px.</strong>
-                    The TCGA counterpart (5 encoders). The result replicates CPTAC: alignment
-                    lifts cross-model retrieval to Recall@1 ≈ 0.95 with GCCA, confirming the
-                    finding holds across cohorts.</figcaption>
+            <figure id="similarity-panel-tcga-mag" class="result-figure" role="tabpanel" aria-labelledby="similarity-tab-tcga-mag" hidden>
+                <div class="result-figure-toolbar"><span>TCGA · 256px · 5× / 10× / 20×</span><a class="result-figure-action" href="images/figures/fig4b_magnification_tcga.png" target="_blank" rel="noopener">Open full resolution <span aria-hidden="true">↗</span></a></div>
+                <div class="result-figure-stage"><img src="images/figures/fig4b_magnification_tcga.png" alt="TCGA cross-model agreement across magnifications" loading="lazy" decoding="async"></div>
+                <figcaption class="result-figure-caption"><strong>The magnification trend is not cohort-specific.</strong> TCGA independently reproduces the loss of cross-model agreement at higher magnification.</figcaption>
             </figure>
+        </div>
 
-            <figure class="fig-card">
-                <img src="images/figures/fig5_transfer.png" alt="Cross-model transfer" loading="lazy">
-                <figcaption><div class="rq-badge" style="color: #d97706;">RQ5 · Cross-model Transfer</div><strong>Cross-model transfer (source → target).</strong>
-                    Encode with a source model, decode as the target through the shared
-                    space. Left: cosine to the target's real embedding. Right: Recall@1
-                    against the target's real index. Directional, so the full grid is shown.</figcaption>
+        <div id="result-panel-rq2" class="result-story-panel" role="tabpanel" aria-labelledby="result-tab-rq2" tabindex="0" hidden>
+            <div class="result-panel-header"><span class="result-number">02</span><div><h3>Where do architectures converge or diverge?</h3><p>Forward hooks expose the relationship through depth rather than only at the final embedding.</p></div></div>
+            <figure class="result-figure">
+                <div class="result-figure-toolbar"><span>5 encoders · block-to-block CKA</span><a class="result-figure-action" href="images/figures/fig10_layerwise.png" target="_blank" rel="noopener">Open full resolution <span aria-hidden="true">↗</span></a></div>
+                <div class="result-figure-stage"><img src="images/figures/fig10_layerwise.png" alt="Layerwise representational similarity through encoder depth" loading="lazy" decoding="async"></div>
+                <figcaption class="result-figure-caption"><strong>Depth stratifies by architecture.</strong> ViT pathology models become more similar to UNI2 late in the network, CTransPath remains comparatively distant, and the ResNet50 control rises before falling.</figcaption>
             </figure>
+        </div>
 
-            <figure class="fig-card">
-                <img src="images/figures/fig4_magnification.png" alt="Agreement vs magnification" loading="lazy">
-                <figcaption><div class="rq-badge" style="color: #3b82f6;">RQ1 · Similarity</div><strong>Agreement decreases with magnification.</strong>
-                    The same analysis replicated at 5×, 10× and 20×. All seven metrics decline
-                    monotonically: models agree most on coarse tissue architecture and diverge
-                    on fine nuclear detail.</figcaption>
+        <div id="result-panel-rq3" class="result-story-panel" role="tabpanel" aria-labelledby="result-tab-rq3" tabindex="0" hidden>
+            <div class="result-panel-header"><span class="result-number">03</span><div><h3>Can independently trained models share one coordinate system?</h3><p>Alignment quality and identity retrieval expose different sides of the shared-space trade-off.</p></div></div>
+            <div class="result-figure-tabs" role="tablist" aria-label="Alignment views" data-tabs>
+                <button id="alignment-tab-cptac" class="result-figure-tab" type="button" role="tab" aria-selected="true" aria-controls="alignment-panel-cptac">Alignment · CPTAC</button>
+                <button id="alignment-tab-tcga" class="result-figure-tab" type="button" role="tab" aria-selected="false" aria-controls="alignment-panel-tcga" tabindex="-1">Alignment · TCGA</button>
+                <button id="retrieval-tab-cptac" class="result-figure-tab" type="button" role="tab" aria-selected="false" aria-controls="retrieval-panel-cptac" tabindex="-1">Retrieval · CPTAC</button>
+                <button id="retrieval-tab-tcga" class="result-figure-tab" type="button" role="tab" aria-selected="false" aria-controls="retrieval-panel-tcga" tabindex="-1">Retrieval · TCGA</button>
+            </div>
+            <figure id="alignment-panel-cptac" class="result-figure" role="tabpanel" aria-labelledby="alignment-tab-cptac">
+                <div class="result-figure-toolbar"><span>CPTAC · 10× · 256px · 6 encoders</span><a class="result-figure-action" href="images/figures/fig7_alignment_methods.png" target="_blank" rel="noopener">Open full resolution <span aria-hidden="true">↗</span></a></div>
+                <div class="result-figure-stage"><img src="images/figures/fig7_alignment_methods.png" alt="Five alignment methods compared on CPTAC" loading="lazy" decoding="async"></div>
+                <figcaption class="result-figure-caption"><strong>No aligner dominates every objective.</strong> GCCA is strongest on retrieval and shared-space agreement; generalized Procrustes preserves reconstruction and neighbourhoods but aligns identities less effectively.</figcaption>
             </figure>
-
-            <figure class="fig-card">
-                <img src="images/figures/fig10_layerwise.png" alt="Layer-wise alignment across depth" loading="lazy">
-                <figcaption><div class="rq-badge" style="color: #7c3aed;">RQ2 · Architecture vs Objective</div><strong>Layer-wise representational alignment (architecture depth).</strong>
-                    Similarity through network depth, not just at the output; the only stage
-                    that re-runs the models with forward hooks, across five encoders. Left:
-                    block-by-block CKA between UNI2 (24 blocks) and GigaPath (40). Right:
-                    UNI2's best-match CKA to each other encoder vs relative depth. The result
-                    <em>stratifies by architecture</em>: the ViT-based pathology models
-                    (GigaPath, CONCH) climb to ≈0.95–0.97, growing <em>more</em> similar with
-                    depth, against the "universal-early, specific-late" expectation, while the
-                    hybrid CTransPath stays low (≈0.45) and the ResNet50 control rises then falls.</figcaption>
+            <figure id="alignment-panel-tcga" class="result-figure" role="tabpanel" aria-labelledby="alignment-tab-tcga" hidden>
+                <div class="result-figure-toolbar"><span>TCGA · 10× · 256px · 5 encoders</span><a class="result-figure-action" href="images/figures/fig9_alignment_tcga.png" target="_blank" rel="noopener">Open full resolution <span aria-hidden="true">↗</span></a></div>
+                <div class="result-figure-stage"><img src="images/figures/fig9_alignment_tcga.png" alt="Five alignment methods compared on TCGA" loading="lazy" decoding="async"></div>
+                <figcaption class="result-figure-caption"><strong>The alignment trade-off replicates on TCGA.</strong> The method ordering closely matches CPTAC even though KEEP is unavailable in this grid.</figcaption>
             </figure>
+            <figure id="retrieval-panel-cptac" class="result-figure" role="tabpanel" aria-labelledby="retrieval-tab-cptac" hidden>
+                <div class="result-figure-toolbar"><span>CPTAC · held-out patch identity retrieval</span><a class="result-figure-action" href="images/figures/fig2_retrieval.png" target="_blank" rel="noopener">Open full resolution <span aria-hidden="true">↗</span></a></div>
+                <div class="result-figure-stage"><img src="images/figures/fig2_retrieval.png" alt="Cross-model identity retrieval metrics on CPTAC" loading="lazy" decoding="async"></div>
+                <figcaption class="result-figure-caption"><strong>Alignment changes retrieval from chance to reliable identity matching.</strong> GCCA reaches 92.5% Recall@1 on held-out CPTAC patches; aligners are fit only on the training split.</figcaption>
+            </figure>
+            <figure id="retrieval-panel-tcga" class="result-figure" role="tabpanel" aria-labelledby="retrieval-tab-tcga" hidden>
+                <div class="result-figure-toolbar"><span>TCGA · held-out patch identity retrieval</span><a class="result-figure-action" href="images/figures/fig8_retrieval_tcga.png" target="_blank" rel="noopener">Open full resolution <span aria-hidden="true">↗</span></a></div>
+                <div class="result-figure-stage"><img src="images/figures/fig8_retrieval_tcga.png" alt="Cross-model identity retrieval metrics on TCGA" loading="lazy" decoding="async"></div>
+                <figcaption class="result-figure-caption"><strong>TCGA confirms the same shared-space result.</strong> GCCA reaches 93.5% Recall@1 across the five encoders available at 10× / 256px.</figcaption>
+            </figure>
+        </div>
 
+        <div id="result-panel-rq4" class="result-story-panel" role="tabpanel" aria-labelledby="result-tab-rq4" tabindex="0" hidden>
+            <div class="result-panel-header"><span class="result-number">04</span><div><h3>Does the shared space improve downstream MIL?</h3><p>Thirteen tasks compare the best fixed single encoder, raw concatenation, and MOSAIC under the same MIL protocol.</p></div></div>
+            <figure class="result-figure">
+                <div class="result-figure-toolbar"><span>13 tasks · ABMIL + TransMIL</span><a class="result-figure-action" href="images/figures/fig3_downstream_auc.png" target="_blank" rel="noopener">Open full resolution <span aria-hidden="true">↗</span></a></div>
+                <div class="result-figure-stage"><img src="images/figures/fig3_downstream_auc.png" alt="Downstream MIL AUC across thirteen tasks" loading="lazy" decoding="async"></div>
+                <figcaption class="result-figure-caption"><strong>Representation choice matters most on weak-signal molecular tasks.</strong> Morphological and clinical tasks approach saturation, while mutation prediction separates single, concatenated, and shared-space features. The dashed line marks chance.</figcaption>
+            </figure>
+        </div>
+
+        <div id="result-panel-rq5" class="result-story-panel" role="tabpanel" aria-labelledby="result-tab-rq5" tabindex="0" hidden>
+            <div class="result-panel-header"><span class="result-number">05</span><div><h3>Can one encoder be translated into another?</h3><p>Directional source-to-target translation tests whether the shared latent space retains model identity and neighbourhood structure.</p></div></div>
+            <figure class="result-figure">
+                <div class="result-figure-toolbar"><span>Source → target · cosine + Recall@1</span><a class="result-figure-action" href="images/figures/fig5_transfer.png" target="_blank" rel="noopener">Open full resolution <span aria-hidden="true">↗</span></a></div>
+                <div class="result-figure-stage"><img src="images/figures/fig5_transfer.png" alt="Directional cross-model representation translation matrices" loading="lazy" decoding="async"></div>
+                <figcaption class="result-figure-caption"><strong>Translation is strong but directional.</strong> The shared space can reconstruct a target-like embedding with high cosine similarity, while exact target identity retrieval remains more model-pair dependent.</figcaption>
+            </figure>
         </div>
     </section>
-
-    <!-- ============================================================
-         METRICS SECTION (Similarity Heatmap)
-    ============================================================ -->
-    <section id="metrics" class="animate-up" style="padding: 3rem 2rem; max-width: 1200px; margin: 0 auto;">
-        <h2 class="section-title">Similarity Metrics</h2>
-        <p class="section-desc" style="max-width: 820px; margin-bottom: 3rem;">
-            Cross-encoder similarity across all seven metrics. Because trident writes one
-            coordinate grid per (magnification, patch size), patch encoders are only
-            comparable within a grid, so the 12 patch encoders appear across several
-            groups rather than one matrix. Each panel carries its own colour scale.
-        </p>
-
-        <div class="fig-stack">
-
-            <figure class="fig-card">
-                <img src="images/figures/fig1_similarity.png" alt="Patch-encoder similarity, flagship group" loading="lazy">
-                <figcaption><div class="rq-badge" style="color: #3b82f6;">RQ1 · Similarity</div><strong>Patch encoders · CPTAC · 10× · 256px (flagship, 6 encoders).</strong>
-                    Pairwise similarity spanning all three pretraining families. ResNet50, the
-                    ImageNet-supervised control, is consistently least similar to the pathology
-                    encoders: the sanity check for any "shared morphology" claim.</figcaption>
-            </figure>
-
-            <figure class="fig-card">
-                <img src="images/figures/similarity_224px.png" alt="224px group similarity" loading="lazy">
-                <figcaption><div class="rq-badge" style="color: #3b82f6;">RQ1 · Similarity</div><strong>Patch encoders · 20× · 224px (the large vision-SSL models).</strong>
-                    GPFM, H-optimus-0, Virchow and Virchow2. Note Virchow ↔ Virchow2 is only
-                    ~0.30 linear CKA despite identical architecture, an artefact of their
-                    class-token ∥ mean-patch-token output.</figcaption>
-            </figure>
-
-            <figure class="fig-card">
-                <img src="images/figures/fig6_slide_encoders.png" alt="Slide-level encoder similarity" loading="lazy">
-                <figcaption><div class="rq-badge" style="color: #3b82f6;">RQ1 · Similarity</div><strong>Slide-level encoders · all six, across four patch grids.</strong>
-                    Slide encoders emit one vector per slide, so the grid constraint dissolves
-                    and all six are directly comparable across every slide in each cohort.</figcaption>
-            </figure>
-
-        </div>
-    </section>
-
-    <!-- amCharts 5 CDN -->
-    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 
 
 

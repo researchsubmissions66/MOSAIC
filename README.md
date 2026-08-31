@@ -11,15 +11,15 @@
 
 <div align="center">
 
-**🔬 18 encoders · 🩻 2 cohorts · 🧫 4,465 slides · 🎯 14 tasks**
+**🔬 18 encoders · 🩻 2 cohorts · 🧫 4,331 slides · 🎯 13 tasks**
 
 </div>
 
 MOSAIC tests whether independently trained computational-pathology foundation
 models converge to a shared latent morphology space. This README is a practical
 guide to **installing the code and running the study**. For the full method,
-encoder registry, datasets, metrics and research questions, see
-[`PLAN.md`](PLAN.md).
+encoder registry, datasets, metrics and research questions, see the
+[project website](https://researchsubmissions66.github.io/MOSAIC/).
 
 ---
 
@@ -69,14 +69,14 @@ One command runs all seven stages in order: `inventory`, `similarity`,
 ```bash
 python scripts/run_study.py --out results/smoke --preset smoke     # ~35 min, validates the chain
 python scripts/run_study.py --out results/main  --preset standard
-python scripts/run_study.py --out results/paper --preset full      # all 14 tasks, all aligners
+python scripts/run_study.py --out results/paper --preset full      # all 13 tasks, all aligners
 ```
 
 | Preset | patches | latent dim | MIL epochs | tasks | aligners |
 |---|---|---|---|---|---|
 | `smoke` | 3k | 32 | 5 | 1 | joint_pca, gcca |
 | `standard` | 20k | 64 | 50 | 4 | + procrustes |
-| `full` | 50k | 64 | 80 | all 14 | + mcca, autoencoder |
+| `full` | 50k | 64 | 80 | all 13 | + mcca, autoencoder |
 
 Each stage is a separate subprocess, so one failure does not abort the rest and
 any stage can be re-run on its own:
@@ -167,5 +167,5 @@ scripts/    entry points: run_study.py plus one script per stage
 utils/      metrics, aligners, transfer, retrieval, MIL, feature store
 configs/    encoders.yaml registry + downloaded clinical / mutation labels
 tests/      property tests
-PLAN.md     full method, research questions, and phase-by-phase plan
+index.html  public project page and interactive result browser
 ```
