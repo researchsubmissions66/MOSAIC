@@ -1821,9 +1821,6 @@ function switchMetric(btn, metricKey) {
     document.querySelectorAll('#metrics .results-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     buildHeatmap(metricKey);
-    if (typeof updateMetricInfo === 'function') {
-        updateMetricInfo(metricKey);
-    }
 }
 
 // ──────────────────────────────────────────────
@@ -1833,9 +1830,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Build default charts
     buildResultsChart('tcga_brca_subtype');
     buildHeatmap('linear_cka');
-    if (typeof updateMetricInfo === 'function') {
-        updateMetricInfo('linear_cka');
-    }
 
     // Scroll animations (IntersectionObserver)
     const observer = new IntersectionObserver((entries) => {
@@ -1980,50 +1974,3 @@ function closeRqModal() {
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeRqModal();
 });
-
-// ──────────────────────────────────────────────
-// Metric Equations Data
-// ──────────────────────────────────────────────
-const METRIC_EQUATIONS = {
-    'linear_cka': {
-        desc: "Linear Centered Kernel Alignment measures the similarity of linear feature spaces by comparing their Gram matrices.",
-        math: "$$ CKA_{linear}(X, Y) = \\frac{\\| Y^T X \\|_F^2}{\\| X^T X \\|_F \\| Y^T Y \\|_F} $$"
-    },
-    'kernel_cka': {
-        desc: "Kernel CKA with an RBF kernel captures non-linear representational similarities.",
-        math: "$$ CKA_{RBF}(K, L) = \\frac{\\langle K_c, L_c \\rangle_F}{\\| K_c \\|_F \\| L_c \\|_F} $$"
-    },
-    'svcca': {
-        desc: "Singular Vector Canonical Correlation Analysis measures the mean of canonical correlations after PCA projection.",
-        math: "$$ SVCCA(X, Y) = \\frac{1}{\\min(d_X, d_Y)} \\sum_{i} \\rho_i $$"
-    },
-    'pwcca': {
-        desc: "Projection Weighted CCA weights canonical correlations by their importance in the original representation.",
-        math: "$$ PWCCA(X, Y) = \\frac{\\sum_{i} \\alpha_i \\rho_i}{\\sum_{i} \\alpha_i} $$"
-    },
-    'procrustes': {
-        desc: "Procrustes similarity measures alignment after solving for the optimal orthogonal transformation between spaces.",
-        math: "$$ \\text{Procrustes}(X, Y) = 1 - \\min_{Q^T Q = I} \\frac{\\| X - YQ \\|_F^2}{\\|X\\|_F^2 + \\|Y\\|_F^2} $$"
-    },
-    'cosine_rsa': {
-        desc: "Representational Similarity Analysis (RSA) correlates the pairwise cosine distance matrices of both spaces.",
-        math: "$$ RSA(X, Y) = r(\\text{vec}(D_X), \\text{vec}(D_Y)) $$"
-    },
-    'distance_correlation': {
-        desc: "Distance Correlation captures both linear and non-linear dependence between the two representation spaces.",
-        math: "$$ dCor(X, Y) = \\frac{dCov(X, Y)}{\\sqrt{dVar(X) dVar(Y)}} $$"
-    }
-};
-
-function updateMetricInfo(metricKey) {
-    const info = METRIC_EQUATIONS[metricKey];
-    const descEl = document.getElementById('metric-desc');
-    const eqEl = document.getElementById('metric-equation');
-    if (info && descEl && eqEl) {
-        descEl.textContent = info.desc;
-        eqEl.innerHTML = info.math;
-        if (window.MathJax) {
-            MathJax.typesetPromise([document.getElementById('metric-equation')]);
-        }
-    }
-}

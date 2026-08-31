@@ -9,22 +9,6 @@
     <link rel="stylesheet" href="style.css">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- MathJax for LaTeX rendering -->
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                processEscapes: true,
-                packages: {'[+]': ['ams', 'boldsymbol']}
-            },
-            options: {
-                enableMenu: false
-            },
-            loader: {load: ['[tex]/ams', '[tex]/boldsymbol']}
-        };
-    </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
@@ -573,7 +557,7 @@
     <section id="theory-methods" class="animate-up" style="padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; border-bottom: 1px solid #eee;">
         <h2 class="section-title">Theory & Methods</h2>
         <p class="section-desc" style="max-width: 800px; margin-bottom: 3rem;">
-            A rigorous formulation of the 7 similarity metrics and 6 alignment methods used to compute cross-encoder representation alignments.
+            An overview of the 7 similarity metrics and 6 alignment methods used to compare and align cross-encoder representations.
         </p>
 
         <!-- Similarity Metrics -->
@@ -585,45 +569,37 @@
             <table class="premium-table">
                 <thead>
                     <tr>
-                        <th style="width: 20%;">Name</th>
-                        <th style="width: 45%;">Equation</th>
-                        <th style="width: 35%;">What it measures</th>
+                        <th style="width: 28%;">Name</th>
+                        <th style="width: 72%;">What it measures</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td class="font-bold">Linear CKA</td>
-                        <td>$$\text{CKA}(K, L) = \frac{\text{HSIC}(K, L)}{\sqrt{\text{HSIC}(K, K) \text{HSIC}(L, L)}}$$</td>
                         <td>Linear correlation between representation spaces independent of orthogonal transformations.</td>
                     </tr>
                     <tr>
                         <td class="font-bold">Kernel CKA</td>
-                        <td>$$\text{CKA}(K, L) = \frac{\text{HSIC}(K, L)}{\sqrt{\text{HSIC}(K, K) \text{HSIC}(L, L)}}$$</td>
                         <td>Non-linear correlation capturing higher-order interactions using RBF kernels.</td>
                     </tr>
                     <tr>
                         <td class="font-bold">SVCCA</td>
-                        <td>$$\text{SVCCA}(X, Y) = \frac{1}{\min(d_1, d_2)} \sum_{i} \rho_i$$</td>
                         <td>Singular Value Canonical Correlation Analysis (PCA followed by CCA).</td>
                     </tr>
                     <tr>
                         <td class="font-bold">PWCCA</td>
-                        <td>$$\text{PWCCA}(X, Y) = \frac{\sum_i \alpha_i \rho_i}{\sum_i \alpha_i}$$</td>
                         <td>Projection Weighted CCA (weights CCA directions by variance explained).</td>
                     </tr>
                     <tr>
                         <td class="font-bold">Procrustes</td>
-                        <td>$$\min_{Q^T Q = I} \| X - Y Q \|_F^2$$</td>
                         <td>Distance after optimal orthogonal alignment.</td>
                     </tr>
                     <tr>
                         <td class="font-bold">Cosine RSA</td>
-                        <td>$$RSA(X, Y) = \frac{\text{vec}(S_X) \cdot \text{vec}(S_Y)}{\|\text{vec}(S_X)\| \|\text{vec}(S_Y)\|}$$</td>
                         <td>Representational Similarity Analysis using Cosine distance between samples.</td>
                     </tr>
                     <tr>
                         <td class="font-bold">Distance Correlation</td>
-                        <td>$$\text{dCor}(X, Y) = \frac{\text{dCov}(X, Y)}{\sqrt{\text{dVar}(X) \text{dVar}(Y)}}$$</td>
                         <td>Dependence measure robust to non-linear associations.</td>
                     </tr>
                 </tbody>
@@ -639,41 +615,34 @@
             <table class="premium-table">
                 <thead>
                     <tr>
-                        <th style="width: 20%;">Name</th>
-                        <th style="width: 45%;">Equation</th>
-                        <th style="width: 35%;">What it aligns</th>
+                        <th style="width: 28%;">Name</th>
+                        <th style="width: 72%;">What it aligns</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td class="font-bold">GCCA</td>
-                        <td>$$\max_{W_i} \sum_{i,j} \text{Tr}(W_i^T X_i^T X_j W_j)$$</td>
                         <td>Generalized Canonical Correlation Analysis aligns multiple spaces to a shared latent representation.</td>
                     </tr>
                     <tr>
                         <td class="font-bold">MCCA</td>
-                        <td>$$\max_{W_i} \sum_{i \neq j} \text{Tr}(W_i^T \Sigma_{ij} W_j)$$</td>
-                        <td>Multi-set CCA extends standard CCA to maximize pairwise correlations among \(m\) sets.</td>
+                        <td>Multi-set CCA extends standard CCA to maximize pairwise correlations among multiple representation sets.</td>
                     </tr>
                     <tr>
                         <td class="font-bold">Generalized Procrustes</td>
-                        <td>$$\min_{Q_i} \sum_{i=1}^m \| X_i Q_i - M \|_F^2$$</td>
-                        <td>Finds optimal orthogonal transformations to align multiple spaces to a central mean \(M\).</td>
+                        <td>Finds optimal orthogonal transformations to align multiple spaces to a central mean representation.</td>
                     </tr>
                     <tr>
                         <td class="font-bold">Joint PCA (jPCA)</td>
-                        <td>$$Z = [X_1, X_2, \dots, X_m] W$$</td>
                         <td>Computes a shared low-rank subspace across concatenated features.</td>
                     </tr>
                     <tr>
                         <td class="font-bold">Shared Autoencoder</td>
-                        <td>$$\min_{E_i, D} \sum_{i} \| X_i - D(E_i(X_i)) \|^2$$</td>
                         <td>Learns non-linear mappings into a shared bottleneck capable of reconstructing all modalities.</td>
                     </tr>
                     <tr>
                         <td class="font-bold">Optimal Transport</td>
-                        <td>$$\min_{\gamma \in \Pi} \int_{\mathcal{X} \times \mathcal{Y}} c(x,y) d\gamma(x,y)$$</td>
-                        <td>Finds the minimum cost plan \(\gamma\) to transport probability mass from one space to another.</td>
+                        <td>Finds the minimum-cost plan for transporting probability mass from one space to another.</td>
                     </tr>
                 </tbody>
             </table>
