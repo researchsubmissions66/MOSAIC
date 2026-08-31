@@ -1974,7 +1974,92 @@ footer {
 }
 
 .encoder-registry-table {
-    min-width: 860px;
+    min-width: 1280px;
+}
+
+.slide-encoder-table {
+    min-width: 820px;
+}
+
+.encoder-resource-note {
+    max-width: 800px;
+    margin: 0 auto 2.5rem;
+    color: #64748b;
+    font-size: 0.86rem;
+    line-height: 1.55;
+    text-align: center;
+}
+
+.encoder-resource-head,
+.encoder-resource-cell {
+    width: 72px;
+    min-width: 72px;
+    padding-right: 0.55rem !important;
+    padding-left: 0.55rem !important;
+    text-align: center;
+}
+
+.encoder-resource-head {
+    font-size: 0.72rem;
+    line-height: 1.25;
+    white-space: normal;
+}
+
+.encoder-resource-link {
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    background: #fff;
+    text-decoration: none;
+    box-shadow: 0 2px 6px rgb(15 23 42 / 0.04);
+    transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.encoder-resource-link:hover {
+    transform: translateY(-2px);
+    border-color: #c7d2fe;
+    background: #f8fafc;
+    box-shadow: 0 7px 14px rgb(59 130 246 / 0.12);
+}
+
+.encoder-resource-link:focus-visible {
+    outline: 3px solid rgb(59 130 246 / 0.28);
+    outline-offset: 2px;
+}
+
+.encoder-resource-link i {
+    font-size: 1.45rem;
+    line-height: 1;
+}
+
+.resource-paper i {
+    color: #b31b1b;
+}
+
+.resource-github i {
+    color: #181717;
+}
+
+.resource-hf img {
+    display: block;
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.resource-unavailable {
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    font-size: 1rem;
+    cursor: help;
 }
 
 .encoder-registry-table .encoder-dim {
