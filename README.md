@@ -13,6 +13,12 @@
 
 **18 encoders · 2 cohorts · 4,331 slides · 13 tasks**
 
+<br/>
+
+<a href="https://researchsubmissions66.github.io/MOSAIC/">
+  <img src="https://img.shields.io/badge/Explore_the_Interactive_Project_Website-4F46E5?style=for-the-badge&amp;logo=githubpages&amp;logoColor=white" alt="Explore the interactive MOSAIC project website">
+</a>
+
 </div>
 
 MOSAIC asks whether independently trained computational-pathology foundation
